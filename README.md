@@ -29,3 +29,5 @@ Planning / Issues only. No Veil implementation, independent security audit or su
 - Upstream code is AGPLv3; licenses and copyright attribution of forked material must be preserved. The upstream brand/logos may be protected separately.
 
 See [ROADMAP.md](ROADMAP.md) and [SECURITY.md](SECURITY.md).
+
+Veil is 100% anonymous.
