@@ -35,10 +35,12 @@ import boofcv.alg.fiducial.qrcode.QrCode
 import chat.simplex.common.model.*
 import chat.simplex.common.model.ChatController.appPrefs
 import chat.simplex.common.platform.*
+import chat.simplex.common.veil.VeilUi
 import chat.simplex.common.veil.data.launchOrbot
 import chat.simplex.common.veil.design.*
 import chat.simplex.common.veil.screens.chatlist.VeilIcon
 import chat.simplex.common.veil.screens.chatlist.torRingStateFor
+import chat.simplex.common.veil.screens.groups.veilShowGroupCreate
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.newchat.*
 import chat.simplex.res.MR
@@ -54,7 +56,7 @@ import kotlinx.coroutines.withContext
  *
  * Logic is upstream's: `controller.apiAddContact` creates the one-time invitation, `apiSetConnectionIncognito`
  * changes its profile mode, `strConnectTarget` + `planAndConnect` handle pasted and scanned links with all of upstream's
- * plans and alerts, `QRCodeScanner` is the camera view, `AddGroupView` is group creation. This file is layout and state.
+ * plans and alerts, `QRCodeScanner` is the camera view, group creation is `veilShowGroupCreate` (groups screens, which keeps upstream's `AddGroupView` while `VeilUi.groups` is off). This file is layout and state.
  */
 
 private const val TOR_PROBE_UNAVAILABLE_MS = 3_000L
@@ -134,7 +136,8 @@ fun VeilNewChatHost(rh: RemoteHostInfo?, closeSheet: () -> Unit) {
             NewChatPage.Menu -> MenuPage(
               onOpen = { page = it },
               onGroup = {
-                ModalManager.start.showCustomModal { close -> AddGroupView(chatModel, chatModel.currentRemoteHost.value, close, closeAll) }
+                if (VeilUi.groups) veilShowGroupCreate(chatModel.currentRemoteHost.value, closeAll)
+                else ModalManager.start.showCustomModal { close -> AddGroupView(chatModel, chatModel.currentRemoteHost.value, close, closeAll) }
               }
             )
             NewChatPage.Invite -> InvitePage(rhId, ring, onBack = back)

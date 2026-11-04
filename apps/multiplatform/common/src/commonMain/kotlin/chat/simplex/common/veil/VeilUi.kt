@@ -18,7 +18,7 @@ object VeilUi {
   /** New chat flows: create link, connect via link / scan / paste. */
   var newChat: Boolean = true
   /** Group screens: create, info, members, invite. */
-  var groups: Boolean = false
+  var groups: Boolean = true
   /** Settings screens. */
   var settings: Boolean = true
   /** System surfaces: alerts, lock screen, database error, progress, call overlays. */

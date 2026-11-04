@@ -12,7 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import chat.simplex.common.model.*
 import chat.simplex.common.platform.*
+import chat.simplex.common.veil.VeilUi
 import chat.simplex.common.veil.design.*
+import chat.simplex.common.veil.screens.groups.veilGroupEligible
+import chat.simplex.common.veil.screens.groups.veilOpenGroupInfo
 import chat.simplex.common.views.chat.*
 import chat.simplex.common.views.chatlist.toggleNotifications
 import chat.simplex.common.views.helpers.*
@@ -21,12 +24,22 @@ import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.delay
 
 /**
- * Tap on the top bar name ([VeilChatHooks.onChatInfo] default). Direct contacts get the Veil screen below; every
- * other chat type keeps upstream's info (group info is redesigned in a later task) through [openUpstreamInfo].
+ * Tap on the top bar name ([VeilChatHooks.onChatInfo] default). Direct contacts get the Veil screen below and plain
+ * groups the Veil group info (`veilOpenGroupInfo`); every other chat type (notes, channels, business chats, groups
+ * with a support scope) keeps upstream's info through [openUpstreamInfo].
  */
 fun veilShowChatInfo(openUpstreamInfo: () -> Unit) {
   val chat = chatModel.chatId.value?.let { chatModel.getChat(it) }
   val info = chat?.chatInfo
+  if (veilChatActive() && VeilUi.groups && chat != null && info is ChatInfo.Group) {
+    val g = info.groupInfo
+    if (veilGroupEligible(g.useRelays, g.businessChat != null, g.nextConnectPrepared, info.groupChatScope != null)) {
+      veilOpenGroupInfo(chat, info)
+    } else {
+      openUpstreamInfo()
+    }
+    return
+  }
   if (!veilChatActive() || chat == null || info !is ChatInfo.Direct) {
     openUpstreamInfo()
     return
