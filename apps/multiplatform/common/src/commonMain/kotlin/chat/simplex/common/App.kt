@@ -23,6 +23,7 @@ import chat.simplex.common.model.*
 import chat.simplex.common.model.ChatController.appPrefs
 import chat.simplex.common.platform.*
 import chat.simplex.common.ui.theme.*
+import chat.simplex.common.veil.VeilUi
 import chat.simplex.common.views.CreateFirstProfile
 import chat.simplex.common.views.helpers.SimpleButton
 import chat.simplex.common.views.SplashView
@@ -134,6 +135,11 @@ fun MainScreen() {
     }
   }
 
+  // Veil: screen routing. This is the single place where later tasks branch to the redesigned screens, e.g.
+  //   VeilUi.onboarding -> VeilOnboarding(...) instead of the `else ->` branch below,
+  //   VeilUi.chatList / VeilUi.chat -> Veil home inside AndroidScreen / DesktopScreen (OnboardingComplete branch).
+  // The other groups (newChat, groups, settings, system) are opened from upstream views; see VeilUi. All flags are
+  // false for now, so nothing is rerouted.
   Box {
     val unauthorized = remember { derivedStateOf { AppLock.userAuthorized.value != true } }
     val onboarding by remember { chatModel.controller.appPrefs.onboardingStage.state }

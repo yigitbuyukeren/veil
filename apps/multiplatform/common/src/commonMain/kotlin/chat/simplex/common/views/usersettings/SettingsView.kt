@@ -28,6 +28,8 @@ import chat.simplex.common.platform.*
 import chat.simplex.common.ui.theme.*
 import chat.simplex.common.views.database.DatabaseView
 import chat.simplex.common.views.helpers.*
+import chat.simplex.common.veil.design.VeilGalleryScreen
+import chat.simplex.common.veil.design.veilIsDebugBuild
 import chat.simplex.common.views.migration.MigrateFromDeviceView
 import chat.simplex.common.views.onboarding.GetStakeView
 import chat.simplex.common.views.onboarding.SimpleXInfo
@@ -149,6 +151,8 @@ fun HelpAndSupportView(
       SettingsActionItem(painterResource(MR.images.ic_wifi_tethering), stringResource(MR.strings.veil_status_title), showModal { VeilStatusView() })
       SettingsActionItem(painterResource(MR.images.ic_github), stringResource(MR.strings.veil_source_code), { uriHandler.openExternalLink("https://github.com/yigitbuyukeren/veil") }, textColor = MaterialTheme.colors.primary)
       SettingsActionItem(painterResource(MR.images.ic_info), stringResource(MR.strings.about_simplex_chat), showModal { SimpleXInfo(it, onboarding = false) })
+      // Veil: design-system gallery, debug builds only (hardcoded label on purpose)
+      if (veilIsDebugBuild) SettingsActionItem(painterResource(MR.images.ic_info), "Veil design gallery (debug)", showModal { VeilGalleryScreen() })
     }
     SectionDividerSpaced()
 
