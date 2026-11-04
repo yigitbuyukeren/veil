@@ -27,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import chat.simplex.common.model.*
+import chat.simplex.common.veil.screens.chat.veilChatActive
+import chat.simplex.common.veil.screens.chat.veilShowMemberSecurityCode
 import chat.simplex.common.model.ChatModel.controller
 import chat.simplex.common.ui.theme.*
 import chat.simplex.common.views.chat.*
@@ -205,6 +207,9 @@ fun GroupMemberInfoView(
         })
       },
       verifyClicked = {
+       if (veilChatActive() && connectionCode != null) { // Veil: security code screen
+        veilShowMemberSecurityCode(rhId, groupInfo, member, connectionCode)
+       } else
         ModalManager.end.showModalCloseable { close ->
           remember { derivedStateOf { chatModel.getGroupMember(member.groupMemberId) } }.value?.let { mem ->
             VerifyCodeView(

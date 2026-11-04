@@ -1348,7 +1348,7 @@ suspend fun save(applyToMode: DefaultThemeMode?, newTheme: ThemeModeOverride?, c
   }
 }
 
-private fun setContactAlias(chat: Chat, localAlias: String, chatModel: ChatModel) = withBGApi {
+internal fun setContactAlias(chat: Chat, localAlias: String, chatModel: ChatModel) = withBGApi { // Veil: private -> internal, the Veil contact info saves the alias with it
   val chatRh = chat.remoteHostId
   chatModel.controller.apiSetContactAlias(chatRh, chat.chatInfo.apiId, localAlias)?.let {
     withContext(Dispatchers.Main) {

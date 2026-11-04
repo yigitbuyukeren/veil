@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
+import chat.simplex.common.model.ChatInfo
 import chat.simplex.common.model.ChatItem
 import chat.simplex.common.platform.appPlatform
 import chat.simplex.common.veil.VeilUi
@@ -26,7 +27,13 @@ object VeilChatHooks {
    * Tap on the top bar (name / avatar). [openUpstreamInfo] opens upstream's chat info / group info. The default shows
    * the Veil screen for direct contacts and calls [openUpstreamInfo] for everything else ([veilShowChatInfo]).
    */
-  var onChatInfo: (openUpstreamInfo: () -> Unit) -> Unit = { openUpstreamInfo -> openUpstreamInfo() }
+  var onChatInfo: (openUpstreamInfo: () -> Unit) -> Unit = ::veilShowChatInfo
+
+  /**
+   * Tap on the verification chip in the top bar. The default opens the security code screen ([veilOpenSecurityCode]);
+   * [openInfo] is the fallback when the chat has no code.
+   */
+  var onVerifyCode: (chatInfo: ChatInfo, openInfo: () -> Unit) -> Unit = ::veilOpenSecurityCode
 }
 
 /** Per-item facts the list knows and the bubble needs. Provided by `ChatViewListItem`. */

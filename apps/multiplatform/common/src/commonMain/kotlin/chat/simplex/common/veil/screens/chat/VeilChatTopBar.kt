@@ -97,8 +97,8 @@ fun VeilChatTopBar(
           Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
             for (s in subtitles) when (s) {
               is VeilBarSubtitle.Verified ->
-                if (s.verified) VeilChip(stringResource(MR.strings.veil_chat_verified), style = VeilChipStyle.Gradient)
-                else VeilChip(stringResource(MR.strings.veil_chat_unverified))
+                if (s.verified) VeilChip(stringResource(MR.strings.veil_chat_verified), style = VeilChipStyle.Gradient, onClick = { VeilChatHooks.onVerifyCode(chatInfo, openInfo) })
+                else VeilChip(stringResource(MR.strings.veil_chat_unverified), onClick = { VeilChatHooks.onVerifyCode(chatInfo, openInfo) })
               is VeilBarSubtitle.Members ->
                 BasicText(
                   stringResource(MR.strings.veil_chat_members, s.count.toInt()),
