@@ -115,7 +115,7 @@ fun VeilNewChatHost(rh: RemoteHostInfo?, closeSheet: () -> Unit) {
     Box(
       Modifier
         .fillMaxSize()
-        .background(Color.Black.copy(alpha = 0.55f))
+        .background(VeilTheme.colors.scrim)
         .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = closeSheet)
         .semantics { contentDescription = dismissLabel }
     )
@@ -416,7 +416,7 @@ private fun IncognitoRow(incognito: Boolean, enabled: Boolean, onChange: (Boolea
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.spacedBy(12.dp)
   ) {
-    VeilIcon(if (incognito) MR.images.ic_theater_comedy_filled else MR.images.ic_theater_comedy, if (incognito) colors.iris else colors.ink3, size = 24.dp)
+    VeilIcon(if (incognito) MR.images.ic_theater_comedy_filled else MR.images.ic_theater_comedy, if (incognito) colors.accent else colors.ink3, size = 24.dp)
     Column(Modifier.weight(1f)) {
       BasicText(stringResource(MR.strings.veil_new_incognito_title), style = type.rowTitle.copy(color = colors.ink, fontSize = 15.sp))
       BasicText(

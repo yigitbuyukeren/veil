@@ -12,6 +12,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import chat.simplex.common.model.ChatInfo
@@ -93,7 +94,9 @@ fun VeilChatTopBar(
           maxLines = 1,
           overflow = TextOverflow.Ellipsis,
         )
-        if (subtitles.isNotEmpty()) {
+        // The bar has a fixed height (the list's top padding depends on it): at large font scales the chip row is left out
+        // instead of being clipped. The same facts are in the chat info.
+        if (subtitles.isNotEmpty() && LocalDensity.current.fontScale <= 1.3f) {
           Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
             for (s in subtitles) when (s) {
               is VeilBarSubtitle.Verified ->

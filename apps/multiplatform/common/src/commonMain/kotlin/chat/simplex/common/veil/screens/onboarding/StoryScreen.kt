@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -131,7 +132,7 @@ private fun StoryArt(page: Int) {
     0f, 1f, infiniteRepeatable(tween(3000, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "float"
   )
   val lift = if (reduce) 0f else -8f * float
-  Box(Modifier.graphicsLayer { translationY = lift.dp.toPx() }) {
+  Box(Modifier.graphicsLayer { translationY = lift.dp.toPx() }.clearAndSetSemantics { }) {
     when (page) {
       0 -> NoAccountArt()
       1 -> TorRingsArt()
@@ -172,7 +173,7 @@ private fun TorRingsArt() {
     )
   }
   val radii = listOf(120f, 92f, 64f, 38f)
-  Canvas(Modifier.size(270.dp).semantics { contentDescription = "" }) {
+  Canvas(Modifier.size(270.dp)) {
     val u = size.minDimension / 270f
     val c = Offset(135f * u, 135f * u)
     val brush = colors.gradientFor(size, 135f)

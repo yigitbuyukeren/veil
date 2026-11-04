@@ -2,6 +2,7 @@ package chat.simplex.common.veil.screens.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -101,6 +102,7 @@ fun VeilNavRow(icon: ImageResource, title: String, summary: String?, onClick: ()
     Modifier
       .fillMaxWidth()
       .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+      .heightIn(min = 48.dp)
       .padding(horizontal = 16.dp, vertical = 14.dp),
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.spacedBy(14.dp),
@@ -125,7 +127,7 @@ fun VeilSwitchRow(title: String, description: String? = null, checked: Boolean, 
   Row(
     Modifier
       .fillMaxWidth()
-      .clickable(enabled = enabled, role = Role.Switch) { onChange(!checked) }
+      .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onChange)
       .padding(horizontal = 16.dp, vertical = 12.dp),
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.spacedBy(12.dp),

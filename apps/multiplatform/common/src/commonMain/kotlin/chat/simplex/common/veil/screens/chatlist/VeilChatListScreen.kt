@@ -29,7 +29,9 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -110,8 +112,10 @@ fun VeilChatListScreen(
       VeilTopBar(
         title = stringResource(MR.strings.veil_list_title),
         subtitle = {
+          // Polite live region: a change of the Tor ring state is announced here (and nowhere else in the app).
           BasicText(
             torRingLabel(ring),
+            Modifier.semantics { liveRegion = LiveRegionMode.Polite },
             style = type.caption.copy(color = if (ring == TorRingState.Unavailable) colors.warn else colors.ink2),
             maxLines = 1, overflow = TextOverflow.Ellipsis
           )
@@ -257,17 +261,23 @@ private fun FilterPill(text: String, selected: Boolean, onClick: () -> Unit) {
   val shape = VeilTheme.shapes.pill
   Box(
     Modifier
-      .height(34.dp)
-      .clip(shape)
-      .then(
-        if (selected) Modifier.background(colors.night3).border(1.dp, colors.gradient, shape)
-        else Modifier.background(colors.sheet1).border(1.dp, colors.line, shape)
-      )
-      .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
-      .padding(horizontal = 14.dp),
+      .heightIn(min = 48.dp)
+      .selectable(selected = selected, role = Role.RadioButton, onClick = onClick),
     contentAlignment = Alignment.Center
   ) {
-    BasicText(text, style = VeilTheme.type.body.copy(fontSize = 13.5.sp, color = if (selected) colors.ink else colors.ink2), maxLines = 1)
+    Box(
+      Modifier
+        .heightIn(min = 34.dp)
+        .clip(shape)
+        .then(
+          if (selected) Modifier.background(colors.night3).border(1.dp, colors.gradient, shape)
+          else Modifier.background(colors.sheet1).border(1.dp, colors.line, shape)
+        )
+        .padding(horizontal = 14.dp, vertical = 4.dp),
+      contentAlignment = Alignment.Center
+    ) {
+      BasicText(text, style = VeilTheme.type.body.copy(fontSize = 13.5.sp, color = if (selected) colors.ink else colors.ink2), maxLines = 1)
+    }
   }
 }
 
@@ -305,8 +315,8 @@ private fun NewChatButton(modifier: Modifier, onClick: () -> Unit) {
   val desc = stringResource(MR.strings.veil_list_new_chat_desc)
   Row(
     modifier
-      .shadow(14.dp, shape, ambientColor = colors.iris, spotColor = colors.iris)
-      .height(56.dp)
+      .shadow(14.dp, shape, ambientColor = colors.accent, spotColor = colors.accent)
+      .heightIn(min = 56.dp)
       .clip(shape)
       .drawBehind { drawRect(colors.gradientFor(size, 120f)) }
       .clickable(role = Role.Button, onClick = onClick)
@@ -337,7 +347,7 @@ private fun ActionsSheet(chat: Chat?, onDismiss: () -> Unit) {
       Box(
         Modifier
           .fillMaxSize()
-          .background(Color.Black.copy(alpha = 0.55f))
+          .background(colors.scrim)
           .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = onDismiss)
           .semantics { contentDescription = dismissLabel }
       )

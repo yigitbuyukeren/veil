@@ -69,7 +69,7 @@ internal fun ConditionsScreen(chatModel: ChatModel) {
       BasicText(
         stringResource(MR.strings.veil_onb_terms_link),
         Modifier.clickable(role = Role.Button) { openBrowserAlert(SIMPLEX_PRIVACY_URL, uriHandler) }.padding(vertical = 4.dp),
-        style = VeilTheme.type.body.copy(color = colors.mint, textDecoration = TextDecoration.Underline)
+        style = VeilTheme.type.body.copy(color = colors.mintInk, textDecoration = TextDecoration.Underline)
       )
     }
     Spacer(Modifier.height(14.dp))

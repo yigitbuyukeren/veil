@@ -106,7 +106,7 @@ private fun OrbotLog(state: OrbotCheckState) {
       BasicText(stringResource(MR.strings.veil_onb_orbot_log_answered), style = mono.copy(color = colors.ink))
       BasicText(stringResource(MR.strings.veil_onb_orbot_log_note), style = mono.copy(color = colors.ink2))
     } else {
-      BlinkingCursor(mono.copy(color = colors.iris))
+      BlinkingCursor(mono.copy(color = colors.accent))
     }
   }
 }
@@ -127,7 +127,7 @@ private fun OrbotMissingSheet(onClose: () -> Unit) {
   val colors = VeilTheme.colors
   val uriHandler = LocalUriHandler.current
   Box(
-    Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.55f)).clickable(onClick = onClose),
+    Modifier.fillMaxSize().background(colors.scrim).clickable(onClick = onClose),
     contentAlignment = Alignment.BottomCenter
   ) {
     VeilSheet(Modifier.navigationBarsPadding().clickable(enabled = false) {}) {
@@ -149,6 +149,6 @@ private fun StoreRow(label: String, address: String, onOpen: () -> Unit) {
   val colors = VeilTheme.colors
   VeilCard(Modifier.fillMaxWidth(), layer = VeilLayer.Mid, onClick = onOpen, contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)) {
     BasicText(label, style = VeilTheme.type.rowTitle.copy(color = colors.ink))
-    BasicText(address, style = VeilTheme.type.caption.copy(color = colors.mint))
+    BasicText(address, style = VeilTheme.type.caption.copy(color = colors.mintInk))
   }
 }

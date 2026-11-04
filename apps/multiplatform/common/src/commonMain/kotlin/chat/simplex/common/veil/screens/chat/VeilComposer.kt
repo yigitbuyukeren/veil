@@ -93,7 +93,7 @@ fun VeilContextBar(chatInfo: ChatInfo, item: ChatItem, editing: Boolean, onClose
       .padding(start = 12.dp, end = 12.dp, top = 8.dp)
       .clip(androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
       .background(colors.sheet2)
-      .drawBehind { drawRect(colors.iris, size = Size(2.dp.toPx(), size.height)) }
+      .drawBehind { drawRect(colors.accent, size = Size(2.dp.toPx(), size.height)) }
       .padding(start = 12.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
     verticalAlignment = Alignment.CenterVertically,
   ) {

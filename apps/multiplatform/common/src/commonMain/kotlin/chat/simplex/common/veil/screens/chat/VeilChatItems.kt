@@ -136,9 +136,9 @@ private fun VeilQuote(quote: CIQuote, chatInfo: ChatInfo, onClick: () -> Unit) {
     Modifier
       .padding(bottom = 6.dp)
       .clip(RoundedCornerShape(topEnd = 8.dp, bottomEnd = 8.dp))
-      .background(Color.Black.copy(alpha = 0.18f))
+      .background(colors.quoteShade)
       .clickable(onClick = onClick)
-      .drawBehind { drawRect(colors.iris, size = Size(2.dp.toPx(), size.height)) }
+      .drawBehind { drawRect(colors.accent, size = Size(2.dp.toPx(), size.height)) }
       .padding(start = 9.dp, top = 3.dp, bottom = 3.dp, end = 8.dp)
   ) {
     if (sender != null) {
@@ -173,7 +173,7 @@ private fun VeilMetaLine(ci: ChatItem, sent: Boolean) {
     horizontalArrangement = Arrangement.End,
     verticalAlignment = Alignment.CenterVertically,
   ) {
-    val base = if (sent) colors.ink.copy(alpha = 0.62f) else colors.ink3
+    val base = if (sent) colors.ink2 else colors.ink3
     val style = VeilTheme.type.caption.copy(color = base, fontSize = 11.sp)
     val stateColor = when (state) {
       VeilDeliveryState.Failed -> colors.errText

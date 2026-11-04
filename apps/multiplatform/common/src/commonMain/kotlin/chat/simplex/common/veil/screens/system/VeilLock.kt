@@ -124,8 +124,13 @@ private fun Header(title: String, reason: String?, passcode: MutableState<String
     }
     Spacer(Modifier.height(8.dp))
     // Tap on the dots shows or hides the digits (as upstream).
+    val dotsDescription = String.format(stringResource(MR.strings.veil_a11y_pass_entered), passcode.value.length)
+    val toggleLabel = stringResource(if (show) MR.strings.veil_a11y_pass_hide else MR.strings.veil_a11y_pass_show)
     Box(
-      Modifier.heightIn(min = 36.dp).clickable(role = Role.Button) { show = !show },
+      Modifier
+        .heightIn(min = 48.dp)
+        .clickable(onClickLabel = toggleLabel, role = Role.Button) { show = !show }
+        .then(if (show && passcode.value.isNotEmpty()) Modifier else Modifier.semantics { contentDescription = dotsDescription }),
       contentAlignment = Alignment.Center
     ) {
       if (show && passcode.value.isNotEmpty()) {

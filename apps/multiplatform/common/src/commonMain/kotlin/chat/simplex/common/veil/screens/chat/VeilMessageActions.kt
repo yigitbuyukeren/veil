@@ -121,7 +121,7 @@ private fun VeilSheetHost(close: () -> Unit, content: @Composable (close: () -> 
       Box(
         Modifier
           .fillMaxSize()
-          .background(Color.Black.copy(alpha = 0.55f))
+          .background(VeilTheme.colors.scrim)
           .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = close)
           .semantics { contentDescription = dismissLabel }
       )
@@ -161,7 +161,7 @@ private fun VeilMessageSheet(item: ChatItem, env: VeilMessageEnv, actions: List<
           BasicText(previewText, style = type.body.copy(color = colors.ink2, fontSize = 14.sp), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
       }
-      AnimatedVisibility(reactionsOpen, enter = fadeIn(tween(VeilTheme.motion.lift(VeilTheme.reduceMotion))) + expandVertically()) {
+      AnimatedVisibility(reactionsOpen, enter = fadeIn(tween(VeilTheme.motion.lift(VeilTheme.reduceMotion))) + expandVertically(tween(VeilTheme.motion.lift(VeilTheme.reduceMotion)))) {
         val choices = remember(item) { veilReactionChoices(item) }
         Row(
           Modifier
@@ -176,7 +176,7 @@ private fun VeilMessageSheet(item: ChatItem, env: VeilMessageEnv, actions: List<
           for (r in choices) {
             Box(
               Modifier
-                .size(46.dp)
+                .size(48.dp)
                 .clip(VeilTheme.shapes.input)
                 .clickable(role = Role.Button) {
                   close()

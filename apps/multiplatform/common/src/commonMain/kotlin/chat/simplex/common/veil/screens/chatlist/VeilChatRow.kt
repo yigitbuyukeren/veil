@@ -2,6 +2,7 @@ package chat.simplex.common.veil.screens.chatlist
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicText
@@ -131,7 +132,7 @@ internal fun VeilChatRow(
         )
       }
       Spacer(Modifier.height(3.dp))
-      Row(Modifier.heightIn(min = 30.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+      Row(Modifier.heightIn(min = 48.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         if (canReveal) {
           Perde(revealed = revealed, modifier = Modifier.weight(1f).heightIn(min = 24.dp)) {
             BasicText(
@@ -149,16 +150,17 @@ internal fun VeilChatRow(
         }
         Indicators(chat)
         if (canReveal) {
+          // 48dp touch target; the label says what a tap does ("Önizlemeyi göster" / "Önizlemeyi gizle")
           Box(
             Modifier
-              .size(30.dp)
+              .size(48.dp)
               .clip(VeilTheme.shapes.input)
-              .clickable(role = Role.Switch, onClick = onToggleEye),
+              .toggleable(value = eyeOn, role = Role.Switch, onValueChange = { onToggleEye() }),
             contentAlignment = Alignment.Center
           ) {
             VeilIcon(
               if (eyeOn) MR.images.ic_visibility_filled else MR.images.ic_visibility,
-              if (eyeOn) colors.mint else colors.ink3,
+              if (eyeOn) colors.mintInk else colors.ink3,
               size = 18.dp,
               description = stringResource(if (eyeOn) MR.strings.veil_list_eye_hide else MR.strings.veil_list_eye_show)
             )

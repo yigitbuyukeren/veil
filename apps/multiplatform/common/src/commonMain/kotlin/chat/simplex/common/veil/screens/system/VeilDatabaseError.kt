@@ -15,6 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.key.*
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -125,7 +128,7 @@ fun VeilDatabaseErrorView(
     }
     if (busy) {
       Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(Modifier.size(30.dp), color = colors.iris, strokeWidth = 2.5.dp)
+        CircularProgressIndicator(Modifier.size(30.dp), color = colors.accent, strokeWidth = 2.5.dp)
       }
     }
   }
@@ -172,7 +175,14 @@ private fun PassphraseInput(value: MutableState<String>, enabled: Boolean, onDon
     visualTransformation = if (show) VisualTransformation.None else PasswordVisualTransformation(),
     trailing = {
       val valid = validKey(value.value)
-      Box(Modifier.clickable { show = !show }.padding(4.dp)) {
+      val toggleDescription = stringResource(if (show) MR.strings.veil_a11y_pass_hide else MR.strings.veil_a11y_pass_show)
+      Box(
+        Modifier
+          .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
+          .clickable(role = Role.Button) { show = !show }
+          .semantics { contentDescription = toggleDescription },
+        contentAlignment = Alignment.Center
+      ) {
         VeilIcon(
           if (!valid) MR.images.ic_error else if (show) MR.images.ic_visibility_off_filled else MR.images.ic_visibility_filled,
           if (valid) colors.ink2 else colors.err, size = 22.dp
