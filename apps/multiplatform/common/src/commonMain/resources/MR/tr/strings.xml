@@ -552,8 +552,8 @@
     <string name="smp_server_test_disconnect">Bağlantıyı kes</string>
     <string name="la_minutes">%d dakika</string>
     <string name="la_seconds">%d saniye</string>
-    <string name="auth_disable_simplex_lock">SimpleX kilidini kaldır</string>
-    <string name="auth_enable_simplex_lock">SimpleX kilidini etkinleştir</string>
+    <string name="auth_disable_simplex_lock">Veil kilidini kaldır</string>
+    <string name="auth_enable_simplex_lock">Veil kilidini etkinleştir</string>
     <string name="icon_descr_edited">Düzeltilmiş</string>
     <string name="icon_descr_server_status_disconnected">Bağlantı kesildi</string>
     <string name="icon_descr_email">E-posta</string>
@@ -772,8 +772,8 @@
     <string name="service_notifications_disabled">Anlık bildirimler devre dışı!</string>
     <string name="turn_off_battery_optimization"><![CDATA[Bildirimleri anında almak için bir sonraki iletişim kutusunda buna <b>izin verin</b>. ]]></string>
     <string name="notification_preview_mode_contact">Kişi ismi</string>
-    <string name="auth_device_authentication_is_disabled_turning_off">Cihaz doğrulaması devre dışı. SimpleX Kilidi Kapatılıyor.</string>
-    <string name="auth_device_authentication_is_not_enabled_you_can_turn_on_in_settings_once_enabled">Cihaz doğrulaması etkin değil. Cihaz doğrulamasını etkinleştirdikten sonra SimpleX Kilidini Ayarlar üzerinden açabilirsiniz.</string>
+    <string name="auth_device_authentication_is_disabled_turning_off">Cihaz doğrulaması devre dışı. Veil kilidi kapatılıyor.</string>
+    <string name="auth_device_authentication_is_not_enabled_you_can_turn_on_in_settings_once_enabled">Cihaz doğrulaması etkin değil. Cihaz doğrulamasını etkinleştirdikten sonra Veil kilidini Ayarlar üzerinden açabilirsiniz.</string>
     <string name="in_reply_to">Şuna cevap olarak</string>
     <string name="group_preview_join_as">%s olarak katılın</string>
     <string name="invalid_contact_link">Geçersiz link!</string>
@@ -905,7 +905,7 @@
     <string name="connected_to_server_to_receive_messages_from_contact">Bu bağlantıdan gelen mesajları almak için kullanılan sunucuya bağlısınız.</string>
     <string name="you_are_already_connected_to_vName_via_this_link">Zaten %1$s e bağlısınız</string>
     <string name="la_could_not_be_verified">Doğrulanamadınız; lütfen tekrar deneyin.</string>
-    <string name="you_can_turn_on_lock">SimpleX Kilidini Ayarlar üzerinden açabilirsiniz.</string>
+    <string name="you_can_turn_on_lock">Veil kilidini Ayarlar üzerinden açabilirsiniz.</string>
     <string name="group_preview_you_are_invited">Gruba davetlisiniz</string>
     <string name="you_have_no_chats">Hiç sohbetiniz yok</string>
     <string name="you_are_observer">Gözlemcisiniz</string>
@@ -1010,7 +1010,7 @@
     <string name="periodic_notifications">Periyodik bildirimler</string>
     <string name="periodic_notifications_disabled">Periyodik bildirimler devre dışı</string>
     <string name="enter_passphrase_notification_desc">Bildirimleri almak için lütfen veri tabanı parolasını girin</string>
-    <string name="la_notice_to_protect_your_information_turn_on_simplex_lock_you_will_be_prompted_to_complete_authentication_before_this_feature_is_enabled">Bilgilerinizi korumak için SimpleX Lock özelliğini açın.
+    <string name="la_notice_to_protect_your_information_turn_on_simplex_lock_you_will_be_prompted_to_complete_authentication_before_this_feature_is_enabled">Bilgilerinizi korumak için Veil kilidi özelliğini açın.
 \nBu özellik etkinleştirilmeden önce kimlik doğrulamayı tamamlamanız istenecektir.</string>
     <string name="la_notice_turn_on">Aç</string>
     <string name="la_please_remember_to_store_password">Hatırlayın veya güvenli bir şekilde saklayın - kaybolan bir parolayı kurtarmanın bir yolu yoktur!</string>
@@ -1146,7 +1146,7 @@
     <string name="chat_with_the_founder">Sorularınızı ve fikirlerinizi gönderin</string>
     <string name="delete_files_and_media_desc">Bu eylem geri alınamaz - tüm alınan ve gönderilen dosyalar ve medyalar silinecek. Düşük çözünürlükteki resimlar kalacaktır.</string>
     <string name="encrypt_local_files">Yerel dosyaları şifrele</string>
-    <string name="ntf_channel_calls">SimpleX Chat aramaları</string>
+    <string name="ntf_channel_calls">Veil aramaları</string>
     <string name="v5_3_new_desktop_app">Yeni masaüstü uygulaması!</string>
     <string name="v5_3_new_interface_languages">6 yeni arayüz dili</string>
     <string name="notification_preview_mode_contact_desc">Sadece kişiyi göster</string>
@@ -1183,7 +1183,7 @@
     <string name="text_field_set_contact_placeholder">Kişi ismini ayarla…</string>
     <string name="send_us_an_email">Bize e-posta gönder</string>
     <string name="v4_2_security_assessment_desc">SimpleX Chat\'in güvenliği Trail of Bits tarafından denetlenmiştir.</string>
-    <string name="simplex_service_notification_title">SimpleX Chat hizmeti</string>
+    <string name="simplex_service_notification_title">Veil hizmeti</string>
     <string name="is_verified">%s onaylı</string>
     <string name="password_to_show">Göserilecek parola</string>
     <string name="incognito_info_allows">Tek bir sohbet profilinde, aralarında herhangi bir veri paylaşımı olmadan birden fazla anonim bağlantı kurmaya izin verir.</string>
@@ -1197,7 +1197,7 @@
     <string name="this_device_name">Bu cihazın ismi</string>
     <string name="smp_server_test_upload_file">Dosya yükle</string>
     <string name="network_use_onion_hosts_required">Gerekli</string>
-    <string name="ntf_channel_messages">SimpleX Chat mesajlar</string>
+    <string name="ntf_channel_messages">Veil mesajlar</string>
     <string name="share_link">Bağlantı paylaş</string>
     <string name="icon_descr_simplex_team">SimpleX Ekibi</string>
     <string name="rcv_group_event_3_members_connected">%s, %s ve %s bağlandı</string>
@@ -1241,7 +1241,7 @@
     <string name="network_socks_proxy_settings">SOCKS proxy ayarları</string>
     <string name="rcv_group_events_count">%d grup etkinlikleri</string>
     <string name="invalid_name">Geçersiz isim!</string>
-    <string name="la_lock_mode">SimpleX Kilit modu</string>
+    <string name="la_lock_mode">Veil kilidi modu</string>
     <string name="share_file">Dosya paylaş…</string>
     <string name="periodic_notifications_desc">Uygulama yeni mesajları periyodik olarak alır - günde pilin yüzde birkaçını kullanır. Uygulama anlık bildirimleri kullanmaz - cihazınızdan gelen veriler sunuculara gönderilmez.</string>
     <string name="first_platform_without_user_ids">Herhangi bir kullanıcı tanımlayıcısı yok.</string>
@@ -1258,18 +1258,18 @@
     <string name="v5_4_more_things_descr">- isteğe bağlı olarak silinen kişileri bildirme.
 \n- boşluklu profil adları.
 \n- ve daha fazlası!</string>
-    <string name="la_notice_title_simplex_lock">SimpleX Kilit</string>
+    <string name="la_notice_title_simplex_lock">Veil kilidi</string>
     <string name="connect_via_member_address_alert_desc">Bu grup üyesine bağlantı isteği gönderilecek.</string>
     <string name="only_your_contact_can_add_message_reactions">Sadece senin kişin mesaj tepkileri ekleyebilir.</string>
     <string name="settings_is_storing_in_clear_text">Parola, ayarlarda düz metin olarak saklanır.</string>
-    <string name="auth_simplex_lock_turned_on">SimpleX Kilit aktif</string>
+    <string name="auth_simplex_lock_turned_on">Veil kilidi aktif</string>
     <string name="terminal_always_visible">Yeni pencerede konsolu göster</string>
     <string name="scan_from_mobile">Mobilden tara</string>
     <string name="verify_connections">Bağlantıları onayla</string>
     <string name="share_message">Mesaj paylaş…</string>
     <string name="alert_text_msg_bad_hash">Önceki mesajın özeti veya karması farklı.</string>
-    <string name="lock_not_enabled">SimpleX Kilit aktif değil!</string>
-    <string name="chat_lock">SimpleX Kilit</string>
+    <string name="lock_not_enabled">Veil kilidi aktif değil!</string>
+    <string name="chat_lock">Veil kilidi</string>
     <string name="connect_via_member_address_alert_title">Doğrudan bağlanılsın mı?</string>
     <string name="receipts_section_description">Bu ayarlar mevcut profiliniz içindir</string>
     <string name="smp_servers_test_failed">Sunucu testi başarısız!</string>

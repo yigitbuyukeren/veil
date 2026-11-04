@@ -354,7 +354,7 @@
   <string name="xiaomi_ignore_battery_optimization"><![CDATA[<b>Xiaomi devices</b>: please enable Autostart in the system settings for notifications to work.]]></string>
 
   <!-- SimpleX Chat foreground Service -->
-  <string name="simplex_service_notification_title">SimpleX Chat service</string>
+  <string name="simplex_service_notification_title">Veil service</string>
   <string name="simplex_service_notification_text">Receiving messages…</string>
   <string name="call_service_notification_audio_call">Audio call</string>
   <string name="call_service_notification_video_call">Video call</string>
@@ -362,8 +362,8 @@
   <string name="hide_notification">Hide</string>
 
   <!-- Notification channels -->
-  <string name="ntf_channel_messages">SimpleX Chat messages</string>
-  <string name="ntf_channel_calls">SimpleX Chat calls</string>
+  <string name="ntf_channel_messages">Veil messages</string>
+  <string name="ntf_channel_calls">Veil calls</string>
 
   <!-- Notifications -->
   <string name="settings_notifications_mode_title">Notification service</string>
@@ -388,10 +388,10 @@
   <string name="error_showing_desktop_notification">Error showing notification, contact developers.</string>
 
   <!-- local authentication notice - SimpleXAPI.kt -->
-  <string name="la_notice_title_simplex_lock">SimpleX Lock</string>
-  <string name="la_notice_to_protect_your_information_turn_on_simplex_lock_you_will_be_prompted_to_complete_authentication_before_this_feature_is_enabled">To protect your information, turn on SimpleX Lock.\nYou will be prompted to complete authentication before this feature is enabled.</string>
+  <string name="la_notice_title_simplex_lock">Veil Lock</string>
+  <string name="la_notice_to_protect_your_information_turn_on_simplex_lock_you_will_be_prompted_to_complete_authentication_before_this_feature_is_enabled">To protect your information, turn on Veil Lock.\nYou will be prompted to complete authentication before this feature is enabled.</string>
   <string name="la_notice_turn_on">Turn on</string>
-  <string name="la_lock_mode">SimpleX Lock mode</string>
+  <string name="la_lock_mode">Veil Lock mode</string>
   <string name="la_lock_mode_system">System authentication</string>
   <string name="la_lock_mode_passcode">Passcode entry</string>
   <string name="la_auth_failed">Authentication failed</string>
@@ -407,22 +407,22 @@
   <string name="la_please_remember_to_store_password">Please remember or store it securely - there is no way to recover a lost password!</string>
 
   <!-- LocalAuthentication.kt -->
-  <string name="auth_simplex_lock_turned_on">SimpleX Lock turned on</string>
+  <string name="auth_simplex_lock_turned_on">Veil Lock turned on</string>
   <string name="auth_you_will_be_required_to_authenticate_when_you_start_or_resume">You will be required to authenticate when you start or resume the app after 30 seconds in background.</string>
   <string name="auth_unlock">Unlock</string>
   <string name="auth_log_in_using_credential">Log in using your credential</string>
-  <string name="auth_enable_simplex_lock">Enable SimpleX Lock</string>
-  <string name="auth_disable_simplex_lock">Disable SimpleX Lock</string>
+  <string name="auth_enable_simplex_lock">Enable Veil Lock</string>
+  <string name="auth_disable_simplex_lock">Disable Veil Lock</string>
   <string name="auth_confirm_credential">Confirm your credential</string>
   <string name="auth_unavailable">Authentication unavailable</string>
-  <string name="auth_device_authentication_is_not_enabled_you_can_turn_on_in_settings_once_enabled">Device authentication is not enabled. You can turn on SimpleX Lock via Settings, once you enable device authentication.</string>
-  <string name="auth_device_authentication_is_disabled_turning_off">Device authentication is disabled. Turning off SimpleX Lock.</string>
+  <string name="auth_device_authentication_is_not_enabled_you_can_turn_on_in_settings_once_enabled">Device authentication is not enabled. You can turn on Veil Lock via Settings, once you enable device authentication.</string>
+  <string name="auth_device_authentication_is_disabled_turning_off">Device authentication is disabled. Turning off Veil Lock.</string>
   <string name="auth_stop_chat">Stop chat</string>
   <string name="auth_open_chat_console">Open chat console</string>
   <string name="auth_open_chat_profiles">Change chat profiles</string>
   <string name="auth_open_migration_to_another_device">Open migration screen</string>
-  <string name="lock_not_enabled">SimpleX Lock not enabled!</string>
-  <string name="you_can_turn_on_lock">You can turn on SimpleX Lock via Settings.</string>
+  <string name="lock_not_enabled">Veil Lock not enabled!</string>
+  <string name="you_can_turn_on_lock">You can turn on Veil Lock via Settings.</string>
 
   <!-- Chat Alerts - ChatItemView.kt -->
   <string name="message_delivery_error_title">Message delivery error</string>
@@ -1103,7 +1103,7 @@
   <string name="chat_with_the_founder">Send questions and ideas</string>
   <string name="send_us_an_email">Send us email</string>
   <string name="follow_simplex_network_news">Follow SimpleX Network News</string>
-  <string name="chat_lock">SimpleX Lock</string>
+  <string name="chat_lock">Veil Lock</string>
   <string name="chat_console">Chat console</string>
   <string name="message_servers">Message servers</string>
   <string name="smp_servers">SMP servers</string>
