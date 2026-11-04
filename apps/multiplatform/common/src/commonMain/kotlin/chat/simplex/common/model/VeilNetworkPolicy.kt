@@ -52,3 +52,8 @@ object VeilNetworkPolicy {
       false
     }
 }
+
+/** Veil branding policy: no upstream promotion, fundraising or support-contact surfaces. */
+object VeilBranding {
+  const val UPSTREAM_PROMOTIONS = false
+}

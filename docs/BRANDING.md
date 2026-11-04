@@ -9,6 +9,11 @@
 | Launcher icon | original vector mark (`drawable/veil_icon_foreground.xml`); upstream launcher PNGs removed |
 | Attribution | Settings > Help: "About Veil" and source-code link (AGPL-3.0, "app for using the SimpleX network") |
 
+## Done (2026-11-04)
+
+- In-app logos, tray/notification glyphs and the Android drawable icon replaced with generated original artwork (`scripts/branding/generate_assets.py`).
+- Upstream promotion surfaces hidden behind `VeilBranding.UPSTREAM_PROMOTIONS=false`: investment banner, "Why SimpleX is built", news/founder/e-mail contact items, "support the project" section (rate app, star on GitHub, contribute).
+
 ## Still upstream-branded (to resolve in VEIL-016, before any distribution)
 
 - Onboarding screens and in-app logo (`icon_foreground_android_common`, `logo*.png`, "Why SimpleX is built").

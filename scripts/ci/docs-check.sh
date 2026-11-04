@@ -3,7 +3,7 @@
 set -u
 cd "$(git rev-parse --show-toplevel)"
 fail=0
-docs="README.md ROADMAP.md SECURITY.md SOURCES.md docs/THREAT_MODEL.md docs/PRIVACY_CLAIMS.md docs/UPSTREAM.md docs/UPSTREAM_LICENSES.md docs/RELAY_USAGE.md docs/ANDROID_BUILD.md docs/BRANDING.md docs/TOR_ONLY.md docs/NETWORK_EGRESS.md docs/PRIVACY_DEFAULTS.md docs/DEVELOPMENT_STATUS.md docs/M1_RELEASE_REPORT.md"
+docs="README.md ROADMAP.md SECURITY.md SOURCES.md docs/THREAT_MODEL.md docs/PRIVACY_CLAIMS.md docs/UPSTREAM.md docs/UPSTREAM_LICENSES.md docs/RELAY_USAGE.md docs/ANDROID_BUILD.md docs/BRANDING.md docs/TOR_ONLY.md docs/NETWORK_EGRESS.md docs/PRIVACY_DEFAULTS.md docs/DEVELOPMENT_STATUS.md docs/M1_RELEASE_REPORT.md docs/THIRD_PARTY_NOTICES.md"
 for f in $docs; do
   [ -f "$f" ] || { echo "DOCS FAIL: missing $f"; fail=1; continue; }
   dir=$(dirname "$f")

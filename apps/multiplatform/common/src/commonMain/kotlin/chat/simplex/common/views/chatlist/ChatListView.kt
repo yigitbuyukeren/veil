@@ -1004,7 +1004,7 @@ private fun BoxScope.ChatList(searchText: MutableState<TextFieldValue>, listStat
         ToggleChatListCard()
       }
     }
-    if (crowdfunding && !getStakeBannerDismissed.value) {
+    if (VeilBranding.UPSTREAM_PROMOTIONS && crowdfunding && !getStakeBannerDismissed.value) {
       item {
         Box(Modifier.zIndex(1f).padding(16.dp)) {
           GetStakeBanner(
