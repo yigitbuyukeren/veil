@@ -1197,7 +1197,7 @@
     <string name="this_device_name">Bu cihazın ismi</string>
     <string name="smp_server_test_upload_file">Dosya yükle</string>
     <string name="network_use_onion_hosts_required">Gerekli</string>
-    <string name="ntf_channel_messages">Veil mesajlar</string>
+    <string name="ntf_channel_messages">Veil mesajları</string>
     <string name="share_link">Bağlantı paylaş</string>
     <string name="icon_descr_simplex_team">SimpleX Ekibi</string>
     <string name="rcv_group_event_3_members_connected">%s, %s ve %s bağlandı</string>

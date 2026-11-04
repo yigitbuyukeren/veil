@@ -307,7 +307,8 @@ class SimplexService: Service() {
   companion object {
     const val TAG = "SIMPLEX_SERVICE"
     const val NOTIFICATION_CHANNEL_ID = "chat.simplex.app.SIMPLEX_SERVICE_NOTIFICATION"
-    const val NOTIFICATION_CHANNEL_NAME = "SimpleX Chat service"
+    // Veil: user-visible channel name; the channel ID above is unchanged
+    const val NOTIFICATION_CHANNEL_NAME = "Veil service"
     const val SIMPLEX_SERVICE_ID = 6789
     const val SERVICE_START_WORKER_VERSION = BuildConfig.VERSION_CODE
     const val SERVICE_START_WORKER_INTERVAL_MINUTES = 3 * 60L

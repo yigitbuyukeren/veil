@@ -188,7 +188,8 @@ class CallService: Service() {
 companion object {
     const val TAG = "CALL_SERVICE"
     const val CALL_NOTIFICATION_CHANNEL_ID = "chat.simplex.app.CALL_SERVICE_NOTIFICATION"
-    const val CALL_NOTIFICATION_CHANNEL_NAME = "SimpleX Chat call service"
+    // Veil: user-visible channel name; the channel ID above is unchanged
+    const val CALL_NOTIFICATION_CHANNEL_NAME = "Veil call service"
     const val CALL_SERVICE_ID = 6788
     const val WAKE_LOCK_TAG = "CallService::lock"
 
