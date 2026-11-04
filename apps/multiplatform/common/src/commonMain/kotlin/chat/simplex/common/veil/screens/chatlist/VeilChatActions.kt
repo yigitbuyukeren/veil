@@ -9,6 +9,8 @@ import chat.simplex.common.views.chatlist.*
 import chat.simplex.common.views.contacts.onRequestAccepted
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.newchat.*
+import chat.simplex.common.veil.VeilUi
+import chat.simplex.common.veil.screens.newchat.veilShowNewChatSheetModal
 import chat.simplex.res.MR
 import dev.icerock.moko.resources.ImageResource
 import dev.icerock.moko.resources.StringResource
@@ -158,10 +160,15 @@ fun veilChatActions(chat: Chat): List<VeilChatAction> {
 }
 
 /**
- * Opens upstream's new-chat sheet. A copy of the private `showNewChatSheet` in ChatListView.kt (that function is
- * private and upstream files are not edited); the sheet itself is `NewChatSheet`, redesigned in a later task.
+ * Opens the new-chat sheet: the Veil sheet when `VeilUi.newChat` is on (Android), otherwise upstream's `NewChatSheet`
+ * through a copy of the private `showNewChatSheet` in ChatListView.kt (that function is private and upstream files are
+ * not edited).
  */
 fun veilShowNewChatSheet() {
+  if (VeilUi.newChat && appPlatform.isAndroid) {
+    veilShowNewChatSheetModal()
+    return
+  }
   val oneHandUI = appPrefs.oneHandUI.state
   connectProgressManager.cancelConnectProgress()
   ModalManager.start.closeModals()
