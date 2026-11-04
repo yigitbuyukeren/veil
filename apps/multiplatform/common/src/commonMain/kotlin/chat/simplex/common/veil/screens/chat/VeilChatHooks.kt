@@ -12,17 +12,20 @@ import chat.simplex.common.veil.VeilUi
 fun veilChatActive(): Boolean = VeilUi.chat && appPlatform.isAndroid
 
 /**
- * Extension points for the later task that builds the Veil message actions sheet, chat info and security-code screens
- * (T11). Until then each default simply runs the upstream behaviour passed in.
+ * Extension points of the Veil chat screen. The defaults are the Veil sheet and screens (message actions, chat info,
+ * security code); each still receives upstream's behaviour as a lambda to fall back to.
  */
 object VeilChatHooks {
   /**
-   * Long-press on a message. [openUpstreamMenu] opens upstream's item menu (reply, edit, delete, react...). A Veil
-   * sheet replaces the default by assigning this and not calling [openUpstreamMenu].
+   * Long-press on a message. [env] carries what upstream's item menu has in scope; [openUpstreamMenu] opens that menu.
+   * The default opens the Veil sheet ([veilShowMessageActions]).
    */
-  var onMessageActions: (item: ChatItem, openUpstreamMenu: () -> Unit) -> Unit = { _, openUpstreamMenu -> openUpstreamMenu() }
+  var onMessageActions: (item: ChatItem, env: VeilMessageEnv, openUpstreamMenu: () -> Unit) -> Unit = ::veilShowMessageActions
 
-  /** Tap on the top bar (name / avatar). [openUpstreamInfo] opens upstream's chat info / group info. */
+  /**
+   * Tap on the top bar (name / avatar). [openUpstreamInfo] opens upstream's chat info / group info. The default shows
+   * the Veil screen for direct contacts and calls [openUpstreamInfo] for everything else ([veilShowChatInfo]).
+   */
   var onChatInfo: (openUpstreamInfo: () -> Unit) -> Unit = { openUpstreamInfo -> openUpstreamInfo() }
 }
 

@@ -121,6 +121,7 @@ fun ChatItemView(
   val sent = cItem.chatDir.sent
   val alignment = if (sent) Alignment.CenterEnd else Alignment.CenterStart
   val showMenu = remember { mutableStateOf(false) }
+  val veilSaveLauncher = if (veilChatActive() && cItem.file != null) rememberSaveFileLauncher(cItem.file) else null // Veil: lives as long as the item, not the sheet
   val fullDeleteAllowed = remember(cInfo) { cInfo.featureEnabled(ChatFeature.FullDelete) }
   val onLinkLongClick = { _: String -> showMenu.value = true }
   val live = remember { derivedStateOf { composeState.value.liveMessage != null } }.value
@@ -330,7 +331,12 @@ fun ChatItemView(
               .then(if (veilBubble || veilDeleted) Modifier else Modifier.clipChatItem(cItem, itemSeparation.largeGap, revealed.value)) // Veil: the bubble clips itself
               .hoverable(bubbleInteractionSource)
               .combinedClickable(
-                onLongClick = { if (veilChatActive()) VeilChatHooks.onMessageActions(cItem) { showMenu.value = true } else showMenu.value = true }, // Veil: T11 hook
+                onLongClick = { // Veil: T11 hook, the sheet gets what upstream's menu has in scope
+                  if (veilChatActive()) {
+                    val env = VeilMessageEnv(chatsCtx, rhId, chat, composeState, useLinkPreviews, revealed, range, selectedChatItems, live, preview, developerTools, selectChatItem, deleteMessage, deleteMessages, archiveReports, cancelFile, forwardItem, setReaction, showItemDetails, reveal, veilSaveLauncher)
+                    VeilChatHooks.onMessageActions(cItem, env) { showMenu.value = true }
+                  } else showMenu.value = true
+                },
                 onClick = {
                   if (appPlatform.isAndroid && (searchIsNotBlank.value || cItem.meta.itemForwarded?.chatTypeApiIdMsgId != null)) {
                     hoveredItemId.value = if (hoveredItemId.value == cItem.id) null else cItem.id
@@ -896,36 +902,49 @@ fun DeleteItemAction(
     painterResource(MR.images.ic_delete),
     onClick = {
       showMenu.value = false
-      if (!revealed.value) {
-        val reversedChatItems = chatsCtx.chatItems.value.asReversed()
-        val currIndex = chatModel.getChatItemIndexOrNull(cItem, reversedChatItems)
-        val ciCategory = cItem.mergeCategory
-        if (currIndex != null && ciCategory != null) {
-          val (prevHidden, _) = chatModel.getPrevShownChatItem(currIndex, ciCategory, reversedChatItems)
-          val range = chatViewItemsRange(currIndex, prevHidden)
-          if (range != null) {
-            val itemIds: ArrayList<Long> = arrayListOf()
-            for (i in range) {
-              itemIds.add(reversedChatItems[i].id)
-            }
-            deleteMessagesAlertDialog(
-              itemIds,
-              generalGetString(MR.strings.delete_messages_cannot_be_undone_warning),
-              forAll = false,
-              deleteMessages = { ids, _ -> deleteMessages(ids) }
-            )
-          } else {
-            deleteMessageAlertDialog(cItem, questionText, cInfo, deleteMessage = deleteMessage)
-          }
-        } else {
-          deleteMessageAlertDialog(cItem, questionText, cInfo, deleteMessage = deleteMessage)
-        }
-      } else {
-        deleteMessageAlertDialog(cItem, questionText, cInfo, deleteMessage = deleteMessage)
-      }
+      deleteItemWithDialog(chatsCtx, cInfo, cItem, revealed, questionText, deleteMessage, deleteMessages)
     },
     color = Color.Red
   )
+}
+
+// Veil: the click handler of DeleteItemAction, extracted unchanged so the Veil message sheet runs the same dialogs
+fun deleteItemWithDialog(
+  chatsCtx: ChatModel.ChatsContext,
+  cInfo: ChatInfo,
+  cItem: ChatItem,
+  revealed: State<Boolean>,
+  questionText: String,
+  deleteMessage: (Long, CIDeleteMode) -> Unit,
+  deleteMessages: (List<Long>) -> Unit,
+) {
+  if (!revealed.value) {
+    val reversedChatItems = chatsCtx.chatItems.value.asReversed()
+    val currIndex = chatModel.getChatItemIndexOrNull(cItem, reversedChatItems)
+    val ciCategory = cItem.mergeCategory
+    if (currIndex != null && ciCategory != null) {
+      val (prevHidden, _) = chatModel.getPrevShownChatItem(currIndex, ciCategory, reversedChatItems)
+      val range = chatViewItemsRange(currIndex, prevHidden)
+      if (range != null) {
+        val itemIds: ArrayList<Long> = arrayListOf()
+        for (i in range) {
+          itemIds.add(reversedChatItems[i].id)
+        }
+        deleteMessagesAlertDialog(
+          itemIds,
+          generalGetString(MR.strings.delete_messages_cannot_be_undone_warning),
+          forAll = false,
+          deleteMessages = { ids, _ -> deleteMessages(ids) }
+        )
+      } else {
+        deleteMessageAlertDialog(cItem, questionText, cInfo, deleteMessage = deleteMessage)
+      }
+    } else {
+      deleteMessageAlertDialog(cItem, questionText, cInfo, deleteMessage = deleteMessage)
+    }
+  } else {
+    deleteMessageAlertDialog(cItem, questionText, cInfo, deleteMessage = deleteMessage)
+  }
 }
 
 @Composable
@@ -1019,39 +1038,44 @@ private fun ReportItemAction(
     stringResource(MR.strings.report_verb),
     painterResource(MR.images.ic_flag),
     onClick = {
-      AlertManager.shared.showAlertDialogButtons(
-        title = generalGetString(MR.strings.report_reason_alert_title),
-        buttons = {
-          ReportReason.supportedReasons.forEach { reason ->
-            SectionItemView({
-              if (composeState.value.editing) {
-                composeState.value = ComposeState(
-                  contextItem = ComposeContextItem.ReportedItem(cItem, reason),
-                  useLinkPreviews = false,
-                  preview = ComposePreview.NoPreview,
-                )
-              } else {
-                composeState.value = composeState.value.copy(
-                  contextItem = ComposeContextItem.ReportedItem(cItem, reason),
-                  useLinkPreviews = false,
-                  preview = ComposePreview.NoPreview,
-                )
-              }
-              AlertManager.shared.hideAlert()
-            }) {
-              Text(reason.text, Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = MaterialTheme.colors.error)
-            }
-          }
-          SectionItemView({
-            AlertManager.shared.hideAlert()
-          }) {
-            Text(stringResource(MR.strings.cancel_verb), Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = MaterialTheme.colors.primary)
-          }
-        }
-      )
+      showReportReasonAlert(cItem, composeState)
       showMenu.value = false
     },
     color = Color.Red
+  )
+}
+
+// Veil: the alert of ReportItemAction, extracted unchanged (private -> public) for the Veil message sheet
+fun showReportReasonAlert(cItem: ChatItem, composeState: MutableState<ComposeState>) {
+  AlertManager.shared.showAlertDialogButtons(
+    title = generalGetString(MR.strings.report_reason_alert_title),
+    buttons = {
+      ReportReason.supportedReasons.forEach { reason ->
+        SectionItemView({
+          if (composeState.value.editing) {
+            composeState.value = ComposeState(
+              contextItem = ComposeContextItem.ReportedItem(cItem, reason),
+              useLinkPreviews = false,
+              preview = ComposePreview.NoPreview,
+            )
+          } else {
+            composeState.value = composeState.value.copy(
+              contextItem = ComposeContextItem.ReportedItem(cItem, reason),
+              useLinkPreviews = false,
+              preview = ComposePreview.NoPreview,
+            )
+          }
+          AlertManager.shared.hideAlert()
+        }) {
+          Text(reason.text, Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = MaterialTheme.colors.error)
+        }
+      }
+      SectionItemView({
+        AlertManager.shared.hideAlert()
+      }) {
+        Text(stringResource(MR.strings.cancel_verb), Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = MaterialTheme.colors.primary)
+      }
+    }
   )
 }
 
