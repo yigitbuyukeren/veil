@@ -34,6 +34,8 @@ import chat.simplex.common.views.localauth.VerticalDivider
 import chat.simplex.common.views.remote.*
 import chat.simplex.common.views.usersettings.*
 import chat.simplex.common.views.usersettings.AppearanceScope.ColorModeSwitcher
+import chat.simplex.common.veil.screens.settings.veilOpenSettings
+import chat.simplex.common.veil.screens.settings.veilSettingsActive
 import chat.simplex.res.MR
 import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.*
@@ -380,7 +382,10 @@ private fun GlobalSettingsSection(
 
   SectionItemView(
     click = {
-      ModalManager.start.showModalCloseable(cardScreen = true) { close ->
+      if (veilSettingsActive()) {
+        userPickerState.value = AnimatedViewState.HIDING
+        veilOpenSettings(setPerformLA)
+      } else ModalManager.start.showModalCloseable(cardScreen = true) { close ->
         SettingsView(chatModel, setPerformLA, close)
       }
     },

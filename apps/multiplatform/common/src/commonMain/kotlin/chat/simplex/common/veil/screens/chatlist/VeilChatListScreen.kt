@@ -42,7 +42,9 @@ import chat.simplex.common.views.chatlist.UserPicker
 import chat.simplex.common.views.chatlist.filteredChats
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.onboarding.SetNotificationsModeAdditions
-import chat.simplex.common.views.usersettings.VeilStatusView
+import chat.simplex.common.veil.screens.settings.veilOpenSettings
+import chat.simplex.common.veil.screens.settings.veilOpenTorScreen
+import chat.simplex.common.veil.screens.settings.veilSettingsActive
 import chat.simplex.res.MR
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
@@ -113,7 +115,7 @@ fun VeilChatListScreen(
         },
         actions = {
           VeilIconButton(
-            onClick = { ModalManager.start.showModal(settings = true) { VeilStatusView() } },
+            onClick = { veilOpenTorScreen() },
             contentDescription = stringResource(MR.strings.veil_list_tor_ring_open)
           ) { TorRing(ring, 30.dp) }
           VeilIconButton(
@@ -121,7 +123,7 @@ fun VeilChatListScreen(
             contentDescription = stringResource(if (searching) MR.strings.veil_list_search_close else MR.strings.veil_list_search_open)
           ) { VeilIcon(if (searching) MR.images.ic_close else MR.images.ic_search, colors.ink2, size = 22.dp) }
           VeilIconButton(
-            onClick = { userPickerState.value = AnimatedViewState.VISIBLE },
+            onClick = { if (veilSettingsActive()) veilOpenSettings(setPerformLA) else userPickerState.value = AnimatedViewState.VISIBLE },
             contentDescription = stringResource(MR.strings.veil_list_settings)
           ) { VeilIcon(MR.images.ic_settings, colors.ink2, size = 22.dp) }
         }

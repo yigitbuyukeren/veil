@@ -20,7 +20,7 @@ object VeilUi {
   /** Group screens: create, info, members, invite. */
   var groups: Boolean = false
   /** Settings screens. */
-  var settings: Boolean = false
+  var settings: Boolean = true
   /** System surfaces: alerts, lock screen, database error, progress, call overlays. */
   var system: Boolean = false
 }
