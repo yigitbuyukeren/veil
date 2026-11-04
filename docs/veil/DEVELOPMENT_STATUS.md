@@ -10,7 +10,7 @@ Updated 2026-11-04. Base: SimpleX Chat v7.0.3. Evidence rules: PASS only with a 
 |---|---|
 | Release decision | **NO-GO** ([M1_RELEASE_REPORT.md](M1_RELEASE_REPORT.md)). Reasons: no real-device or Orbot evidence, leak matrix mostly NOT TESTED, open license gaps, no independent review |
 | Milestone M1 (closed alpha) | gates open, see [ROADMAP.md](ROADMAP.md) |
-| Redesign "Tül" | in progress; no screen group is recorded as done here yet (nothing to claim until it is shown working on an emulator) |
+| Redesign "Tül" | **implemented for all screen groups, NOT TESTED** on a device or emulator (builds, unit tests pass); not "done" until shown working. See the redesign section below |
 | Native core | prebuilt official `libsimplex.so`/`libsupport.so` from v7.0.3, verified by SHA-256 and GPG signatures in CI; not built from source by decision ([NATIVE_CORE.md](NATIVE_CORE.md)) |
 | Tor-only policy | enforced at the single choke point `apiSetNetworkConfig`, network settings locked read-only, status indicator reads the core's active config: code and unit tests only; device and emulator verification of the new locks and status check NOT TESTED |
 
@@ -22,11 +22,33 @@ Updated 2026-11-04. Base: SimpleX Chat v7.0.3. Evidence rules: PASS only with a 
 - **Design system foundation** merged (7e2571835): tokens, Bricolage Grotesque, forced Gece theme, components, debug gallery. Visuals NOT TESTED on a device or emulator.
 - **Documentation:** Veil documents moved to `docs/veil/`, one roadmap, vision and design documents added, status consolidated here.
 
+## Redesign "Tül": implemented, untested
+
+All screen groups of [DESIGN.md](DESIGN.md) exist for Android and the arm64 FOSS debug build compiles with the unit tests for logic, design system and contrast. **Nothing has been run on a device or on an emulator**; no screen is recorded as working. Commits (all on `main`):
+
+| Group | Commits | Contents |
+|---|---|---|
+| Design system | 9ae9853c5, c421cc19f, 7e2571835, 57902d719, 154ea9b79, 9dda9dbd9, e116ef760, 8e41224cf | tokens, Gece palette, components, Bricolage Grotesque and Inter with licenses, avatar generator, debug gallery, `VeilUi` flags |
+| A. Onboarding | 7990c875a, d88c2a516, 6ae868368, 9f1585760 | story, Orbot check, name, notifications, conditions; Orbot launcher and conditions adapters |
+| B. Chat list | 3b1aa01f6, e1cccaa9e, 6b0aa5ca4, 7d074fe4a | veil reveal, Tor ring, filters, search, avatar actions |
+| C. Chat | 03430edef, c3733fb40, b23583178, cd2bde5a3, 43a875d98, 88ae52f54, 76b2f65de | top bar, bubbles, composer frame, message actions, contact info, security code, "Gelişmiş" |
+| D. New chat | 620a694f0, 2461654fc | invite link and QR, paste, scan, group entry |
+| F. Settings | 037ede712, 8edf1d344, f928fa381, a0a9b32e9 | home, privacy, appearance, Tor and status (read-only network), about and licenses |
+| G. System | 5a1175b36, c592a8b19, ada8fcd63 | app-wide alerts, lock and passcode, database error, splash, stopped chat |
+| E. Groups | 5df5ec5c3, 3c409360b, b31109ca8 | create, info, members and roles, group link |
+| Theme and accessibility | b732f843d, ac5dccce2, 1218c254c | Sis light theme and Sistem mode, labels and 48 dp targets, contrast tests (`VeilContrastTest`) |
+| Final audit (this pass) | see `git log` for "Close hidden-feature paths", "Remove unused Veil strings" and the documentation commits | hidden-feature paths closed, unused strings removed, claims audit, docs |
+
+Final audit result of 2026-11-04: navigation was traced from every Veil screen (table in [DESIGN.md](DESIGN.md), "Reachable upstream screens"). Closed with `// Veil:` guards: call buttons and the calls preference in the upstream contact and member info, the WebRTC servers section, the terminal and terminal-app link outside debug builds, and a stale device-migration state in the Android routing. All `veil_` strings were audited against [PRIVACY_CLAIMS.md](PRIVACY_CLAIMS.md): none prohibited, two softened, 25 allowed statements still lack device evidence and are listed with their required evidence (distribution NO-GO, [M1_RELEASE_REPORT.md](M1_RELEASE_REPORT.md)). Eleven unused `veil_` keys were removed from base and tr.
+
 ## Open items
+
+- **Device and emulator tests of the whole redesign are pending.** The emulator run waits for the owner's go; real devices and Orbot are needed for the M1 gates and for the evidence in the claims list.
 
 - **`android-support` license (must be settled before any distribution).** The package that provides the glue code of `libsupport.so` declares no license and has no license file at the pinned tag. It has to be confirmed with upstream before Veil is distributed. Nobody has been contacted; this only records the item. See [UPSTREAM_LICENSES.md](UPSTREAM_LICENSES.md), Conflicts.
 - Haskell and native license inventory is approximate; LGPL notice and replace duties (GMP, libiconv, trove4j) are not implemented for the native libraries.
-- Non-English strings, onboarding artwork and deep-link filters still carry upstream branding ([BRANDING.md](BRANDING.md)); the redesign is expected to replace most of this.
+- In-app statements pending evidence: 25 `veil_` strings ([PRIVACY_CLAIMS.md](PRIVACY_CLAIMS.md)); distribution is NO-GO until each is backed or softened.
+- Upstream screens opened on purpose still have the upstream look and SimpleX wording; system notification texts, lock texts, non-English locales and deep-link filters still carry upstream branding ([BRANDING.md](BRANDING.md), [DESIGN.md](DESIGN.md)).
 
 | Issue | State | Commits | Notes |
 |---|---|---|---|

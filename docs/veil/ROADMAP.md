@@ -24,7 +24,9 @@ Goal: a Tor-only Android closed alpha, not a finished or audited product. Issue 
 | 8 | Native core verification | Checksum and signature verification of the prebuilt libraries is done (enforced in CI). Open: the license gaps in [UPSTREAM_LICENSES.md](UPSTREAM_LICENSES.md) (`android-support` has no license, the Haskell inventory is approximate, LGPL notice duties are not implemented) | License gaps closed or resolved with upstream; inventory merged into `THIRD_PARTY_NOTICES.md`. A from-source build is not planned | no |
 | 9 | Acceptance and decision | End-to-end acceptance on two phones; independent security review; GO or NO-GO | Signed-off report in [M1_RELEASE_REPORT.md](M1_RELEASE_REPORT.md) | yes |
 
-## Redesign "Tül" (in progress)
+## Redesign "Tül" (implemented, NOT TESTED)
+
+Status 2026-11-04: all nine groups below exist in code and build (arm64 FOSS debug) with unit tests for the logic, the contrast of both themes and the design system. **No screen has been run on a device or an emulator**, so by the acceptance rule below no group is "done" yet. Commits per group are in [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md). Remaining: the emulator run (waits for the owner's go), the upstream screens that are opened on purpose and still have the upstream look ([DESIGN.md](DESIGN.md), "Reachable upstream screens"), English translation, and the remaining upstream wording ([BRANDING.md](BRANDING.md)).
 
 A whole-app redesign on a Veil design system, Turkish-first. It replaces the upstream screens one by one without touching upstream logic (architecture rule in [DESIGN.md](DESIGN.md)). The app builds and runs after every screen group. Calls, desktop, remote connection and device migration stay hidden.
 
@@ -38,7 +40,7 @@ Screen groups (details in the screen map of [DESIGN.md](DESIGN.md)):
 6. **Groups:** create, info, members and roles, group link, add members.
 7. **Settings:** simplified groups, read-only network settings, Tor and status, about and licenses.
 8. **System screens:** app lock, empty and error states, dialogs, database errors.
-9. **Language:** Turkish-first strings, English translation, CI audit of leftover upstream strings.
+9. **Language:** Turkish-first strings (done, identical in base and tr), CI audit of leftover upstream strings (done as a ratchet), English translation (not started).
 
 Acceptance: each screen group is shown to work on an emulator before it is called done; device behavior stays NOT TESTED until the M1 device runs. The redesign does not by itself change the release decision.
 
@@ -62,8 +64,8 @@ Audit upstream first and enable or restyle what exists instead of rebuilding it.
 
 What the redesign does not cover.
 
-1. Light theme "Mist", color settings.
-2. Accessibility: screen reader, dynamic font size.
+1. Color settings. (The light theme "Sis" and the theme setting are implemented, NOT TESTED.)
+2. Accessibility: a first pass is implemented (labels, 48 dp targets, contrast tests), NOT TESTED with a screen reader; dynamic font size remains.
 3. Animation and performance pass; clear connection and message states; error and recovery screens refined from real use.
 4. Localization beyond Turkish and English.
 
