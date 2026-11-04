@@ -3540,4 +3540,11 @@
   <string name="veil_verify_explain_channel">Kodları Veil dışında bir yoldan karşılaştırmak en iyisi: yüz yüze ya da başka bir kanaldan.</string>
   <string name="veil_verify_mark">Doğrulandı olarak işaretle</string>
   <string name="veil_verify_clear">Doğrulama işaretini kaldır</string>
+
+  <!-- Veil system -->
+  <string name="veil_sys_lock_title">Uygulama kilidi açık</string>
+  <string name="veil_sys_pass_clear">Hepsini sil</string>
+  <string name="veil_sys_pass_delete">Son rakamı sil</string>
+  <string name="veil_sys_stopped_title">Sohbet durduruldu</string>
+  <string name="veil_sys_stopped_text">Durdurulduğu sürece mesaj alınmaz ve gönderilmez. Ayarlar’daki Veritabanı bölümünden ya da uygulamayı yeniden başlatarak başlatabilirsin.</string>
 </resources>
