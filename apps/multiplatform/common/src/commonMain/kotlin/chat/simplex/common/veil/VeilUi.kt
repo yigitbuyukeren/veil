@@ -9,8 +9,8 @@ package chat.simplex.common.veil
  * views that open them; those views should branch on the matching flag at their entry point.
  */
 object VeilUi {
-  /** Onboarding stages (SimpleXInfo, CreateFirstProfile, network commitments...). */
-  var onboarding: Boolean = false
+  /** Onboarding stages (SimpleXInfo, CreateFirstProfile, network commitments...). Android only; desktop keeps the upstream onboarding. */
+  var onboarding: Boolean = true
   /** Chat list (home) screen. */
   var chatList: Boolean = false
   /** Conversation screen. */
