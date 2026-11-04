@@ -19,6 +19,7 @@ Updated 2026-11-04. Base: SimpleX Chat v7.0.3. Evidence rules: PASS only with a 
 - **Native core decision:** no build from source; prebuilt official libraries, verified by hash and signature (714d807a9, decision in [NATIVE_CORE.md](NATIVE_CORE.md)). Changes that would need core changes are not done; they are solved in the app layer.
 - **Tor-only enforcement** moved to `ChatController.apiSetNetworkConfig`, the only place that builds the network-config command; the network settings screens are read-only; the Tor and privacy status screen checks the core's reported config with `VeilNetworkPolicy.isCompliant` (227de4d4c, 05b3fae8b). Unit tests exist; UI behavior NOT TESTED on a device or emulator.
 - **License inventory:** approximate Haskell and native inventory added to `THIRD_PARTY_NOTICES.md` (6704ed0ee). It is derived from build files, not from a build or the binaries.
+- **Design system foundation** merged (7e2571835): tokens, Bricolage Grotesque, forced Gece theme, components, debug gallery. Visuals NOT TESTED on a device or emulator.
 - **Documentation:** Veil documents moved to `docs/veil/`, one roadmap, vision and design documents added, status consolidated here.
 
 ## Open items
