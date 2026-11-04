@@ -3189,4 +3189,46 @@
   <string name="veil_set_tor_servers_desc">Sunucu listeleri; ağ ayarları salt okunurdur.</string>
   <string name="veil_set_about_title">Hakkında ve lisanslar</string>
   <string name="veil_set_about_version">Sürüm</string>
+
+  <!-- Veil chat actions and info -->
+  <string name="veil_msgact_close">Kapat</string>
+  <string name="veil_msgact_reply">Yanıtla</string>
+  <string name="veil_msgact_edit">Düzenle</string>
+  <string name="veil_msgact_forward">İlet</string>
+  <string name="veil_msgact_react">Tepki</string>
+  <string name="veil_msgact_copy">Kopyala</string>
+  <string name="veil_msgact_share">Paylaş</string>
+  <string name="veil_msgact_save">Kaydet</string>
+  <string name="veil_msgact_download">İndir</string>
+  <string name="veil_msgact_info">Mesaj bilgisi</string>
+  <string name="veil_msgact_select">Seç</string>
+  <string name="veil_msgact_hide">Gizle</string>
+  <string name="veil_msgact_reveal">Göster</string>
+  <string name="veil_msgact_expand">Genişlet</string>
+  <string name="veil_msgact_archive_report">Raporu arşivle</string>
+  <string name="veil_msgact_cancel_file">Dosyayı iptal et</string>
+  <string name="veil_msgact_delete">Sil</string>
+  <string name="veil_msgact_delete_report">Raporu sil</string>
+  <string name="veil_msgact_moderate">Yönetici olarak kaldır</string>
+  <string name="veil_msgact_report">Bildir</string>
+  <string name="veil_chatinfo_title">Sohbet bilgisi</string>
+  <string name="veil_chatinfo_alias_hint">Takma ad ver (yalnızca sende görünür)</string>
+  <string name="veil_chatinfo_incognito_title">Gizli profil</string>
+  <string name="veil_chatinfo_incognito_body">Bu sohbette şu gizli profille görünüyorsun: %1$s</string>
+  <string name="veil_chatinfo_notifications">Bildirimler</string>
+  <string name="veil_chatinfo_notifications_on">Açık</string>
+  <string name="veil_chatinfo_notifications_off">Sessize alındı</string>
+  <string name="veil_chatinfo_preferences">Kişi tercihleri</string>
+  <string name="veil_chatinfo_clear">Sohbeti temizle</string>
+  <string name="veil_chatinfo_delete">Kişiyi sil</string>
+  <string name="veil_verify_title">Güvenlik kodu</string>
+  <string name="veil_verify_subtitle">%1$s ile aranızdaki kod</string>
+  <string name="veil_verify_unverified">Doğrulanmadı</string>
+  <string name="veil_verify_qr_description">Güvenlik kodunun QR kodu</string>
+  <string name="veil_verify_qr_hint">Karşındaki kişi kodunu okuyabilsin diye ekranı ona göster ya da onun kodunu tara.</string>
+  <string name="veil_verify_scan">Kodu tara</string>
+  <string name="veil_verify_explain">İki telefonda da aynı kodu görüyorsanız, bağlanırken davet linkini kimsenin araya girip değiştirmediğine dair güçlü bir işaret elde edersiniz. Kodlar farklıysa sohbete güvenmeyin ve yeni bir link ile baştan bağlanın.</string>
+  <string name="veil_verify_explain_channel">Kodları Veil dışında bir yoldan karşılaştırmak en iyisi: yüz yüze ya da başka bir kanaldan.</string>
+  <string name="veil_verify_mark">Doğrulandı olarak işaretle</string>
+  <string name="veil_verify_clear">Doğrulama işaretini kaldır</string>
 </resources>
