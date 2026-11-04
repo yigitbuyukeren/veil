@@ -24,3 +24,5 @@ python3 -I scripts/emulator/scenario_group.py emulator-5554 emulator-5556
 It creates a group on A, reads the group link from the share sheet, joins B through it, sends a message each way and checks that each app's TCP sockets go only to `127.0.0.1:9050`. Coordinates assume a 1080x2400 screen. Exit code 0 only when every step passed. It does not run in CI (needs emulators and Tor).
 
 App data lives in the `-read-only` overlay and is lost when an emulator is stopped; after a restart onboarding data may be gone, so re-pair before running scenarios.
+
+Other scenarios: `scenario_abuse.py <A> <B>` (deleted link, observer role), `scenario_background.py <A> <B> <chat title>` (background/Doze; needs a healthy pair, see E27). Helpers are in `emu.py`.

@@ -19,7 +19,7 @@ Updated 2026-11-04 (third session). Base: SimpleX Chat v7.0.3. Evidence rules: P
 | #13 VEIL-012 encrypted persistent history | emulator evidence only | a2d841cf5 | E7, E8 PASS; key storage not audited; no Veil code change |
 | #14 VEIL-013 background reliability | NOT STARTED | | emulator cannot represent vendor battery policy |
 | #15 VEIL-014 small groups | 2-member group via group link: emulator PASS | cfead9cfc | E10, E11, E19 (scripted); 3-member and 10-participant NOT TESTED (needs a third emulator or devices) |
-| #16 VEIL-015 group permissions | partial, observation only | cfead9cfc | E11b: member sees read-only preferences and no invite action; link deletion/invite revocation/abuse controls NOT TESTED |
+| #16 VEIL-015 group permissions | partial | cfead9cfc, this session | E11b, E22-E24: link deletion, observer role and member removal observed on emulators; removal is not a ban while the link is active; anyone-can-join link abuse beyond that NOT TESTED |
 | #17 VEIL-016 minimal UI and indicators | partial | c4856e810, bc40525b3, f0add36b9 | artwork, promotions hidden, Tor-unavailable alert, Tor and privacy status screen with licenses section (E16-E18), app name in all locales; no always-visible indicator in the chat list, non-English strings, core-created "SimpleX Team" contact still open |
 | #18 VEIL-017 M1 validation, GO/NO-GO | report: **NO-GO** | | see `M1_RELEASE_REPORT.md` |
 
@@ -28,7 +28,7 @@ Updated 2026-11-04 (third session). Base: SimpleX Chat v7.0.3. Evidence rules: P
 1. Obtain two real Android devices (and Orbot) and run VEIL-010: pair over Tor, exchange messages both ways, verification code, wrong-contact case. Record devices, Android versions and patch levels in an anonymized report. Then VEIL-011, 012, 013, 014-015, 016, and re-run VEIL-007/008 leak tests on the devices.
 2. Build the native core from source on Linux x86_64 (`NATIVE_BUILD_PLAN.md`; BLOCKED here) and finish the native part of the license inventory.
 3. With a third emulator or device: 3-member and 10-participant groups, group-link deletion/invite revocation, anyone-can-join abuse controls (`scripts/emulator/scenario_group.py` covers the 2-member case).
-4. Not yet tried: delivery-state semantics (icons are not readable by the accessibility tree), key change, wrong-contact, background/doze (VEIL-013).
+4. Not yet tried or inconclusive: delivery-state semantics (icons not readable), wrong-contact and key-change warning (E26), background/doze (E27 inconclusive; rerun `scenario_background.py` on a clean pair).
 
 ## Environment notes
 

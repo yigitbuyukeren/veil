@@ -24,3 +24,14 @@ State: **BLOCKED, not built.** The app currently links `libsimplex.so`/`libsuppo
 4. Use the build's dependency closure to finish the Haskell/native license inventory (`UPSTREAM_LICENSES.md` row 6b).
 
 Decision: wait for a Linux x86_64 machine. No workflow is added.
+
+## Linux x86_64 preparation checklist (nothing here is run on the Mac)
+
+These figures are planning estimates from upstream's statement and typical Nix/haskell.nix cross builds; they are not measurements from this project.
+
+- Machine: Linux x86_64, 4+ cores (8 preferred), 16 GB RAM (32 GB safer for the final GHC link steps), 80 GB free disk for the Nix store, build outputs and logs, stable network. Time budget 12 to 24 h cold.
+- Software: Nix with flakes enabled, `git`, `curl`, `gawk`, `jq`; optional Docker for upstream's reproduce script. No Android SDK is needed for the core libraries.
+- Source: clone this repository at the commit being shipped; the flake pins upstream's inputs. Do not update `flake.lock` for the first reproduction.
+- Build targets: `aarch64-android:lib:simplex-chat` and `aarch64-android:lib:support` from `flake.nix`.
+- Record: commit, `flake.lock` hash, wall time, output sha256 of `libsimplex.so` and `libsupport.so`, and the sha256 of the official release libraries for comparison.
+- Never run this on the Mac: it would exhaust the roughly 4-5 GB of free disk and the 16 GB of RAM shared with the emulators.
