@@ -1,5 +1,9 @@
 <resources>
-  <string name="app_name">SimpleX</string>
+  <string name="app_name">Veil</string>
+  <string name="veil_about">About Veil</string>
+  <string name="veil_about_title">Veil (alpha)</string>
+  <string name="veil_about_text">Veil is an app for using the SimpleX network. It is an independent, unaudited alpha and is not made by or affiliated with SimpleX Chat Ltd. It is based on SimpleX Chat source code under AGPL-3.0. By using the network you accept the SimpleX Conditions of Use (https://simplex.chat/privacy/).</string>
+  <string name="veil_source_code">Veil source code (AGPL-3.0)</string>
 
   <string name="thousand_abbreviation">k</string>
 

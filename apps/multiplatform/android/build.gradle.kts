@@ -12,7 +12,8 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "chat.simplex.app"
+        // Veil: own package id so it installs next to SimpleX; `namespace` (Kotlin package) stays upstream's
+        applicationId = "io.github.yigitbuyukeren.veil"
         namespace = "chat.simplex.app"
         minSdk = 26
         targetSdk = 35
@@ -31,7 +32,7 @@ android {
             }
         }
         manifestPlaceholders["app_name"] = "@string/app_name"
-        manifestPlaceholders["provider_authorities"] = "chat.simplex.app.provider"
+        manifestPlaceholders["provider_authorities"] = "io.github.yigitbuyukeren.veil.provider"
         manifestPlaceholders["extract_native_libs"] = rootProject.extra["compression.level"] as Int != 0
     }
 
@@ -56,7 +57,7 @@ android {
             isDebuggable = rootProject.extra["enable_debuggable"] as Boolean
             manifestPlaceholders["app_name"] = rootProject.extra["app.name"] as String
             // Provider can"t be the same for different apps on the same device
-            manifestPlaceholders["provider_authorities"] = "chat.simplex.app${rootProject.extra["application_id.suffix"]}.provider"
+            manifestPlaceholders["provider_authorities"] = "io.github.yigitbuyukeren.veil${rootProject.extra["application_id.suffix"]}.provider"
         }
         release {
             isMinifyEnabled = false
