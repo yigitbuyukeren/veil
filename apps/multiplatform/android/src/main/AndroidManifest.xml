@@ -33,6 +33,8 @@
       <action android:name="android.intent.action.VIEW" />
       <data android:mimeType="*/*" />
     </intent>
+    <!-- Lets the onboarding find out whether Orbot is installed and start it (launch intent only, no network) -->
+    <package android:name="org.torproject.android" />
   </queries>
 
   <application
