@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +24,8 @@ import androidx.compose.ui.unit.*
 import chat.simplex.common.model.ChatModel
 import chat.simplex.common.model.LocalBadge
 import chat.simplex.common.platform.*
+import chat.simplex.common.veil.VeilUi
+import chat.simplex.common.veil.screens.system.*
 import chat.simplex.common.ui.theme.*
 import chat.simplex.res.MR
 import dev.icerock.moko.resources.StringResource
@@ -142,7 +145,13 @@ class AlertManager {
         title = alertTitle(title),
         buttons = {
           val buttonRow: @Composable () -> Unit = {
-            Row(
+            // Veil: Veil buttons (danger = red) instead of text buttons; same callbacks and focus.
+            if (VeilUi.system) {
+              VeilAlertButtons(listOf(
+                VeilAlertButton(confirmText, veilConfirmRole(destructive), focus = true) { onConfirm?.invoke(); hideAlert() },
+                VeilAlertButton(dismissText, VeilAlertRole.Secondary) { onDismiss?.invoke(); hideAlert() },
+              ))
+            } else Row(
               Modifier.fillMaxWidth().padding(horizontal = DEFAULT_PADDING),
               horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -189,7 +198,13 @@ class AlertManager {
         title = alertTitle(title),
         buttons = {
           AlertContent(text, null) {
-            Column(
+            // Veil: stacked Veil buttons, main action first.
+            if (VeilUi.system) {
+              VeilAlertButtons(listOf(
+                VeilAlertButton(confirmText, veilConfirmRole(destructive)) { onConfirm?.invoke(); hideAlert() },
+                VeilAlertButton(dismissText, VeilAlertRole.Secondary) { onDismiss?.invoke(); hideAlert() },
+              ))
+            } else Column(
               Modifier.fillMaxWidth().padding(horizontal = DEFAULT_PADDING_HALF).padding(top = DEFAULT_PADDING, bottom = 2.dp),
               horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -230,7 +245,15 @@ class AlertManager {
             }
             // Can pass shareText = false to prevent showing Share button if it's needed in a specific case
             val showShareButton = text != null && (shareText == true || (shareText == null && text.length > 500))
-            Row(
+            // Veil: Veil buttons, same behaviour.
+            if (VeilUi.system) {
+              val clipboard = LocalClipboardManager.current
+              val shareLabel = stringResource(MR.strings.share_verb)
+              VeilAlertButtons(listOfNotNull(
+                VeilAlertButton(confirmText, VeilAlertRole.Primary, focus = true) { onConfirm?.invoke(); hideAlert() },
+                if (showShareButton && text != null) VeilAlertButton(shareLabel, VeilAlertRole.Secondary) { clipboard.shareText(text); hideAlert() } else null,
+              ))
+            } else Row(
               Modifier.fillMaxWidth().padding(horizontal = DEFAULT_PADDING),
               horizontalArrangement = if (showShareButton) Arrangement.SpaceBetween else Arrangement.Center
             ) {
@@ -394,6 +417,15 @@ class AlertManager {
                   delay(200)
                   focusRequester.requestFocus()
                 }
+                // Veil: Veil buttons; the dismiss button gets focus when there is no confirm button.
+                if (VeilUi.system) {
+                  VeilAlertButtons(listOfNotNull(
+                    if (confirmText != null && onConfirm != null) VeilAlertButton(confirmText, VeilAlertRole.Primary, focus = true) { onConfirm.invoke(); hideAlert() } else null,
+                    if (connectOtherButton != null && onConnectOther != null) VeilAlertButton(connectOtherButton, VeilAlertRole.Secondary) { onConnectOther.invoke(); hideAlert() } else null,
+                    VeilAlertButton(dismissText, VeilAlertRole.Secondary, focus = confirmText == null || onConfirm == null) { onDismiss?.invoke(); hideAlert() },
+                  ))
+                  return@Column
+                }
                 if (confirmText != null && onConfirm != null) {
                   TextButton(onClick = {
                     onConfirm.invoke()
@@ -436,9 +468,26 @@ class AlertManager {
   }
 }
 
+// Veil: central hook. Every dialog in this file is created through this function (it shadows Material's AlertDialog,
+// so the call sites are untouched); with VeilUi.system the Veil shell is used.
+@Composable
+private fun AlertDialog(
+  onDismissRequest: () -> Unit,
+  buttons: @Composable () -> Unit,
+  title: (@Composable () -> Unit)? = null,
+  shape: Shape,
+) {
+  if (VeilUi.system) {
+    VeilAlertShell(onDismissRequest, title, buttons)
+  } else {
+    androidx.compose.material.AlertDialog(onDismissRequest = onDismissRequest, title = title, buttons = buttons, shape = shape)
+  }
+}
+
 private fun alertTitle(title: String): (@Composable () -> Unit)? {
   return {
-    Text(
+    // Veil: Bricolage title.
+    if (VeilUi.system) VeilAlertTitle(title) else Text(
       title,
       Modifier.fillMaxWidth(),
       textAlign = TextAlign.Center,
