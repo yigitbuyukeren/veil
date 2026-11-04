@@ -231,11 +231,13 @@ fun ModalData.AdvancedNetworkSettingsView(showModal: (@Composable ModalData.() -
 
     if (currentRemoteHost == null) {
       SectionView(generalGetString(MR.strings.settings_section_title_private_message_routing)) {
-        SMPProxyModePicker(smpProxyMode, showModal, updateSMPProxyMode)
-        SMPProxyFallbackPicker(smpProxyFallback, showModal, updateSMPProxyFallback, enabled = remember { derivedStateOf { smpProxyMode.value != SMPProxyMode.Never } })
+        // Veil: private routing mode and fallback are fixed by the Tor-only policy
+        SMPProxyModePicker(smpProxyMode, showModal, updateSMPProxyMode, enabled = !VeilNetworkPolicy.SETTINGS_LOCKED)
+        SMPProxyFallbackPicker(smpProxyFallback, showModal, updateSMPProxyFallback, enabled = remember { derivedStateOf { !VeilNetworkPolicy.SETTINGS_LOCKED && smpProxyMode.value != SMPProxyMode.Never } })
         SettingsPreferenceItem(painterResource(MR.images.ic_arrow_forward), stringResource(MR.strings.private_routing_show_message_status), chatModel.controller.appPrefs.showSentViaProxy)
       }
       SectionTextFooter(stringResource(MR.strings.private_routing_explanation))
+      if (VeilNetworkPolicy.SETTINGS_LOCKED) SectionTextFooter(stringResource(MR.strings.veil_network_locked))
       SectionDividerSpaced()
 
       SectionView(stringResource(MR.strings.network_session_mode_transport_isolation)) {
@@ -246,13 +248,15 @@ fun ModalData.AdvancedNetworkSettingsView(showModal: (@Composable ModalData.() -
         ExposedDropDownSettingRow(
           stringResource(MR.strings.network_smp_web_port_toggle),
           SMPWebPortServers.entries.map { it to stringResource(it.text) },
-          smpWebPortServers
+          smpWebPortServers,
+          enabled = remember { mutableStateOf(!VeilNetworkPolicy.SETTINGS_LOCKED) } // Veil: web port servers stay off
         ) { smpWebPortServers.value = it }
       }
       SectionTextFooter(
         if (smpWebPortServers.value == SMPWebPortServers.Preset) stringResource(MR.strings.network_smp_web_port_preset_footer)
         else String.format(stringResource(MR.strings.network_smp_web_port_footer), if (smpWebPortServers.value == SMPWebPortServers.All) "443" else "5223")
       )
+      if (VeilNetworkPolicy.SETTINGS_LOCKED) SectionTextFooter(stringResource(MR.strings.veil_network_locked))
       SectionDividerSpaced()
 
       SectionView(stringResource(MR.strings.network_option_tcp_connection)) {
@@ -351,6 +355,7 @@ private fun SMPProxyModePicker(
   smpProxyMode: MutableState<SMPProxyMode>,
   showModal: (@Composable ModalData.() -> Unit) -> Unit,
   updateSMPProxyMode: (SMPProxyMode) -> Unit,
+  enabled: Boolean = true,
 ) {
   val density = LocalDensity.current
   val values = remember {
@@ -369,6 +374,7 @@ private fun SMPProxyModePicker(
     smpProxyMode,
     values,
     icon = painterResource(MR.images.ic_settings_ethernet),
+    enabled = remember(enabled) { mutableStateOf(enabled) },
     onSelected = {
       showModal {
         ColumnWithScrollBar {

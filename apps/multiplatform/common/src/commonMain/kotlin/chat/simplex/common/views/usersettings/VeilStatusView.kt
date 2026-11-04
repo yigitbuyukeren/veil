@@ -34,12 +34,17 @@ import chat.simplex.res.MR
 fun VeilStatusView() {
   val uriHandler = LocalUriHandler.current
   val proxyUp = remember { mutableStateOf<Boolean?>(null) }
-  val policyOk = remember { mutableStateOf(VeilNetworkPolicy.isCompliant(chatModel.controller.getNetCfg())) }
+  // Veil: null = checking or unknown; computed from the config the core reports as active, not from the app preferences
+  val policyOk = remember { mutableStateOf<Boolean?>(null) }
+  val policyUnknown = remember { mutableStateOf(false) }
   val tick = remember { mutableStateOf(0) }
   LaunchedEffect(tick.value) {
     proxyUp.value = null
     proxyUp.value = withContext(Dispatchers.IO) { VeilNetworkPolicy.torProxyReady() }
-    policyOk.value = VeilNetworkPolicy.isCompliant(chatModel.controller.getNetCfg())
+    policyOk.value = null
+    policyUnknown.value = false
+    val active = chatModel.controller.apiGetNetworkConfig()
+    if (active == null) policyUnknown.value = true else policyOk.value = VeilNetworkPolicy.isCompliant(active)
   }
   fun yn(b: Boolean?) = when (b) {
     null -> generalGetString(MR.strings.veil_status_checking)
@@ -51,7 +56,7 @@ fun VeilStatusView() {
     SectionView(stringResource(MR.strings.veil_status_network)) {
       Column(Modifier.padding(horizontal = itemHPadding, vertical = DEFAULT_PADDING_HALF)) {
         Text(String.format(stringResource(MR.strings.veil_status_tor_proxy), "${VeilNetworkPolicy.SOCKS_HOST}:${VeilNetworkPolicy.SOCKS_PORT}", yn(proxyUp.value)))
-        Text(String.format(stringResource(MR.strings.veil_status_policy), yn(policyOk.value)))
+        Text(String.format(stringResource(MR.strings.veil_status_policy), if (policyUnknown.value) generalGetString(MR.strings.veil_status_unknown) else yn(policyOk.value)))
         Text(stringResource(MR.strings.veil_status_note), color = MaterialTheme.colors.secondary)
       }
       SettingsActionItem(painterResource(MR.images.ic_wifi_tethering), stringResource(MR.strings.veil_status_recheck), { tick.value++ })

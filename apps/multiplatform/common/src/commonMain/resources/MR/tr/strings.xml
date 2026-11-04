@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="veil_status_unknown">bilinmiyor</string>
+    <string name="veil_network_locked">Veil yalnızca Tor üzerinden bağlanır; bu ayar değiştirilemez.</string>
     <string name="notifications">Bildirimler</string>
     <string name="connect_via_link_or_qr">Bağlantı ya da karekod ile bağlan</string>
     <string name="create_group">Gizli grup oluştur</string>

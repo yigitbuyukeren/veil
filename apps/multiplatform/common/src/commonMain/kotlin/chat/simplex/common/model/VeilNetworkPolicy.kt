@@ -15,6 +15,9 @@ object VeilNetworkPolicy {
   const val LINK_PREVIEWS_ENABLED = false
   const val CALLS_ENABLED = false
 
+  /** Network settings that could weaken the policy are shown read-only in the UI (the enforcement itself is in [enforce]). */
+  const val SETTINGS_LOCKED = true
+
   /** Overrides every user-visible network preference that could route traffic outside Tor. */
   fun enforce(cfg: NetCfg): NetCfg = cfg.copy(
     socksProxy = ":$SOCKS_PORT",

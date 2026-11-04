@@ -535,7 +535,8 @@ fun openBrowserAlert(uri: String, uriHandler: UriHandler) {
   if (res == null) {
     showInvalidLinkAlert(uri, err)
   } else {
-    val message = if (uri.count() > 160) uri.substring(0, 159) + "…" else uri
+    // Veil: the link opens outside Tor, say so
+    val message = (if (uri.count() > 160) uri.substring(0, 159) + "…" else uri) + "\n\n" + generalGetString(MR.strings.veil_external_link_warning)
     val sanitizedUri = res.second
     if (sanitizedUri == null) {
       AlertManager.shared.showAlertDialog(

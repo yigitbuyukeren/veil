@@ -42,6 +42,33 @@ class VeilNetworkPolicyTest {
     assertEquals(3, c.rcvConcurrency)
   }
 
+  @Test
+  fun enforceOnNoProxyPublicHostsGivesCompliantConfig() {
+    // what the "disable SOCKS" and advanced-settings paths used to be able to send
+    val weak = NetCfg.defaults.copy(socksProxy = null, hostMode = HostMode.Public, requiredHostMode = false)
+    assertFalse(VeilNetworkPolicy.isCompliant(weak))
+    val c = VeilNetworkPolicy.enforce(weak)
+    assertTrue(VeilNetworkPolicy.isCompliant(c))
+    assertNotNull(c.socksProxy)
+    assertEquals(HostMode.OnionViaSocks, c.hostMode)
+    assertTrue(c.requiredHostMode)
+  }
+
+  @Test
+  fun enforceIsIdempotentAndEveryOnionModeBecomesRequired() {
+    for (mode in OnionHosts.values()) {
+      val c = VeilNetworkPolicy.enforce(NetCfg.defaults.withOnionHosts(mode))
+      assertEquals(c, VeilNetworkPolicy.enforce(c))
+      assertEquals(OnionHosts.REQUIRED, c.onionHosts)
+    }
+  }
+
+  @Test
+  fun enforceIgnoresCustomProxyAndKeepsAuthFreeLoopbackPort() {
+    val c = VeilNetworkPolicy.enforce(NetCfg.defaults.copy(socksProxy = "user:pw@10.0.0.5:1080"))
+    assertEquals(":9050", c.socksProxy)
+  }
+
   private fun fakeProxy(reply: ByteArray?): Pair<ServerSocket, Int> {
     val ss = ServerSocket(0, 1, java.net.InetAddress.getByName("127.0.0.1"))
     thread(isDaemon = true) {

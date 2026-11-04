@@ -94,7 +94,8 @@ fun ModalData.NetworkAndServersView(closeNetworkAndServers: () -> Unit) {
       userServers = userServers,
       serverErrors = serverErrors,
       serverWarnings = serverWarnings,
-      toggleSocksProxy = { enable ->
+      toggleSocksProxy = toggle@{ enable ->
+        if (VeilNetworkPolicy.SETTINGS_LOCKED) return@toggle // Veil: Tor SOCKS proxy cannot be switched off
         val def = NetCfg.defaults
         val proxyDef = NetCfg.proxyDefaults
         if (enable) {
@@ -261,6 +262,7 @@ fun ModalData.NetworkAndServersView(closeNetworkAndServers: () -> Unit) {
 
       if (currentRemoteHost == null) {
         UseSocksProxySwitch(networkUseSocksProxy, toggleSocksProxy)
+        if (VeilNetworkPolicy.SETTINGS_LOCKED) SectionTextFooter(stringResource(MR.strings.veil_network_locked))
         SettingsActionItem(painterResource(MR.images.ic_settings_ethernet), stringResource(MR.strings.network_socks_proxy_settings), { showCustomModal { SocksProxySettings(networkUseSocksProxy.value, appPrefs.networkProxy, onionHosts, sessionMode = appPrefs.networkSessionMode.get(), false, it) } })
         SettingsActionItem(painterResource(MR.images.ic_cable), stringResource(MR.strings.network_settings), { ModalManager.start.showCustomModal { AdvancedNetworkSettingsView(showModal, it) } })
       }
@@ -354,9 +356,11 @@ fun UseSocksProxySwitch(
       TextIconSpaced(false)
       Text(generalGetString(MR.strings.network_socks_toggle_use_socks_proxy))
     }
+    // Veil: always on and not changeable
     DefaultSwitch(
-      checked = networkUseSocksProxy.value,
+      checked = networkUseSocksProxy.value || VeilNetworkPolicy.SETTINGS_LOCKED,
       onCheckedChange = toggleSocksProxy,
+      enabled = !VeilNetworkPolicy.SETTINGS_LOCKED,
     )
   }
 }
@@ -370,6 +374,22 @@ fun SocksProxySettings(
   migration: Boolean,
   close: () -> Unit
 ) {
+  if (VeilNetworkPolicy.SETTINGS_LOCKED) {
+    // Veil: read-only; the proxy is always ${VeilNetworkPolicy.SOCKS_HOST}:${VeilNetworkPolicy.SOCKS_PORT} and onion hosts are required
+    ModalView(close = close, cardScreen = true) {
+      ColumnWithScrollBar {
+        AppBarTitle(generalGetString(MR.strings.network_socks_proxy_settings))
+        SectionView(stringResource(MR.strings.network_socks_proxy)) {
+          Column(Modifier.padding(horizontal = DEFAULT_PADDING, vertical = DEFAULT_PADDING_HALF)) {
+            Text("${VeilNetworkPolicy.SOCKS_HOST}:${VeilNetworkPolicy.SOCKS_PORT}", color = MaterialTheme.colors.secondary)
+          }
+        }
+        SectionTextFooter(stringResource(MR.strings.veil_network_locked))
+        SectionBottomSpacer()
+      }
+    }
+    return
+  }
   val networkProxySaved by remember { networkProxy.state }
   val onionHostsSaved = remember { mutableStateOf(onionHosts.value) }
 

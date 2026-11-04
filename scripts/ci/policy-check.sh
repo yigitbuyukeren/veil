@@ -11,5 +11,11 @@ for c in 'UPSTREAM_PROMOTIONS = false' 'LINK_PREVIEWS_ENABLED = false' 'CALLS_EN
   grep -q "$c" $pol || { echo "POLICY FAIL: '$c' missing in VeilNetworkPolicy.kt"; fail=1; }
 done
 grep -q 'VeilNetworkPolicy.enforce(' apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/model/SimpleXAPI.kt || { echo "POLICY FAIL: getNetCfg is not wrapped by enforce()"; fail=1; }
+api=apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/model/SimpleXAPI.kt
+# apiSetNetworkConfig is the single choke point: CC.APISetNetworkConfig( may only be constructed inside it, and it must enforce the policy.
+total=$(grep -rn 'CC\.APISetNetworkConfig(' apps/multiplatform --include='*.kt' | wc -l | tr -d ' ')
+inside=$(awk '/suspend fun apiSetNetworkConfig\(/{f=1} f&&/CC\.APISetNetworkConfig\(/{n++} f&&/^  }$/{f=0} END{print n+0}' $api)
+[ "$total" -eq 1 ] && [ "$inside" -eq 1 ] || { echo "POLICY FAIL: CC.APISetNetworkConfig( must appear exactly once, inside apiSetNetworkConfig (found $total, $inside inside)"; fail=1; }
+awk '/suspend fun apiSetNetworkConfig\(/{f=1} f&&/CC\.APISetNetworkConfig\(VeilNetworkPolicy\.enforce\(/{ok=1} f&&/^  }$/{f=0} END{exit !ok}' $api || { echo "POLICY FAIL: apiSetNetworkConfig does not send VeilNetworkPolicy.enforce(cfg)"; fail=1; }
 [ $fail -eq 0 ] && echo "policy check: PASS"
 exit $fail

@@ -15,6 +15,8 @@
   <string name="veil_status_checking">checking…</string>
   <string name="veil_status_ok">yes</string>
   <string name="veil_status_fail">no</string>
+  <string name="veil_status_unknown">bilinmiyor</string>
+  <string name="veil_network_locked">Veil yalnızca Tor üzerinden bağlanır; bu ayar değiştirilemez.</string>
   <string name="veil_status_tor_proxy">SOCKS proxy %1$s answers: %2$s</string>
   <string name="veil_status_policy">Tor-only network settings enforced: %1$s</string>
   <string name="veil_status_note">This only measures whether a local SOCKS proxy answers. It does not show that Tor circuits or relays work. Without the proxy nothing is sent.</string>

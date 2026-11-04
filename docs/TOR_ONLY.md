@@ -20,7 +20,13 @@ Status 2026-11-04: implemented in code, verified on an **emulator with a host To
 
 Readiness gate: `ChatController.startChat()` first probes the proxy with a SOCKS5 no-auth handshake. If it fails, the chat agent is not started, nothing is sent or received, and an alert ("Tor is not available") with Retry is shown. The probe shows a SOCKS listener exists, not that Tor has circuits; circuit failures appear as connection errors and never as direct connections because the proxy is always configured.
 
-Known gaps: the Settings > Network screens still show upstream controls (their values are overridden; the UI is reworked in VEIL-016). Only the `startChat` path is gated; a Tor drop after start produces connection errors from the core.
+Single choke point: `ChatController.apiSetNetworkConfig` is the only place that builds `CC.APISetNetworkConfig`, and it always sends `VeilNetworkPolicy.enforce(cfg)`, whoever the caller is (startup, the network settings screens, the migration temporary database). `setNetCfg` also stores the enforced config, so saved preferences never show a non-compliant value. `scripts/ci/policy-check.sh` fails if `CC.APISetNetworkConfig(` appears anywhere else or if the function stops calling `enforce`.
+
+Locked settings: in Settings > Network & servers the SOCKS switch (always on), proxy host/port/authentication and onion host mode (read-only, fixed to 127.0.0.1:9050 with required onion hosts), private routing mode and fallback, and web port servers are shown disabled with the note "Veil yalnızca Tor üzerinden bağlanır; bu ayar değiştirilemez." Timeouts and keep-alive remain editable; they do not change routing.
+
+Status indicator: "Tor-only network settings enforced" in the Tor and privacy status screen reads the config the core reports as active (`APIGetNetworkConfig`) and checks it with `VeilNetworkPolicy.isCompliant`; if the call fails it shows "bilinmiyor" (unknown), never "yes". Web links in messages show the external-link warning (opens outside Tor) in the confirmation dialog.
+
+Status of this behaviour: implemented at code level and covered by unit tests of `enforce`/`isCompliant`; the UI locks, the active-config status check and the dialog text are NOT TESTED on a device. Known gaps: a Tor drop after start produces connection errors from the core (only the `startChat` path is gated); features that bypass the core (link previews, calls) are disabled rather than routed.
 
 ## Verification (2026-11-04)
 

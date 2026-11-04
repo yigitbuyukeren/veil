@@ -1382,8 +1382,9 @@ object ChatController {
     throw Exception("failed to set chat TTL: ${r.responseType} ${r.details}")
   }
 
+  // Veil: the only place that sends a network config to the core; whatever the caller passes is forced through the Tor-only policy (see docs/TOR_ONLY.md).
   suspend fun apiSetNetworkConfig(cfg: NetCfg, showAlertOnError: Boolean = true, ctrl: ChatCtrl? = null): Boolean {
-    val r = sendCmd(null, CC.APISetNetworkConfig(cfg), ctrl)
+    val r = sendCmd(null, CC.APISetNetworkConfig(VeilNetworkPolicy.enforce(cfg)), ctrl)
     if (r.result is CR.CmdOk) return true
     Log.e(TAG, "apiSetNetworkConfig bad response: ${r.responseType} ${r.details}")
     if (showAlertOnError) {
@@ -1393,6 +1394,15 @@ object ChatController {
       )
     }
     return false
+  }
+
+  /** Veil: the network config currently active in the core, or null when it cannot be read. */
+  suspend fun apiGetNetworkConfig(ctrl: ChatCtrl? = null): NetCfg? {
+    val r = sendCmd(null, CC.APIGetNetworkConfig(), ctrl)
+    val res = r.result
+    if (res is CR.NetworkConfig) return res.networkConfig
+    Log.e(TAG, "apiGetNetworkConfig bad response: ${r.responseType} ${r.details}")
+    return null
   }
 
   suspend fun reconnectServer(rh: Long?, server: String): Boolean {
@@ -3737,7 +3747,8 @@ object ChatController {
   /**
    * [AppPreferences.networkProxy] is not changed here, use appPrefs to set it
    * */
-  fun setNetCfg(cfg: NetCfg) {
+  fun setNetCfg(cfgIn: NetCfg) {
+    val cfg = VeilNetworkPolicy.enforce(cfgIn) // Veil: never store a non-compliant config
     appPrefs.networkUseSocksProxy.set(cfg.useSocksProxy)
     appPrefs.networkHostMode.set(cfg.hostMode)
     appPrefs.networkRequiredHostMode.set(cfg.requiredHostMode)
