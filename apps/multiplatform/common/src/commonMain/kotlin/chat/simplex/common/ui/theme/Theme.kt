@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import chat.simplex.res.MR
+import chat.simplex.common.veil.design.*
 import kotlinx.serialization.Transient
 import java.util.UUID
 
@@ -825,8 +826,8 @@ fun SimpleXTheme(darkTheme: Boolean? = null, content: @Composable () -> Unit) {
   }
   MaterialTheme(
     colors = theme.colors,
-    typography = Typography,
-    shapes = Shapes,
+    typography = VeilMaterialTypography, // Veil: display face for headings
+    shapes = VeilMaterialShapes,
     content = {
       val density = Density(LocalDensity.current.density * desktopDensityScaleMultiplier, LocalDensity.current.fontScale * fontSizeMultiplier)
       val rememberedAppColors = remember {
@@ -844,7 +845,7 @@ fun SimpleXTheme(darkTheme: Boolean? = null, content: @Composable () -> Unit) {
         LocalAppColors provides rememberedAppColors,
         LocalAppWallpaper provides rememberedWallpaper,
         LocalDensity provides density,
-        content = content
+        content = { VeilTheme(content = content) } // Veil: design-system CompositionLocals
       )
     }
   )
@@ -854,8 +855,8 @@ fun SimpleXTheme(darkTheme: Boolean? = null, content: @Composable () -> Unit) {
 fun SimpleXThemeOverride(theme: ThemeManager.ActiveTheme, content: @Composable () -> Unit) {
   MaterialTheme(
     colors = theme.colors,
-    typography = Typography,
-    shapes = Shapes,
+    typography = VeilMaterialTypography, // Veil: display face for headings
+    shapes = VeilMaterialShapes,
     content = {
       val rememberedAppColors = remember {
         // Explicitly creating a new object here so we don't mutate the initial [appColors]

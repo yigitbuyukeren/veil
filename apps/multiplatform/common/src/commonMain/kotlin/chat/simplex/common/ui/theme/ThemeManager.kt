@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontFamily
 import chat.simplex.common.model.*
 import chat.simplex.common.platform.*
+import chat.simplex.common.veil.design.VeilTheme
 import chat.simplex.common.views.helpers.*
 import java.io.File
 
@@ -55,6 +56,8 @@ object ThemeManager {
 
   // Spec: spec/services/theme.md#currentColors
   fun currentColors(themeOverridesForType: WallpaperType?, perChatTheme: ThemeModeOverride?, perUserTheme: ThemeModeOverrides?, appSettingsTheme: List<ThemeOverrides>): ActiveTheme {
+    // Veil: the app is forced into the Gece palette; theme selection and overrides are ignored (see VeilTheme).
+    if (VeilTheme.forceVeilTheme) return VeilTheme.activeTheme()
     val themeName = appPrefs.currentTheme.get()!!
     val nonSystemThemeName = nonSystemThemeName()
     val defaultTheme = defaultActiveTheme(appSettingsTheme)
