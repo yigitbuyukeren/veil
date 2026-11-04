@@ -112,7 +112,6 @@ Gaps for a later pass: the upstream screens marked "on purpose" (look and Turkis
 
 ## Language policy
 
-- **Turkish first.** New Veil strings (`veil_` keys) are written in Turkish and are identical in `MR/base` and `MR/tr`, so that a missing key never breaks the build. Keys that no Kotlin file uses are removed from both.
-- The English translation comes later in the redesign; it is a small job.
+- **Turkish first.** Turkish (`tr`) is the primary language of Veil. New Veil strings (`veil_` keys) are written in Turkish in `MR/tr`, and `MR/base` holds the English fallback, so a missing key never breaks the build. Keys that no Kotlin file uses are removed from both.
 - `scripts/ci/strings-check.sh` allows no new "SimpleX" wording in the string files (a ratchet with the counts in `scripts/ci/strings-simplex-baseline.txt`), requires the same `veil_` keys in both files and blocks prohibited claims in them. Reducing the remaining upstream wording is tracked as the branding and language gate in [ROADMAP.md](ROADMAP.md).
 - Documentation stays in English.
