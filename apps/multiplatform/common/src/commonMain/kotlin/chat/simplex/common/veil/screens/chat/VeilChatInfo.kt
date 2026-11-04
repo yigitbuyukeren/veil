@@ -43,14 +43,14 @@ fun veilShowChatInfo(openUpstreamInfo: () -> Unit) {
     val stats = chatModel.controller.apiContactInfo(rhId, contactId)
     val code = chatModel.controller.apiGetContactCode(rhId, contactId)?.second
     ModalManager.end.showCustomModal { close ->
-      VeilContactInfoScreen(rhId, contactId, stats?.second, code, close)
+      VeilContactInfoScreen(rhId, contactId, stats?.first, stats?.second, code, close)
     }
   }
 }
 
 /** Info screen of a direct contact: who, which identity, verification, notifications, preferences, clear / delete. */
 @Composable
-fun VeilContactInfoScreen(rhId: Long?, contactId: Long, customUserProfile: Profile?, connectionCode: String?, close: () -> Unit) {
+fun VeilContactInfoScreen(rhId: Long?, contactId: Long, connectionStats: ConnectionStats?, customUserProfile: Profile?, connectionCode: String?, close: () -> Unit) {
   val colors = VeilTheme.colors
   val type = VeilTheme.type
   val chat = remember(contactId) { derivedStateOf { chatModel.getContactChat(contactId) } }.value
@@ -134,6 +134,24 @@ fun VeilContactInfoScreen(rhId: Long?, contactId: Long, customUserProfile: Profi
           },
         )
       }
+    }
+
+    VeilCard(Modifier.padding(bottom = 14.dp), contentPadding = PaddingValues(8.dp)) {
+      // upstream's full contact info: resync, address switch, send receipts, disappearing messages timer, servers
+      VeilInfoRow(
+        icon = MR.images.ic_settings_backup_restore,
+        title = stringResource(MR.strings.veil_chatinfo_advanced),
+        onClick = {
+          ModalManager.end.showCustomModal { closeAdvanced ->
+            ModalView(closeAdvanced, cardScreen = true) {
+              val ct = remember { derivedStateOf { (chatModel.getContactChat(contactId)?.chatInfo as? ChatInfo.Direct)?.contact } }.value
+              if (ct != null) {
+                ChatInfoView(chatModel.chatsContext, chatModel, ct, connectionStats, customUserProfile, ct.localAlias, connectionCode, closeAdvanced) { }
+              } else LaunchedEffect(Unit) { closeAdvanced() }
+            }
+          }
+        },
+      )
     }
 
     VeilButton(

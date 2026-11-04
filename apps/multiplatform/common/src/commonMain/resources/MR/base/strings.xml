@@ -3527,6 +3527,7 @@
   <string name="veil_chatinfo_notifications_on">Açık</string>
   <string name="veil_chatinfo_notifications_off">Sessize alındı</string>
   <string name="veil_chatinfo_preferences">Kişi tercihleri</string>
+  <string name="veil_chatinfo_advanced">Gelişmiş</string>
   <string name="veil_chatinfo_clear">Sohbeti temizle</string>
   <string name="veil_chatinfo_delete">Kişiyi sil</string>
   <string name="veil_verify_title">Güvenlik kodu</string>
