@@ -95,4 +95,4 @@ If any of S1, S2, S3 or S11 fail, the release decision is NO-GO.
 
 ## 8. Residual risks
 
-Timing correlation; compromised device; malicious peer; upstream vulnerabilities; Orbot or Tor bugs; relay availability and retention policy; legal/terms changes (see `docs/UPSTREAM_LICENSES.md`, `docs/RELAY_USAGE.md` when added). No independent audit exists.
+Timing correlation; compromised device; malicious peer; upstream vulnerabilities; Orbot or Tor bugs; relay availability and retention policy; legal/terms changes (see `UPSTREAM_LICENSES.md`, `RELAY_USAGE.md`). No independent audit exists.
