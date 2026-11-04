@@ -299,10 +299,12 @@ fun ModalData.NetworkAndServersView(closeNetworkAndServers: () -> Unit) {
       }
     }
 
-    SectionDividerSpaced()
+    if (VeilNetworkPolicy.CALLS_ENABLED) { // Veil: calls are disabled, so the WebRTC (ICE) servers are not offered
+      SectionDividerSpaced()
 
-    SectionView(generalGetString(MR.strings.settings_section_title_calls)) {
-      SettingsActionItem(painterResource(MR.images.ic_electrical_services), stringResource(MR.strings.webrtc_ice_servers), { ModalManager.start.showModal { RTCServersView(m) } })
+      SectionView(generalGetString(MR.strings.settings_section_title_calls)) {
+        SettingsActionItem(painterResource(MR.images.ic_electrical_services), stringResource(MR.strings.webrtc_ice_servers), { ModalManager.start.showModal { RTCServersView(m) } })
+      }
     }
 
     if (appPlatform.isAndroid) {

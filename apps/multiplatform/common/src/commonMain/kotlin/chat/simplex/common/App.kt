@@ -159,7 +159,8 @@ fun MainScreen() {
     val localUserCreated = chatModel.localUserCreated.value
     var showInitializationView by remember { mutableStateOf(false) }
     when {
-      onboarding == OnboardingStage.Step1_SimpleXInfo && chatModel.migrationState.value != null -> {
+      // Veil: Android has no way to start a device migration; the Veil onboarding handles a leftover state
+      onboarding == OnboardingStage.Step1_SimpleXInfo && chatModel.migrationState.value != null && !(appPlatform.isAndroid && VeilUi.onboarding) -> {
         // In migration process. Nothing should interrupt it, that's why it's the first branch in when()
         if (appPlatform.isDesktop) DesktopOnboarding(onboarding, chatModel)
         else SimpleXInfo(chatModel, onboarding = true)

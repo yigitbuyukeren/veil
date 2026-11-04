@@ -571,9 +571,12 @@ fun ChatInfoLayout(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
       ) {
-        SearchButton(modifier = Modifier.fillMaxWidth(0.25f), chat, contact, close, onSearchClicked)
-        AudioCallButton(modifier = Modifier.fillMaxWidth(0.33f), chat, contact, connStats)
-        VideoButton(modifier = Modifier.fillMaxWidth(0.5f), chat, contact, connStats)
+        // Veil: calls are disabled (VeilNetworkPolicy.CALLS_ENABLED), so the call buttons are not offered
+        SearchButton(modifier = Modifier.fillMaxWidth(if (VeilNetworkPolicy.CALLS_ENABLED) 0.25f else 0.5f), chat, contact, close, onSearchClicked)
+        if (VeilNetworkPolicy.CALLS_ENABLED) {
+          AudioCallButton(modifier = Modifier.fillMaxWidth(0.33f), chat, contact, connStats)
+          VideoButton(modifier = Modifier.fillMaxWidth(0.5f), chat, contact, connStats)
+        }
         MuteButton(modifier = Modifier.fillMaxWidth(1f), chat, contact)
       }
     }
