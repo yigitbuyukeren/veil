@@ -14,11 +14,14 @@ Recorded 2026-11-04. Setup: two instances of one arm64 Android 15 `google_apis` 
 | E8 | Local database not plaintext | PASS | `files_chat.db` header is not `SQLite format 3`, message strings absent from the file bytes (database key handling is upstream's, not audited) |
 | E9 | Tor stopped, app started: chat not started, alert shown | PASS | see `TOR_ONLY.md` |
 | E10 | Group created on device A (relay over Tor) | PASS | group `veilgrp` created |
-| E11 | Group with 2+ members, 3-member and 10-participant scenarios | NOT TESTED | adding a member through the UI could not be driven (invite action showed no screen); third emulator not run (memory) |
-| E12 | Contact verification code, wrong-contact case, key change | NOT TESTED | |
-| E13 | Delivery state semantics (sent vs delivered) | NOT TESTED | only presence of messages checked |
+| E11 | Group join through a group link: A creates group, shares the link, B opens it, joins incognito; messages both ways | PASS | link opened via VIEW intent on B; both sides show "connected"; each app uid had only `127.0.0.1:9050` sockets. 3-member and 10-participant scenarios NOT TESTED (no third emulator, memory) |
+| E11b | Member role limits: a plain member sees group preferences read-only ("Only group owners can change group preferences") and no invite action; owner can change roles | PASS (observed) | invite revocation, group-link deletion effects and anyone-can-join abuse controls NOT TESTED |
+| E12 | Security code: both sides show the same code, "Mark verified" and "Clear verification" change the state on that side | PASS (group member level) | wrong-contact (differing code) and key change NOT TESTED; 1:1 contact verification not exercised separately |
+| E13 | Delivery state semantics (sent vs delivered) | NOT TESTED | message Info lists per-member delivery rows, but the state icon is not exposed to the accessibility tree and screenshots are black (secure window); semantics unverified |
 | E14 | Background/doze behavior | NOT TESTED | emulator cannot represent vendor battery policy |
 | E15 | Relay availability over Tor | FLAKY | several connection attempts timed out on the first runs; later runs worked |
 | E16 | Settings > Help & support > "Tor and privacy status" shows proxy reachability, policy enforcement, incognito/link-preview/call defaults | PASS | Tor up: "reachable: yes"; Tor killed, "Check again": "reachable: no". Shows a SOCKS listener only, not circuit health |
 | E17 | Empty chat list no longer shows the upstream "Invest" banner (gated by `VeilBranding.UPSTREAM_PROMOTIONS`) | PASS | uiautomator text dump after APK update |
 | E18 | In-app open-source licenses section (AGPL-3.0, upstream copyright, link to notices) | PASS | present in the status screen; notices text itself is on GitHub, not bundled |
+
+| E19 | `scripts/emulator/scenario_group.py` end to end on a fresh group (create, link, join, messages both ways, socket check) | PASS | 9/9 steps, run on the same two emulators; repeatable by script, still emulator + host Tor only |
