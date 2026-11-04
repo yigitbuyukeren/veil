@@ -139,7 +139,7 @@ fun VeilGroupCreateScreen(rhId: Long?, close: () -> Unit, closeAll: () -> Unit) 
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-      VeilIcon(if (incognito) MR.images.ic_theater_comedy_filled else MR.images.ic_theater_comedy, if (incognito) colors.iris else colors.ink3, size = 24.dp)
+      VeilIcon(if (incognito) MR.images.ic_theater_comedy_filled else MR.images.ic_theater_comedy, if (incognito) colors.accent else colors.ink3, size = 24.dp)
       Column(Modifier.weight(1f)) {
         BasicText(stringResource(MR.strings.veil_grp_create_incognito), style = type.rowTitle.copy(color = colors.ink, fontSize = 15.sp))
         BasicText(
@@ -191,7 +191,7 @@ fun VeilGroupCreateScreen(rhId: Long?, close: () -> Unit, closeAll: () -> Unit) 
                 overflow = TextOverflow.Ellipsis,
               )
               if (c.contactConnIncognito) VeilIcon(MR.images.ic_theater_comedy_filled, colors.ink3, size = 22.dp)
-              else VeilIcon(if (checked) MR.images.ic_check_circle_filled else MR.images.ic_circle, if (checked) colors.mint else colors.ink3, size = 24.dp)
+              else VeilIcon(if (checked) MR.images.ic_check_circle_filled else MR.images.ic_circle, if (checked) colors.mintInk else colors.ink3, size = 24.dp)
             }
           }
         }

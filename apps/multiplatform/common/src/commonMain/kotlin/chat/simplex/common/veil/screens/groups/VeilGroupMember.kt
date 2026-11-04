@@ -211,7 +211,7 @@ private fun veilShowRoleSheet(rhId: Long?, groupInfo: GroupInfo, member: GroupMe
           Column(Modifier.weight(1f)) {
             BasicText(stringResource(roleLabel(role)), style = type.bodyLarge.copy(color = colors.ink))
           }
-          if (current) VeilIcon(MR.images.ic_check, colors.mint, size = 20.dp)
+          if (current) VeilIcon(MR.images.ic_check, colors.mintInk, size = 20.dp)
         }
       }
     }
