@@ -42,6 +42,9 @@ import chat.simplex.common.views.chatlist.UserPicker
 import chat.simplex.common.views.chatlist.filteredChats
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.onboarding.SetNotificationsModeAdditions
+import chat.simplex.common.veil.screens.system.VeilShellNotice
+import chat.simplex.common.veil.screens.system.VeilStoppedCard
+import chat.simplex.common.veil.screens.system.veilShellNotice
 import chat.simplex.common.veil.screens.settings.veilOpenSettings
 import chat.simplex.common.veil.screens.settings.veilOpenTorScreen
 import chat.simplex.common.veil.screens.settings.veilSettingsActive
@@ -128,7 +131,12 @@ fun VeilChatListScreen(
           ) { VeilIcon(MR.images.ic_settings, colors.ink2, size = 22.dp) }
         }
       )
-      if (ring == TorRingState.Unavailable) TorBanner()
+      // Veil: shell notices (chat stopped / no Tor) from the system screens.
+      when (veilShellNotice(chatModel.chatRunning.value, ring)) {
+        VeilShellNotice.Stopped -> VeilStoppedCard()
+        VeilShellNotice.TorDown -> TorBanner()
+        VeilShellNotice.None -> {}
+      }
       if (searching) {
         val focus = remember { FocusRequester() }
         LaunchedEffect(Unit) { focus.requestFocus() }
@@ -270,22 +278,22 @@ private fun Centered(content: @Composable () -> Unit) {
 
 @Composable
 private fun EmptyState(kind: VeilListEmpty) {
-  val colors = VeilTheme.colors
-  val type = VeilTheme.type
-  Centered {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-      if (kind == VeilListEmpty.NoChats) {
-        BasicText(stringResource(MR.strings.veil_list_empty_title), style = type.sheetTitle.copy(color = colors.ink, textAlign = TextAlign.Center))
-        BasicText(stringResource(MR.strings.veil_list_empty_text), style = type.body.copy(color = colors.ink3, textAlign = TextAlign.Center))
-      } else {
-        val res = when (kind) {
+  // Veil: the shared empty state component.
+  when (kind) {
+    VeilListEmpty.NoChats -> VeilEmptyState(
+      title = stringResource(MR.strings.veil_list_empty_title),
+      text = stringResource(MR.strings.veil_list_empty_text),
+      illustration = { VeilMark(64.dp) },
+    )
+    else -> VeilEmptyState(
+      text = stringResource(
+        when (kind) {
           VeilListEmpty.NoUnread -> MR.strings.veil_list_empty_unread
           VeilListEmpty.NoGroups -> MR.strings.veil_list_empty_groups
           else -> MR.strings.veil_list_empty_search
         }
-        BasicText(stringResource(res), style = type.body.copy(color = colors.ink3, textAlign = TextAlign.Center))
-      }
-    }
+      )
+    )
   }
 }
 

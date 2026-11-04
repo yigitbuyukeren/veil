@@ -18,6 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import chat.simplex.common.model.AppPreferences
 import chat.simplex.common.platform.*
+import chat.simplex.common.veil.VeilUi
+import chat.simplex.common.veil.screens.system.VeilDatabaseErrorView
 import chat.simplex.common.ui.theme.*
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.usersettings.AppVersionText
@@ -76,6 +78,32 @@ fun DatabaseErrorView(
   @Composable
   fun MigrationsText(ms: List<String>) {
     Text(String.format(generalGetString(MR.strings.database_migrations), ms.joinToString(", ")))
+  }
+
+  // Veil: Veil look of this screen (Android). State and logic stay here; every option of each state is kept.
+  if (VeilUi.system && appPlatform.isAndroid) {
+    VeilDatabaseErrorView(
+      status = chatDbStatus.value,
+      useKeychain = useKeychain,
+      storedKeyPresent = !storedDBKey.isNullOrEmpty(),
+      dbKey = dbKey,
+      busy = progressIndicator.value,
+      restoreAvailable = restoreDbFromBackup.value,
+      onSaveAndOpen = ::saveAndRunChatOnClick,
+      onOpen = { callRunChat() },
+      onUpgrade = { callRunChat(confirmMigrations = MigrationConfirmation.YesUp) },
+      onDowngrade = { callRunChat(confirmMigrations = MigrationConfirmation.YesUpDown) },
+      onRestore = {
+        AlertManager.shared.showAlertDialog(
+          title = generalGetString(MR.strings.restore_database_alert_title),
+          text = generalGetString(MR.strings.restore_database_alert_desc),
+          confirmText = generalGetString(MR.strings.restore_database_alert_confirm),
+          onConfirm = { restoreDb(restoreDbFromBackup, appPreferences) },
+          destructive = true,
+        )
+      },
+    )
+    return
   }
 
   ColumnWithScrollBarNoAppBar(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {

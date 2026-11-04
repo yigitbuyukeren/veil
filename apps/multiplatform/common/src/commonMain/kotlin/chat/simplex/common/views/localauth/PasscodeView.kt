@@ -11,6 +11,8 @@ import androidx.compose.ui.input.key.*
 import dev.icerock.moko.resources.compose.painterResource
 import androidx.compose.ui.unit.dp
 import chat.simplex.common.platform.*
+import chat.simplex.common.veil.VeilUi
+import chat.simplex.common.veil.screens.system.VeilPasscodeView
 import chat.simplex.common.ui.theme.DEFAULT_PADDING
 import chat.simplex.common.views.chat.group.ProgressIndicator
 import chat.simplex.common.views.helpers.SimpleButton
@@ -28,6 +30,11 @@ fun PasscodeView(
   submit: () -> Unit,
   cancel: () -> Unit,
 ) {
+  // Veil: Veil passcode screen on Android; the callers' logic (submit, cancel, allowed codes) is unchanged.
+  if (VeilUi.system && appPlatform.isAndroid) {
+    VeilPasscodeView(passcode, title, reason, submitLabel, submitEnabled, buttonsEnabled, submit, cancel)
+    return
+  }
   val focusRequester = remember { FocusRequester() }
 
   @Composable

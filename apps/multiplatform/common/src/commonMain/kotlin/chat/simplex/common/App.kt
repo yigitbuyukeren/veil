@@ -24,6 +24,7 @@ import chat.simplex.common.model.ChatController.appPrefs
 import chat.simplex.common.platform.*
 import chat.simplex.common.ui.theme.*
 import chat.simplex.common.veil.VeilUi
+import chat.simplex.common.veil.screens.system.VeilLockScreen
 import chat.simplex.common.veil.screens.onboarding.VeilOnboarding
 import chat.simplex.common.veil.screens.chatlist.VeilChatListScreen
 import chat.simplex.common.views.CreateFirstProfile
@@ -120,6 +121,14 @@ fun MainScreen() {
 
   @Composable
   fun AuthView() {
+    // Veil: lock screen (Android); same unlock action.
+    if (VeilUi.system && appPlatform.isAndroid) {
+      VeilLockScreen {
+        AppLock.laFailed.value = false
+        AppLock.runAuthenticate()
+      }
+      return
+    }
     Surface(color = MaterialTheme.colors.background.copy(1f), contentColor = LocalContentColor.current) {
       Box(
         Modifier.fillMaxSize(),

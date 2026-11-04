@@ -22,5 +22,5 @@ object VeilUi {
   /** Settings screens. */
   var settings: Boolean = true
   /** System surfaces: alerts, lock screen, database error, progress, call overlays. */
-  var system: Boolean = false
+  var system: Boolean = true
 }

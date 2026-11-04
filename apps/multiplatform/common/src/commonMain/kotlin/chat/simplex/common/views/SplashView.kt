@@ -4,9 +4,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import chat.simplex.common.platform.appPlatform
+import chat.simplex.common.veil.VeilUi
+import chat.simplex.common.veil.screens.system.VeilSplash
 
 @Composable
 fun SplashView(nonTransparent: Boolean = false) {
+  // Veil: night background and the Veil mark (Android).
+  if (VeilUi.system && appPlatform.isAndroid) {
+    VeilSplash()
+    return
+  }
   Surface(
     Modifier
       .fillMaxSize(),
