@@ -53,7 +53,7 @@ Resource generation lowercases names with the default locale; with a Turkish loc
 | Lint | NOT RUN |
 | `armeabi-v7a` build | NOT RUN (no armv7a native libs fetched) |
 | Install/run on a device or emulator | NOT TESTED |
-| Reproducible build of the native core | NOT DONE |
+| Reproducible build of the native core | NOT DONE, **BLOCKED**: upstream builds it with Nix (haskell.nix cross-compilation to Android) on x86_64 Linux through its Hydra cache; this Mac has no Nix, GHC or Docker and about 4 GB free disk, and the CI job URL is not in the repository. A GitHub-hosted Nix build was not attempted (multi-hour cross-compile without a known cache). Until it is done, release builds are NO-GO |
 
 APK size 260 MB (debug, one ABI). The signing key and all outputs stay out of Git.
 
