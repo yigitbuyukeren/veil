@@ -205,6 +205,7 @@ fun ChatListView(chatModel: ChatModel, userPickerState: MutableStateFlow<Animate
     if (oneHandUI.value) {
       ChatListWithLoadingScreen(searchText, listState)
       Column(Modifier.align(Alignment.BottomCenter)) {
+        VeilSocksIndicator()
         ChatListToolbar(
           userPickerState,
           listState,
@@ -221,6 +222,7 @@ fun ChatListView(chatModel: ChatModel, userPickerState: MutableStateFlow<Animate
           stopped,
           setPerformLA,
         )
+        VeilSocksIndicator()
       }
       if (searchText.value.text.isEmpty() && !chatModel.desktopNoUserNoRemote && chatModel.chatRunning.value == true) {
         NewChatSheetFloatingButton(oneHandUI, stopped)

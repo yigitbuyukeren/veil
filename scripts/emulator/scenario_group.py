@@ -3,8 +3,8 @@
 then each app uid's sockets are checked (only 127.0.0.1:9050 allowed).
 Usage: scenario_group.py <serialA> <serialB> [groupname]. Both apps must be past onboarding and on the chat list,
 Tor must be up with `adb reverse tcp:9050 tcp:9050`. Exit code 0 only if every step passed. Emulator evidence only."""
-import os, re, subprocess, sys, time, xml.etree.ElementTree as ET
-ADB = os.path.join(os.environ.get("ANDROID_HOME", "/opt/homebrew/share/android-commandlinetools"), "platform-tools", "adb")
+import os, re, shutil, subprocess, sys, time, xml.etree.ElementTree as ET
+ADB = shutil.which("adb") or os.path.join(os.environ.get("ANDROID_HOME", ""), "platform-tools", "adb")
 PKG = "io.github.yigitbuyukeren.veil"
 A, B = sys.argv[1], sys.argv[2]
 NAME = sys.argv[3] if len(sys.argv) > 3 else "scn" + str(int(time.time()) % 100000)

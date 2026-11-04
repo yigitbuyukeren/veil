@@ -56,4 +56,9 @@ object VeilNetworkPolicy {
 /** Veil branding policy: no upstream promotion, fundraising or support-contact surfaces. */
 object VeilBranding {
   const val UPSTREAM_PROMOTIONS = false
+
+  /** The core adds an "Ask SimpleX Team" contact card to every new profile; hide it from contact lists. */
+  const val UPSTREAM_TEAM_CARD_NAME = "Ask SimpleX Team"
+  fun isUpstreamTeamCard(chat: Chat): Boolean =
+    !UPSTREAM_PROMOTIONS && (chat.chatInfo as? ChatInfo.Direct)?.contact?.profile?.displayName == UPSTREAM_TEAM_CARD_NAME
 }

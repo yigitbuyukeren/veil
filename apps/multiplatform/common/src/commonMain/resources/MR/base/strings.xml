@@ -15,9 +15,11 @@
   <string name="veil_status_checking">checking…</string>
   <string name="veil_status_ok">yes</string>
   <string name="veil_status_fail">no</string>
-  <string name="veil_status_tor_proxy">Tor proxy %1$s reachable: %2$s</string>
+  <string name="veil_status_tor_proxy">SOCKS proxy %1$s answers: %2$s</string>
   <string name="veil_status_policy">Tor-only network settings enforced: %1$s</string>
-  <string name="veil_status_note">This shows that a proxy answers, not that Tor circuits are working. Without Tor nothing is sent.</string>
+  <string name="veil_status_note">This only measures whether a local SOCKS proxy answers. It does not show that Tor circuits or relays work. Without the proxy nothing is sent.</string>
+  <string name="veil_socks_up">SOCKS proxy answers (Tor circuits not measured)</string>
+  <string name="veil_socks_down">SOCKS proxy not answering: nothing is sent or received</string>
   <string name="veil_status_recheck">Check again</string>
   <string name="veil_status_incognito">New connections use a random profile: %1$s</string>
   <string name="veil_status_previews">Link previews off: %1$s</string>

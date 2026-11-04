@@ -104,7 +104,7 @@ fun chatContactType(chat: Chat): ContactType {
 }
 
 private fun filterContactTypes(c: List<Chat>, contactTypes: List<ContactType>): List<Chat> {
-  return c.filter { chat -> contactTypes.contains(chatContactType(chat)) }
+  return c.filter { chat -> contactTypes.contains(chatContactType(chat)) && !VeilBranding.isUpstreamTeamCard(chat) }
 }
 
 @Composable

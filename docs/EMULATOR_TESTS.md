@@ -25,3 +25,5 @@ Recorded 2026-11-04. Setup: two instances of one arm64 Android 15 `google_apis` 
 | E18 | In-app open-source licenses section (AGPL-3.0, upstream copyright, link to notices) | PASS | present in the status screen; notices text itself is on GitHub, not bundled |
 
 | E19 | `scripts/emulator/scenario_group.py` end to end on a fresh group (create, link, join, messages both ways, socket check) | PASS | 9/9 steps, run on the same two emulators; repeatable by script, still emulator + host Tor only |
+| E20 | Chat-list line "SOCKS proxy answers (Tor circuits not measured)" / "SOCKS proxy not answering: nothing is sent or received", polled every 15 s | PASS | Tor killed: text flipped within 22 s; Tor restarted: flipped back. Measures a local SOCKS listener only, not circuits or relays |
+| E21 | "Ask SimpleX Team" card (created by the prebuilt core) hidden from the New chat contact list | PASS | text dump of New chat sheet after APK update; the card still exists in the core database |

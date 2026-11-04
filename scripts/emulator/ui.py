@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """adb UI helper for emulator tests. ui.py <serial> texts | tap "<text>" | type "<text>" | key <keycode> | dump
 Needs ANDROID_HOME. Taps the first node whose text/content-desc contains the argument (case-insensitive)."""
-import os, re, subprocess, sys, xml.etree.ElementTree as ET
-ADB = os.path.join(os.environ.get("ANDROID_HOME", "/opt/homebrew/share/android-commandlinetools"), "platform-tools", "adb")
+import os, re, shutil, subprocess, sys, xml.etree.ElementTree as ET
+ADB = shutil.which("adb") or os.path.join(os.environ.get("ANDROID_HOME", ""), "platform-tools", "adb")
 serial, cmd, *args = sys.argv[1:]
 def sh(*a): return subprocess.run([ADB, "-s", serial, *a], capture_output=True, text=True).stdout
 def nodes():

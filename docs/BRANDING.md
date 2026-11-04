@@ -15,10 +15,11 @@
 - Upstream promotion surfaces hidden behind `VeilBranding.UPSTREAM_PROMOTIONS=false`: investment banner, "Why SimpleX is built", news/founder/e-mail contact items, "support the project" section (rate app, star on GitHub, contribute), the empty-chat-list investment banner and the settings/what's-new crowdfunding entries (`crowdfundingAvailable()`).
 - Settings > Help & support > "Tor and privacy status": proxy reachability, policy enforcement, privacy defaults and an open-source licenses section (AGPL-3.0, upstream copyright, link to `THIRD_PARTY_NOTICES.md`).
 
+- The core's "Ask SimpleX Team" contact card is hidden in the New chat contact list (`VeilBranding.isUpstreamTeamCard`); it still exists in the core database until the core is rebuilt from source.
+
 ## Still upstream-branded (to resolve in VEIL-016, before any distribution)
 
 - Onboarding screens and in-app logo (`icon_foreground_android_common`, `logo*.png`, "Why SimpleX is built").
-- The core creates an "Ask SimpleX Team" contact card in the contacts list (comes from the prebuilt native core; needs a core rebuild or a UI filter).
 - Other strings in non-English locales still say SimpleX; "About SimpleX Chat", help, news, contact-the-team and rating items in Settings.
 - Deep-link intent filters for `simplex:` and `simplex.chat`/relay hosts (`AndroidManifest.xml`).
 - Desktop module (not part of Veil).
