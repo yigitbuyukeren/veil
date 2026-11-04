@@ -69,6 +69,35 @@ class VeilNetworkPolicyTest {
     assertEquals(":9050", c.socksProxy)
   }
 
+  @Test
+  fun loopbackTorProxyFormsAreCompliant() {
+    val ok = VeilNetworkPolicy.enforce(NetCfg.defaults)
+    for (p in listOf(":9050", "127.0.0.1:9050", "localhost:9050", "[::1]:9050", "@:9050", "@127.0.0.1:9050")) {
+      assertTrue(VeilNetworkPolicy.isCompliant(ok.copy(socksProxy = p)), p)
+    }
+  }
+
+  @Test
+  fun otherProxyFormsAreNotCompliant() {
+    val ok = VeilNetworkPolicy.enforce(NetCfg.defaults)
+    for (p in listOf(null, "", "9050", ":9051", ":1080", "127.0.0.1:9051", "10.0.0.5:9050", "192.168.1.2:9050", "example.com:9050",
+      "127.0.0.2:9050", "[::2]:9050", "user:pw@127.0.0.1:9050", "user:pw@:9050", ":@:9050", "127.0.0.1:9050 ", "127.0.0.1:90500", "x127.0.0.1:9050")) {
+      assertFalse(VeilNetworkPolicy.isCompliant(ok.copy(socksProxy = p)), p ?: "null")
+    }
+  }
+
+  @Test
+  fun normalizedProxyDoesNotHideOtherViolations() {
+    val ok = VeilNetworkPolicy.enforce(NetCfg.defaults).copy(socksProxy = "127.0.0.1:9050")
+    assertTrue(VeilNetworkPolicy.isCompliant(ok))
+    assertFalse(VeilNetworkPolicy.isCompliant(ok.copy(hostMode = HostMode.Public)))
+    assertFalse(VeilNetworkPolicy.isCompliant(ok.copy(requiredHostMode = false)))
+    assertFalse(VeilNetworkPolicy.isCompliant(ok.copy(socksMode = SocksMode.Onion)))
+    assertFalse(VeilNetworkPolicy.isCompliant(ok.copy(smpProxyMode = SMPProxyMode.Always)))
+    assertFalse(VeilNetworkPolicy.isCompliant(ok.copy(smpProxyFallback = SMPProxyFallback.Allow)))
+    assertFalse(VeilNetworkPolicy.isCompliant(ok.copy(smpWebPortServers = SMPWebPortServers.All)))
+  }
+
   private fun fakeProxy(reply: ByteArray?): Pair<ServerSocket, Int> {
     val ss = ServerSocket(0, 1, java.net.InetAddress.getByName("127.0.0.1"))
     thread(isDaemon = true) {

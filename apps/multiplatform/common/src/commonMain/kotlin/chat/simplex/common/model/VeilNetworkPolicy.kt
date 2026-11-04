@@ -29,8 +29,17 @@ object VeilNetworkPolicy {
     smpWebPortServers = SMPWebPortServers.Off
   )
 
-  /** True only when [cfg] already satisfies the policy. */
-  fun isCompliant(cfg: NetCfg): Boolean = cfg == enforce(cfg)
+  /**
+   * The core renders the proxy as `[auth@]host:port` (simplexmq `SocksProxyWithAuth`: empty auth = isolate by auth, "@" = no auth,
+   * "user:pw@" = credentials; host is a `Show SockAddr` IP such as 127.0.0.1 or [::1], and may be omitted when typed in).
+   * Only a loopback host on port 9050 without credentials is accepted.
+   */
+  private val COMPLIANT_PROXY = Regex("""^@?(127\.0\.0\.1|localhost|\[::1\])?:$SOCKS_PORT$""")
+
+  fun isCompliantProxy(proxy: String?): Boolean = proxy != null && COMPLIANT_PROXY.matches(proxy)
+
+  /** True only when [cfg] already satisfies the policy; the proxy string is compared by [isCompliantProxy] since the core may normalize it. */
+  fun isCompliant(cfg: NetCfg): Boolean = isCompliantProxy(cfg.socksProxy) && cfg.copy(socksProxy = enforce(cfg).socksProxy) == enforce(cfg)
 
   /**
    * Readiness probe: the SOCKS5 proxy answers a no-auth greeting. This proves a SOCKS listener exists,
