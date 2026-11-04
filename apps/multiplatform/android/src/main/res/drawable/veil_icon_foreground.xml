@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
     <!-- Veil mark: a "V" drawn as a draped cloth. Original artwork, no upstream assets. -->
+    <!-- Tül palette: diagonal gradient #7CF5D3 -> #8A7CFF -> #FF8FB1 across the V. -->
     <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M30,34 L42,34 L54,66 L66,34 L78,34 L60,80 L48,80 Z" />
+        android:pathData="M30,34 L42,34 L54,66 L66,34 L78,34 L60,80 L48,80 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="30"
+                android:startY="28"
+                android:endX="78"
+                android:endY="80"
+                android:startColor="#7CF5D3"
+                android:centerColor="#8A7CFF"
+                android:endColor="#FF8FB1" />
+        </aapt:attr>
+    </path>
     <path
         android:fillColor="#99FFFFFF"
         android:pathData="M36,28 Q54,40 72,28 L72,31 Q54,43 36,31 Z" />
