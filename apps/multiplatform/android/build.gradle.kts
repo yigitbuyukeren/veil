@@ -125,17 +125,19 @@ android {
         "zh-rCN"
     )
     ndkVersion = "23.1.7779620"
+    // Veil: optional `-Pveil.abis=arm64-v8a` limits the build to the listed ABIs (default: all supported)
+    val veilAbis = (project.findProperty("veil.abis") as String?)?.split(",")?.map { it.trim() } ?: listOf("arm64-v8a", "armeabi-v7a")
     if (isBundle) {
-        defaultConfig.ndk.abiFilters("arm64-v8a", "armeabi-v7a")
+        defaultConfig.ndk.abiFilters(*veilAbis.toTypedArray())
     } else {
         splits {
             abi {
                 isEnable = true
                 reset()
                 if (isRelease) {
-                    include("arm64-v8a", "armeabi-v7a")
+                    include(*veilAbis.toTypedArray())
                 } else {
-                    include("arm64-v8a", "armeabi-v7a")
+                    include(*veilAbis.toTypedArray())
                     isUniversalApk = false
                 }
             }
