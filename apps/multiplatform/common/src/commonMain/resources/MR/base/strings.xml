@@ -3382,4 +3382,42 @@
   <string name="veil_chat_editing">Mesajı düzenliyorsun</string>
   <string name="veil_chat_close_bar">Kapat</string>
   <string name="veil_chat_tor_down">Tor yok — hiçbir şey gönderilmiyor</string>
+
+  <!-- Veil new chat -->
+  <string name="veil_new_title">Yeni sohbet</string>
+  <string name="veil_new_intro">Birini eklemenin tek yolu bir bağlantı paylaşmak. Rehber taranmaz.</string>
+  <string name="veil_new_entry_invite">Davet linki oluştur</string>
+  <string name="veil_new_entry_invite_sub">Tek kullanımlık</string>
+  <string name="veil_new_entry_paste">Link yapıştır</string>
+  <string name="veil_new_entry_paste_sub">Birinin gönderdiği linki aç</string>
+  <string name="veil_new_entry_scan">QR tara</string>
+  <string name="veil_new_entry_scan_sub">Yüz yüze bağlanmak için</string>
+  <string name="veil_new_entry_group">Grup oluştur</string>
+  <string name="veil_new_entry_group_sub">Ayrı bir kimlikle katılabilirsin</string>
+  <string name="veil_new_back">Geri</string>
+  <string name="veil_new_close">Kapat</string>
+  <string name="veil_new_invite_title">Davet linki</string>
+  <string name="veil_new_invite_tor_down">Tor yok — link oluşturulamaz. Orbot’u aç ve yeniden dene.</string>
+  <string name="veil_new_invite_open_orbot">Orbot’u aç</string>
+  <string name="veil_new_invite_creating">Link oluşturuluyor…</string>
+  <string name="veil_new_invite_failed">Link oluşturulamadı.</string>
+  <string name="veil_new_invite_retry">Yeniden dene</string>
+  <string name="veil_new_invite_note">Bu link tek kullanımlıktır: biri bağlandığında geçersiz olur. Linki yalnızca bağlanmak istediğin kişiyle paylaş; sonra güvenlik kodunu karşılaştır.</string>
+  <string name="veil_new_invite_route">Bağlantı, Tor üzerinden röle sunucuları aracılığıyla kurulur.</string>
+  <string name="veil_new_invite_qr_desc">Davet linkinin QR kodu</string>
+  <string name="veil_new_copy">Kopyala</string>
+  <string name="veil_new_copied">Kopyalandı</string>
+  <string name="veil_new_share">Paylaş</string>
+  <string name="veil_new_incognito_title">Gizli profil ile</string>
+  <string name="veil_new_incognito_on">Bu bağlantıda adın yerine rastgele bir takma kimlik görünür.</string>
+  <string name="veil_new_incognito_off">Bu bağlantıda profil adın görünür: %1$s.</string>
+  <string name="veil_new_paste_title">Link yapıştır</string>
+  <string name="veil_new_paste_intro">Sana gönderilen davet linkini yapıştır.</string>
+  <string name="veil_new_paste_placeholder">Davet linki</string>
+  <string name="veil_new_paste_from_clipboard">Panodan yapıştır</string>
+  <string name="veil_new_connect">Bağlan</string>
+  <string name="veil_new_connecting">Bağlanılıyor…</string>
+  <string name="veil_new_scan_title">QR tara</string>
+  <string name="veil_new_scan_intro">Karşındaki kişinin QR kodunu çerçeveye hizala.</string>
+  <string name="veil_new_scan_camera_note">Kamera izni yalnızca tarama sırasında kullanılır.</string>
 </resources>
