@@ -24,6 +24,7 @@ jobs:
       - run: bash scripts/ci/egress-check.sh
       - run: bash scripts/ci/presets-onion-check.sh
       - run: bash scripts/ci/policy-check.sh
+      - run: bash scripts/ci/strings-check.sh
 
   android-foss-debug:
     runs-on: ubuntu-24.04
@@ -53,6 +54,6 @@ jobs:
         run: |
           {
             echo "### Veil CI status"
-            echo "- RAN: secret scan, docs check, workflow lint (job static); FOSS debug build and unit tests (this job)"
-            echo "- NOT RUN: lint, armeabi-v7a, native core build from source, third-party license inventory, instrumented and real-device tests"
+            echo "- RAN: secret scan, docs check, strings check, workflow lint (job static); FOSS debug build and unit tests (this job)"
+            echo "- NOT RUN: lint, armeabi-v7a, native core from source (not planned: prebuilt, signature-verified libs), third-party license inventory, instrumented and real-device tests"
           } >> "$GITHUB_STEP_SUMMARY"
