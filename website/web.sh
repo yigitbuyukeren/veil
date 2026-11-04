@@ -1,0 +1,89 @@
+#!/bin/bash
+
+set -e
+# Eleventy OOMs with default 2GB V8 heap when building 280+ pages across 23 languages
+export NODE_OPTIONS=--max-old-space-size=4096
+
+cp -R docs website/src
+rm -rf website/src/docs/contributing
+rm -rf website/src/docs/rfcs
+rm website/src/docs/lang/*/README.md
+rm -rf website/src/docs/dependencies
+rm -f website/src/docs/LINKS.md
+cp -R docs/links/images website/src/link-images 2>/dev/null || true
+cp -R blog website/src
+cp -R images website/src
+rm website/src/blog/README.md
+rm -rf website/src/blog/new
+cp PRIVACY.md website/src/privacy.md
+cd website
+
+langs=()
+
+# this loop finds out the available languages
+for file in langs/*.json; do
+  if [ -f "$file" ]; then
+    file_name=$(basename "$file")
+    file_name=${file_name%.*}
+    langs+=($file_name)
+  fi
+done
+
+npm install
+cp node_modules/lottie-web/build/player/lottie.min.js src/js
+cp node_modules/ethers/dist/ethers.umd.min.js src/js
+cp node_modules/ethers/dist/ethers.umd.js.map src/js
+mkdir -p src/file-assets
+cp node_modules/@simplex-chat/xftp-web/dist-web/assets/index.js src/file-assets/
+cp node_modules/@simplex-chat/xftp-web/dist-web/assets/index.css src/file-assets/
+cp node_modules/@simplex-chat/xftp-web/dist-web/assets/crypto.worker.js src/file-assets/
+node merge_translations.js
+node customize_docs_frontmatter.js
+
+# creating folders for each language for internationalization
+for lang in "${langs[@]}"; do
+  mkdir -p src/$lang
+  cp src/index.html src/$lang
+  cp src/old.html src/$lang
+  cp src/messaging.html src/$lang
+  cp src/contact.html src/$lang
+  cp src/invitation.html src/$lang
+  cp src/fdroid.html src/$lang
+  cp src/why.html src/$lang
+  cp src/file.html src/$lang
+  echo "{\"lang\":\"$lang\"}" > src/$lang/$lang.json
+  echo "done $lang copying"
+done
+
+for f in src/js/*.jsc; do
+  [ -f "$f" ] && cpp -P -traditional-cpp "$f" "${f%.jsc}.js"
+done
+
+npm run build
+
+for lang in "${langs[@]}"; do
+  rm -rf src/$lang
+  echo "done $lang deletion"
+done
+
+# for val in "${langs[@]}"; do
+#   json_content=$(echo "$json_content" | jq ". + {$val: $(jq . langs/$val.json)}")
+# done
+# echo "$json_content" > translations.json
+
+
+# keys of the english language are used as the base keys
+# base_keys=($(jq -r 'keys[]' 'langs/en.json'))
+# this program generates a combined translations.json file
+# main_json_obj="{}"
+# for key in "${base_keys[@]}"; do
+#   val_json_obj="{}"
+#   for lang in "${langs[@]}"; do
+#     val="$(jq .["\"$key\""] langs/$lang.json)"
+#     if [ ! -z "$val" ] && [ "$val" != "null" ]; then
+#       val_json_obj=$(echo "$val_json_obj" | jq ". + {$lang: $val}")
+#     fi
+#   done
+#   main_json_obj=$(echo "$main_json_obj" | jq ". + {\"$key\": $val_json_obj}")
+# done
+# echo "$main_json_obj" > translations.json
