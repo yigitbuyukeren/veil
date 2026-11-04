@@ -19,3 +19,6 @@ Recorded 2026-11-04. Setup: two instances of one arm64 Android 15 `google_apis` 
 | E13 | Delivery state semantics (sent vs delivered) | NOT TESTED | only presence of messages checked |
 | E14 | Background/doze behavior | NOT TESTED | emulator cannot represent vendor battery policy |
 | E15 | Relay availability over Tor | FLAKY | several connection attempts timed out on the first runs; later runs worked |
+| E16 | Settings > Help & support > "Tor and privacy status" shows proxy reachability, policy enforcement, incognito/link-preview/call defaults | PASS | Tor up: "reachable: yes"; Tor killed, "Check again": "reachable: no". Shows a SOCKS listener only, not circuit health |
+| E17 | Empty chat list no longer shows the upstream "Invest" banner (gated by `VeilBranding.UPSTREAM_PROMOTIONS`) | PASS | uiautomator text dump after APK update |
+| E18 | In-app open-source licenses section (AGPL-3.0, upstream copyright, link to notices) | PASS | present in the status screen; notices text itself is on GitHub, not bundled |

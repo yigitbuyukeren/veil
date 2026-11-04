@@ -146,6 +146,7 @@ fun HelpAndSupportView(
       SettingsActionItem(painterResource(MR.images.ic_help), stringResource(MR.strings.how_to_use_simplex_chat), showModal { HelpView(userDisplayName) }, disabled = stopped)
       SettingsActionItem(painterResource(MR.images.ic_add), stringResource(MR.strings.whats_new), showCustomModal { _, close -> WhatsNewView(viaSettings = true, close = close) }, disabled = stopped)
       SettingsActionItem(painterResource(MR.images.ic_info), stringResource(MR.strings.veil_about), { AlertManager.shared.showAlertMsg(title = generalGetString(MR.strings.veil_about_title), text = generalGetString(MR.strings.veil_about_text)) })
+      SettingsActionItem(painterResource(MR.images.ic_wifi_tethering), stringResource(MR.strings.veil_status_title), showModal { VeilStatusView() })
       SettingsActionItem(painterResource(MR.images.ic_github), stringResource(MR.strings.veil_source_code), { uriHandler.openExternalLink("https://github.com/yigitbuyukeren/veil") }, textColor = MaterialTheme.colors.primary)
       SettingsActionItem(painterResource(MR.images.ic_info), stringResource(MR.strings.about_simplex_chat), showModal { SimpleXInfo(it, onboarding = false) })
     }

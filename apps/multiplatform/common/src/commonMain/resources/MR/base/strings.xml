@@ -9,6 +9,22 @@
   <string name="veil_calls_disabled_text">Voice and video calls send media outside Tor and are disabled in Veil.</string>
   <string name="veil_external_link_warning">This opens the link in another app, outside Tor. The website can see your IP address.</string>
   <string name="veil_tor_retry">Retry</string>
+  <string name="veil_status_title">Tor and privacy status</string>
+  <string name="veil_status_network">Network</string>
+  <string name="veil_status_privacy">Privacy defaults</string>
+  <string name="veil_status_checking">checking…</string>
+  <string name="veil_status_ok">yes</string>
+  <string name="veil_status_fail">no</string>
+  <string name="veil_status_tor_proxy">Tor proxy %1$s reachable: %2$s</string>
+  <string name="veil_status_policy">Tor-only network settings enforced: %1$s</string>
+  <string name="veil_status_note">This shows that a proxy answers, not that Tor circuits are working. Without Tor nothing is sent.</string>
+  <string name="veil_status_recheck">Check again</string>
+  <string name="veil_status_incognito">New connections use a random profile: %1$s</string>
+  <string name="veil_status_previews">Link previews off: %1$s</string>
+  <string name="veil_status_calls">Calls off: %1$s</string>
+  <string name="veil_licenses">Open-source licenses</string>
+  <string name="veil_licenses_text">Veil is free software under the GNU AGPL-3.0, based on SimpleX Chat (Copyright SimpleX Chat Ltd and contributors). It includes third-party libraries under Apache-2.0, MIT, BSD and LGPL-2.1 licenses; the full list is in the notices file.</string>
+  <string name="veil_licenses_notices">Third-party notices</string>
   <string name="veil_source_code">Veil source code (AGPL-3.0)</string>
 
   <string name="thousand_abbreviation">k</string>

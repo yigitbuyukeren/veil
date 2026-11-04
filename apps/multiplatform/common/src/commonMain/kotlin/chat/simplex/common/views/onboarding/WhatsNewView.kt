@@ -1023,6 +1023,7 @@ else
 // Google Play policy restricts promoting investments, so Play builds only show it in the US
 @Composable
 fun crowdfundingAvailable(): Boolean {
+  if (!VeilBranding.UPSTREAM_PROMOTIONS) return false
   if (!platform.androidIsPlayStoreBuild) return true
   if (androidPlayStoreCountry.value == null) {
     LaunchedEffect(Unit) {
