@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +29,10 @@ enum class VeilChipStyle {
   Warning,
 }
 
-/** Small pill label (22dp). Clickable when [onClick] is set. [leading] is an optional icon slot. */
+/**
+ * Small pill label (at least 22dp tall: it grows with the font scale). Clickable when [onClick] is set, in which case
+ * its touch target is at least 48dp. [leading] is an optional icon slot.
+ */
 @Composable
 fun VeilChip(
   text: String,
@@ -59,10 +63,11 @@ fun VeilChip(
   }
   Row(
     modifier
-      .height(22.dp)
+      .then(if (onClick != null) Modifier.minimumInteractiveComponentSize() else Modifier)
+      .heightIn(min = 22.dp)
       .then(styled)
       .then(if (onClick != null) Modifier.clickable(role = Role.Button, onClick = onClick) else Modifier)
-      .padding(horizontal = 9.dp),
+      .padding(horizontal = 9.dp, vertical = 3.dp),
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.spacedBy(5.dp),
   ) {

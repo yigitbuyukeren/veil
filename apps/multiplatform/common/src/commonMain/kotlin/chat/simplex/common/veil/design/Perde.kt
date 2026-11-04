@@ -24,7 +24,8 @@ import kotlin.math.tan
 /**
  * "Perde" (curtain): shows [content] behind a tulle veil until [revealed] is true.
  *
- * Veiled look: blurred content under a translucent tulle (white wash 13 % -> 6 %), a fine 45 degree weave, grain
+ * Veiled look: blurred content under a translucent tulle (`tulleTop` -> `tulleBottom`: white 13 % -> 6 % in Gece, a
+ * frosted off-white 62 % -> 46 % in Sis), a fine 45 degree weave, grain
  * and, when motion is allowed, a sheen drifting across every 5.5 s. Revealing lifts the veil (fades, slides up 6dp
  * and squashes to 35 % height) while the blur relaxes, over `VeilMotion.liftMillis` (280 ms, instant with
  * reduce-motion).
@@ -71,9 +72,9 @@ fun Perde(
             transformOrigin = TransformOrigin(0.5f, 0f)
           }
           .drawBehind { drawTulle(colors, opaque = !blurSupported) }
-          .border(1.dp, Color.White.copy(alpha = 0.10f), shape)
+          .border(1.dp, colors.wash.copy(alpha = 0.10f), shape)
       ) {
-        if (!reduce) Sheen(Modifier.matchParentSize(), motion.sheenMillis)
+        if (!reduce) Sheen(Modifier.matchParentSize(), motion.sheenMillis, colors.sheen)
       }
     }
   }
@@ -84,22 +85,22 @@ private fun DrawScope.drawTulle(colors: VeilColors, opaque: Boolean) {
     // No blur on this device: hide the content with an (almost) opaque layer instead.
     drawRect(colors.night2.copy(alpha = 0.97f))
   }
-  drawRect(Brush.verticalGradient(listOf(Color.White.copy(alpha = 0.13f), Color.White.copy(alpha = 0.06f))))
+  drawRect(Brush.verticalGradient(listOf(colors.tulleTop, colors.tulleBottom)))
   // weave: two families of 1px diagonal lines, 3px apart
   val step = 3.dp.toPx() * 1.4142135f
   val line = 1.dp.toPx()
   var x = -size.height
   while (x < size.width) {
-    drawLine(Color.White.copy(alpha = 0.06f), Offset(x, size.height), Offset(x + size.height, 0f), strokeWidth = line)
-    drawLine(Color.White.copy(alpha = 0.045f), Offset(x, 0f), Offset(x + size.height, size.height), strokeWidth = line)
+    drawLine(colors.wash.copy(alpha = 0.06f), Offset(x, size.height), Offset(x + size.height, 0f), strokeWidth = line)
+    drawLine(colors.wash.copy(alpha = 0.045f), Offset(x, 0f), Offset(x + size.height, size.height), strokeWidth = line)
     x += step
   }
-  drawRect(brush = veilGrainBrush, alpha = 0.2f, blendMode = BlendMode.Overlay)
+  drawRect(brush = veilGrainBrush, alpha = 0.2f * colors.grainScale, blendMode = BlendMode.Overlay)
 }
 
 /** Light band that slides across once per cycle (idle for the first half). */
 @Composable
-private fun Sheen(modifier: Modifier, periodMillis: Int) {
+private fun Sheen(modifier: Modifier, periodMillis: Int, color: Color) {
   val t = rememberInfiniteTransition(label = "sheen")
   val p by t.animateFloat(
     initialValue = 0f, targetValue = 1f,
@@ -128,7 +129,7 @@ private fun Sheen(modifier: Modifier, periodMillis: Int) {
       drawPath(
         path,
         Brush.horizontalGradient(
-          listOf(Color.Transparent, Color.White.copy(alpha = 0.28f), Color.Transparent),
+          listOf(Color.Transparent, color, Color.Transparent),
           startX = left - skew, endX = left + bandW + skew
         )
       )

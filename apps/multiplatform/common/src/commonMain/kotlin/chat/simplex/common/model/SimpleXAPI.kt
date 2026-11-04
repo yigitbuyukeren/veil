@@ -227,6 +227,7 @@ class AppPreferences {
   val shouldImportAppSettings = mkBoolPreference(SHARED_PREFS_SHOULD_IMPORT_APP_SETTINGS, false)
 
   val currentTheme = mkStrPreference(SHARED_PREFS_CURRENT_THEME, DefaultTheme.SYSTEM_THEME_NAME)
+  val veilTheme = mkStrPreference(SHARED_PREFS_VEIL_THEME, "gece") // Veil: "gece" | "sis" | "sistem" (VeilThemeMode); upstream's theme prefs are ignored
   val systemDarkTheme = mkStrPreference(SHARED_PREFS_SYSTEM_DARK_THEME, DefaultTheme.DARK.themeName)
   val currentThemeIds = mkMapPreference(SHARED_PREFS_CURRENT_THEME_IDs, mapOf(), encode = {
     json.encodeToString(MapSerializer(String.serializer(), String.serializer()), it)
@@ -490,6 +491,7 @@ class AppPreferences {
     private const val SHARED_PREFS_SELF_DESTRUCT_DISPLAY_NAME = "LocalAuthenticationSelfDestructDisplayName"
     private const val SHARED_PREFS_PQ_EXPERIMENTAL_ENABLED = "PQExperimentalEnabled" // no longer used
     private const val SHARED_PREFS_CURRENT_THEME = "CurrentTheme"
+    private const val SHARED_PREFS_VEIL_THEME = "VeilTheme"
     private const val SHARED_PREFS_CURRENT_THEME_IDs = "CurrentThemeIds"
     private const val SHARED_PREFS_SYSTEM_DARK_THEME = "SystemDarkTheme"
     private const val SHARED_PREFS_THEMES_OLD = "Themes"

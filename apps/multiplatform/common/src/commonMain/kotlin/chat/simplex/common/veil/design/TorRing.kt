@@ -63,7 +63,7 @@ fun TorRing(state: TorRingState, size: Dp = 24.dp, modifier: Modifier = Modifier
   Canvas(modifier.size(size).semantics { contentDescription = label }) {
     val u = this.size.minDimension / 32f
     val c = Offset(16f * u, 16f * u)
-    val grad = Brush.linearGradient(colorStops = colors.gradientStops, start = Offset(4f * u, 4f * u), end = Offset(28f * u, 28f * u))
+    val grad = Brush.linearGradient(colorStops = colors.strokeStops, start = Offset(4f * u, 4f * u), end = Offset(28f * u, 28f * u))
     when (state) {
       TorRingState.ProxyAnswers -> {
         val t = if (reduce) 0.5f else breathe

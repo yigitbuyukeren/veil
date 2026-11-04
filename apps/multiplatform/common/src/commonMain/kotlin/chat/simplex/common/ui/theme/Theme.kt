@@ -792,6 +792,13 @@ val MaterialTheme.wallpaper: AppWallpaper
 
 fun reactOnDarkThemeChanges(isDark: Boolean) {
   systemInDarkThemeCurrently = isDark
+  if (VeilTheme.forceVeilTheme) {
+    // Veil: only the "Sistem" mode follows the operating system
+    if (VeilTheme.mode() == VeilThemeMode.Sistem && CurrentColors.value.colors.isLight == isDark) {
+      ThemeManager.applyTheme(ChatController.appPrefs.currentTheme.get()!!)
+    }
+    return
+  }
   if (ChatController.appPrefs.currentTheme.get() == DefaultTheme.SYSTEM_THEME_NAME && CurrentColors.value.colors.isLight == isDark) {
     // Change active colors from light to dark and back based on system theme
     ThemeManager.applyTheme(DefaultTheme.SYSTEM_THEME_NAME)
@@ -845,7 +852,7 @@ fun SimpleXTheme(darkTheme: Boolean? = null, content: @Composable () -> Unit) {
         LocalAppColors provides rememberedAppColors,
         LocalAppWallpaper provides rememberedWallpaper,
         LocalDensity provides density,
-        content = { VeilTheme(content = content) } // Veil: design-system CompositionLocals
+        content = { VeilTheme(colors = if (theme.colors.isLight) VeilColors.Sis else VeilColors.Gece, content = content) } // Veil: design-system CompositionLocals
       )
     }
   )

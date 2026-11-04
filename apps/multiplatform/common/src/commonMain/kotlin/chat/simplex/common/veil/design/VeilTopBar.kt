@@ -44,7 +44,10 @@ fun VeilTopBar(
   }
 }
 
-/** 40dp round-rect icon button for top bars and composers. [content] is the icon (tint it with `ink2`). */
+/**
+ * 48dp round-rect icon button for top bars and composers (the minimum touch target). [content] is the icon (tint it
+ * with `ink2`); [contentDescription] is the Turkish label TalkBack reads and must not be empty.
+ */
 @Composable
 fun VeilIconButton(
   onClick: () -> Unit,
@@ -55,7 +58,7 @@ fun VeilIconButton(
 ) {
   Box(
     modifier
-      .size(40.dp)
+      .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
       .clip(RoundedCornerShapeIcon)
       .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
       .semantics { this.contentDescription = contentDescription },

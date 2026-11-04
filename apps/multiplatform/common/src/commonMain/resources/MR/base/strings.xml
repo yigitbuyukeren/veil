@@ -3471,7 +3471,7 @@
   <string name="veil_set_appearance_title">Görünüm</string>
   <string name="veil_set_appearance_theme">Tema</string>
   <string name="veil_set_appearance_theme_value">Gece</string>
-  <string name="veil_set_appearance_theme_note">Gece teması; açık tema yakında.</string>
+  <string name="veil_set_appearance_theme_note">Gece koyu, Sis açık temadır. Sistem seçilirse tema cihazın ayarına göre değişir.</string>
   <string name="veil_set_appearance_language">Dil</string>
   <string name="veil_set_appearance_font">Yazı boyutu</string>
   <string name="veil_set_tor_title">Tor ve durum</string>
@@ -3610,4 +3610,17 @@
   <string name="veil_grp_create_no_contacts">Eklenecek kişi yok. Grubu kurduktan sonra link ile de üye alabilirsin.</string>
   <string name="veil_grp_create_button">Grubu oluştur</string>
   <string name="veil_grp_create_button_with">Grubu oluştur ve %1$d kişiyi ekle</string>
+||||||| parent of b8217b659 (Add Sis light theme, theme setting and contrast tests)
+
+
+  <!-- Veil theme and accessibility -->
+  <string name="veil_theme_gece">Gece</string>
+  <string name="veil_theme_gece_desc">Koyu tema. Varsayılan.</string>
+  <string name="veil_theme_sis">Sis</string>
+  <string name="veil_theme_sis_desc">Açık, puslu bir tema.</string>
+  <string name="veil_theme_sistem">Sistem</string>
+  <string name="veil_theme_sistem_desc">Cihazın açık ya da koyu ayarını izler.</string>
+  <string name="veil_a11y_pass_entered">%1$d hane girildi</string>
+  <string name="veil_a11y_pass_show">Parolayı göster</string>
+  <string name="veil_a11y_pass_hide">Parolayı gizle</string>
 </resources>

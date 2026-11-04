@@ -28,8 +28,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 /**
- * Veil switch: 46x28 pill, white thumb. Off = white 12 % track, on = iris. The thumb slides in the lift duration
- * (instant with reduce-motion).
+ * Veil switch: 46x28 pill, white thumb, inside a 48dp-high touch target. Off = `switchOff` track, on = `accent`.
+ * The thumb slides in the lift duration (instant with reduce-motion).
  */
 @Composable
 fun VeilSwitch(
@@ -41,21 +41,27 @@ fun VeilSwitch(
   val colors = VeilTheme.colors
   val motion = VeilTheme.motion
   val ms = motion.lift(VeilTheme.reduceMotion)
-  val track by animateColorAsState(if (checked) colors.iris else colors.sheet3, tween(ms, easing = motion.easeOut))
+  val track by animateColorAsState(if (checked) colors.accent else colors.switchOff, tween(ms, easing = motion.easeOut))
   val thumbX by animateDpAsState(if (checked) 18.dp else 0.dp, tween(ms, easing = motion.easeOut))
   Box(
     modifier
-      .size(width = 46.dp, height = 28.dp)
-      .alpha(if (enabled) 1f else 0.38f)
-      .clip(CircleShape)
-      .background(track)
+      .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
       .then(
         if (onCheckedChange != null) Modifier.toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange)
         else Modifier
-      )
-      .padding(3.dp)
+      ),
+    contentAlignment = Alignment.Center,
   ) {
-    Box(Modifier.offset(x = thumbX).size(22.dp).clip(CircleShape).background(Color.White))
+    Box(
+      Modifier
+        .size(width = 46.dp, height = 28.dp)
+        .alpha(if (enabled) 1f else 0.38f)
+        .clip(CircleShape)
+        .background(track)
+        .padding(3.dp)
+    ) {
+      Box(Modifier.offset(x = thumbX).size(22.dp).clip(CircleShape).background(Color.White))
+    }
   }
 }
 
@@ -81,7 +87,7 @@ fun VeilTextField(
   val interaction = remember { MutableInteractionSource() }
   val focused by interaction.collectIsFocusedAsState()
   val frame = if (focused) {
-    Modifier.clip(shape).background(colors.night2).border(1.dp, colors.gradient, shape)
+    Modifier.clip(shape).background(colors.night2).border(1.5.dp, colors.gradient, shape)
   } else {
     Modifier.clip(shape).background(colors.sheet1).border(1.dp, colors.line2, shape)
   }
@@ -92,7 +98,7 @@ fun VeilTextField(
     enabled = enabled,
     singleLine = singleLine,
     textStyle = VeilTheme.type.bodyLarge.copy(color = colors.ink),
-    cursorBrush = SolidColor(colors.iris),
+    cursorBrush = SolidColor(colors.accent),
     keyboardOptions = keyboardOptions,
     keyboardActions = keyboardActions,
     visualTransformation = visualTransformation,

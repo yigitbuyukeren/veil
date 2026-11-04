@@ -31,7 +31,7 @@ enum class VeilButtonStyle {
 }
 
 /**
- * Veil button: 52dp tall, 18dp radius. Disabled = 38% opacity, no glow, not clickable. Pressing scales to 98%.
+ * Veil button: at least 52dp tall (grows with the font scale), 18dp radius. Disabled = 38% opacity, no glow, not clickable. Pressing scales to 98%.
  * [leading] is an optional icon slot drawn before the label (tint it with the colour you get from the style).
  */
 @Composable
@@ -62,7 +62,7 @@ fun VeilButton(
     .alpha(if (enabled) 1f else 0.38f)
   val styled = when (style) {
     VeilButtonStyle.Primary -> base
-      .then(if (enabled) Modifier.shadow(10.dp, shape, ambientColor = colors.iris, spotColor = colors.iris) else Modifier)
+      .then(if (enabled) Modifier.shadow(10.dp, shape, ambientColor = colors.accent, spotColor = colors.accent) else Modifier)
       .clip(shape)
       .drawBehind { drawRect(colors.gradientFor(size, 120f)) }
     VeilButtonStyle.Secondary -> base

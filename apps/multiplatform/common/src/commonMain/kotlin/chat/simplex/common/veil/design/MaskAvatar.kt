@@ -15,35 +15,40 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlin.math.cos
 import kotlin.math.sin
 
-private val IncColor = Color(0xFFB9B4E6)
-private val IncBadgeIcon = Color(0xFFCFCBF2)
 
 /**
  * Deterministic generative avatar ("mask"). The same [seed] always draws the same mask; [incognito] draws the
  * dashed hexagon family and adds a small dashed badge at the bottom-right corner (the badge overflows the avatar
  * bounds by 3dp like in the prototype, so leave a little room around incognito avatars).
  *
+ * Decorative for accessibility unless [contentDescription] is given.
+ *
  * The geometry comes from [generateMaskSpec], an exact port of the prototype's `hash` / `rng` / `avatar`.
  */
 @Composable
-fun MaskAvatar(seed: String, size: Dp, incognito: Boolean = false, modifier: Modifier = Modifier) {
+fun MaskAvatar(seed: String, size: Dp, incognito: Boolean = false, modifier: Modifier = Modifier, contentDescription: String? = null) {
   val spec = remember(seed, incognito) { generateMaskSpec(seed, incognito) }
   val colors = VeilTheme.colors
   val lineColor = colors.line2
   val night = colors.night
-  Box(modifier.size(size)) {
+  // Decorative by default (the name is read next to it); pass [contentDescription] only where the avatar stands alone.
+  val semanticsMod = if (contentDescription != null) Modifier.semantics { this.contentDescription = contentDescription } else Modifier.clearAndSetSemantics { }
+  Box(modifier.size(size).then(semanticsMod)) {
     Canvas(Modifier.size(size)) {
       val s = this.size.minDimension
       val corner = CornerRadius(s * 0.36f)
       val clip = Path().apply { addRoundRect(RoundRect(Rect(0f, 0f, s, s), corner)) }
       clipPath(clip) {
         withTransform({ scale(s / 48f, s / 48f, Offset.Zero) }) {
-          if (spec.incognito) drawIncognito(spec) else drawNormal(spec)
+          if (spec.incognito) drawIncognito(spec, colors) else drawNormal(spec, colors)
         }
       }
       // inset 1px hairline
@@ -52,7 +57,7 @@ fun MaskAvatar(seed: String, size: Dp, incognito: Boolean = false, modifier: Mod
     if (incognito) {
       val badge = maxOf(size * 0.42f, 14.dp)
       Canvas(Modifier.align(Alignment.BottomEnd).offset(3.dp, 3.dp).size(badge)) {
-        drawIncognitoBadge(night)
+        drawIncognitoBadge(night, colors)
       }
     }
   }
@@ -71,11 +76,14 @@ private fun bboxGradient(x: Float, y: Float, w: Float, h: Float, rotDeg: Int, st
   return Brush.linearGradient(colorStops = stops, start = rot(0.0, 0.0), end = rot(1.0, 0.0))
 }
 
-private val GradMain = arrayOf(0f to Color(0xFF7CF5D3), 0.52f to Color(0xFF8A7CFF), 1f to Color(0xFFFF8FB1))
-private val GradBack = arrayOf(0f to Color(0xFFFF8FB1), 1f to Color(0xFF7CF5D3))
+/** Mask strokes use the theme's stroke gradient (bright on Gece, deeper on Sis so they read on the light tile). */
+private fun gradMain(c: VeilColors) = c.strokeStops
+private fun gradBack(c: VeilColors) = arrayOf(0f to c.strokeStops.last().second, 1f to c.strokeStops.first().second)
 
-private fun DrawScope.drawNormal(spec: MaskSpec) {
-  drawRect(Color(0xFF121A24), size = Size(48f, 48f))
+private fun DrawScope.drawNormal(spec: MaskSpec, colors: VeilColors) {
+  val GradMain = gradMain(colors)
+  val GradBack = gradBack(colors)
+  drawRect(colors.maskBg, size = Size(48f, 48f))
   val bx = spec.blobX.toFloat()
   val by = spec.blobY.toFloat()
   val br = spec.blobR.toFloat()
@@ -114,8 +122,9 @@ private fun DrawScope.drawNormal(spec: MaskSpec) {
   }
 }
 
-private fun DrawScope.drawIncognito(spec: MaskSpec) {
-  val bg = Color(0xFF141922)
+private fun DrawScope.drawIncognito(spec: MaskSpec, colors: VeilColors) {
+  val IncColor = colors.incognitoInk
+  val bg = colors.maskBgIncognito
   drawRect(bg, size = Size(48f, 48f))
   // hatch pattern: vertical hairlines every 5 units, rotated by the pattern angle about the origin
   withTransform({ rotate(spec.patternAngle.toFloat(), Offset.Zero) }) {
@@ -143,7 +152,9 @@ private fun DrawScope.drawIncognito(spec: MaskSpec) {
 }
 
 /** The small dashed "mask" badge: night disc, 1.5px dashed ring, mask glyph at 62%. */
-private fun DrawScope.drawIncognitoBadge(night: Color) {
+private fun DrawScope.drawIncognitoBadge(night: Color, colors: VeilColors) {
+  val IncColor = colors.incognitoInk
+  val IncBadgeIcon = colors.incognitoBadgeIcon
   val s = size.minDimension
   drawCircle(night, radius = s / 2f)
   val ring = 1.5.dp.toPx()

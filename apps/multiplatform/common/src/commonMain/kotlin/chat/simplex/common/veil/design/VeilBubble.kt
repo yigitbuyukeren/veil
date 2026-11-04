@@ -117,12 +117,12 @@ fun VeilBubble(
         val f = foldPx.coerceAtMost(minOf(size.width, size.height) / 2f)
         if (!outgoing) {
           val p = Path().apply { moveTo(f, 0f); lineTo(0f, f); lineTo(f, f); close() }
-          drawPath(p, Color.Black.copy(alpha = 0.28f))
-          drawPath(p, Color.White.copy(alpha = 0.07f))
+          drawPath(p, colors.flapIncoming)
+          drawPath(p, colors.flapIncomingHi)
         } else {
           val x = size.width
           val p = Path().apply { moveTo(x - f, 0f); lineTo(x - f, f); lineTo(x, f); close() }
-          drawPath(p, colors.night.copy(alpha = 0.45f))
+          drawPath(p, colors.flapOutgoing)
         }
       }
       .padding(start = 13.dp, end = 13.dp, top = 9.dp, bottom = 7.dp)

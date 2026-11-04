@@ -15,7 +15,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/** Elevation of a translucent layer: the white overlay gets stronger the higher the level (6 / 9 / 12 %). */
+/** Elevation of a translucent layer: the overlay (white in Gece, dark ink in Sis) gets stronger the higher the level. */
 enum class VeilLayer { Low, Mid, High }
 
 @Composable
@@ -68,7 +68,7 @@ fun VeilCard(
 }
 
 /**
- * Bottom sheet body: 28dp top radius, a faint top-lit white wash over an opaque night base, hairline top edge and a
+ * Bottom sheet body: 28dp top radius, a faint top-lit wash over an opaque base, hairline top edge and a
  * grabber. It does not position or animate itself; place it at the bottom of a scrim / modal host.
  * (Sheets are opaque underneath so content behind them never shows through text.)
  */
@@ -84,8 +84,8 @@ fun VeilSheet(
     modifier
       .fillMaxWidth()
       .clip(shape)
-      .background(Color(0xFF10161D))
-      .background(Brush.verticalGradient(listOf(Color.White.copy(alpha = 0.10f), Color.White.copy(alpha = 0.06f))))
+      .background(colors.sheetBase)
+      .background(Brush.verticalGradient(listOf(colors.wash.copy(alpha = if (colors.isLight) 0.05f else 0.10f), colors.wash.copy(alpha = if (colors.isLight) 0.03f else 0.06f))))
       .border(1.dp, colors.line2, shape)
       .padding(start = 18.dp, end = 18.dp, top = 10.dp, bottom = 26.dp),
   ) {
