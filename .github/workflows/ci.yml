@@ -44,7 +44,7 @@ jobs:
         working-directory: apps/multiplatform
         env:
           JAVA_TOOL_OPTIONS: -Duser.language=en -Duser.country=US
-        run: ./gradlew assembleFossDebug :android:testFossDebugUnitTest -Pveil.abis=arm64-v8a --console=plain
+        run: ./gradlew assembleFossDebug :android:testFossDebugUnitTest :common:testDebugUnitTest --tests 'chat.simplex.app.VeilNetworkPolicyTest' -Pveil.abis=arm64-v8a --console=plain
       - name: Summary (what ran and what did not)
         if: always()
         run: |
