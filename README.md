@@ -2,7 +2,7 @@
 
 **Privacy-first, accountless Android messaging** — closed alpha in development.
 
-Veil is a planned open-source Android client using the SimpleX messaging stack with Tor-only relay connectivity as its security policy. The first target is a **closed Android alpha**, not a finished or audited product.
+Veil is an open-source Android client using the SimpleX messaging stack with Tor-only relay connectivity as its security policy. It ships the official prebuilt SimpleX core (verified by hash and signature) and changes only the app layer. The first target is a **closed Android alpha**, not a finished or audited product.
 
 ## What M1 aims to prove
 
@@ -21,7 +21,7 @@ Tor and end-to-end encryption are **not a guarantee of 100% anonymity**. Endpoin
 
 ## Current state
 
-Veil is an unaudited closed alpha in development. The core Tor-only network policy (fail-closed start gate) is implemented and tested on emulators only; there is no real-device verification and no independent security audit. The current release decision is NO-GO. [docs/DEVELOPMENT_STATUS.md](docs/DEVELOPMENT_STATUS.md) is the single status source.
+Veil is an unaudited closed alpha in development. The Tor-only network policy is implemented in the app layer (fail-closed start gate, enforced at a single choke point, network settings locked). It has unit tests and earlier emulator runs; the latest changes are not verified on a device, there is no real-device verification and no independent security audit. The current release decision is NO-GO. [docs/veil/DEVELOPMENT_STATUS.md](docs/veil/DEVELOPMENT_STATUS.md) is the single status source.
 
 ## Source & licenses
 
@@ -30,4 +30,12 @@ Veil is an unaudited closed alpha in development. The core Tor-only network poli
 - Public server terms: https://simplex.chat/privacy/
 - Upstream code is AGPLv3; licenses and copyright attribution of forked material must be preserved. The upstream brand/logos may be protected separately.
 
-See [ROADMAP.md](ROADMAP.md) and [SECURITY.md](SECURITY.md).
+## Documentation
+
+Veil's own documents are in [docs/veil/](docs/veil/); the rest of `docs/` is upstream's.
+
+- Direction: [vision](docs/veil/VISION.md), [design](docs/veil/DESIGN.md), [roadmap](docs/veil/ROADMAP.md).
+- Status and release decision: [development status](docs/veil/DEVELOPMENT_STATUS.md), [M1 release report](docs/veil/M1_RELEASE_REPORT.md).
+- Security: [SECURITY.md](SECURITY.md), [threat model](docs/veil/THREAT_MODEL.md), [privacy claims policy](docs/veil/PRIVACY_CLAIMS.md), [Tor-only transport](docs/veil/TOR_ONLY.md), [network egress](docs/veil/NETWORK_EGRESS.md).
+- Build and sources: [Android build](docs/veil/ANDROID_BUILD.md), [native core decision](docs/veil/NATIVE_CORE.md), [upstream base](docs/veil/UPSTREAM.md), [SOURCES.md](SOURCES.md).
+- Licenses: [upstream licenses](docs/veil/UPSTREAM_LICENSES.md), [third-party notices](docs/THIRD_PARTY_NOTICES.md).

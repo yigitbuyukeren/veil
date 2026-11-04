@@ -21,8 +21,9 @@ Checked: 2026-11-04. Upstream: https://github.com/simplex-chat/simplex-chat (rel
 2. Keep upstream license text and file headers. Do not relicense.
 3. Do not copy brand assets (logos, icons, wordmarks, store art). Veil uses its own name and assets. Replace upstream-branded resources before any build is distributed.
 4. Make corresponding source available from within the app (link to this repository and the pinned upstream tag).
-5. Generate third-party notices from the real dependency graph once VEIL-004 resolves it, then re-check each license for AGPL compatibility.
-6. State "an app for using the SimpleX network" in the app and README (see `RELAY_USAGE.md`).
+5. Keep the third-party notices generated from the real dependency graph (Gradle) and from the build files (Haskell and native, approximate); re-check each license for AGPL compatibility at every upstream bump. The native core is not built from source ([NATIVE_CORE.md](NATIVE_CORE.md)), so the native part stays approximate unless upstream confirms it.
+6. State "an app for using the SimpleX network" in the app and README (see [RELAY_USAGE.md](RELAY_USAGE.md)).
+7. Before any distribution, confirm the `android-support` license with upstream (open item in [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md); nobody has been contacted).
 
 ## Conflicts
 

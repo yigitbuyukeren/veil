@@ -1,6 +1,6 @@
 # Tor-only transport (VEIL-007)
 
-Status 2026-11-04: implemented in code, verified on an **emulator with a host Tor daemon**, not on a real device and not with Orbot.
+Overall status: [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md). Evidence in this file: the earlier version was verified on an **emulator with a host Tor daemon** (2026-11-04), not on a real device and not with Orbot; the choke-point enforcement, locks and status check described below are code and unit tests only.
 
 ## Upstream behavior (v7.0.3)
 
@@ -8,7 +8,7 @@ Status 2026-11-04: implemented in code, verified on an **emulator with a host To
 
 ## Veil policy
 
-`VeilNetworkPolicy` (`common/.../model/VeilNetworkPolicy.kt`) is applied inside `ChatController.getNetCfg()`, so every code path that sets the network configuration is overridden regardless of user preferences:
+`VeilNetworkPolicy` (`common/.../model/VeilNetworkPolicy.kt`) is applied inside `ChatController.getNetCfg()` and, as the final guard, at `apiSetNetworkConfig` (see "Single choke point" below), so every code path that sets the network configuration is overridden regardless of user preferences:
 
 | Field | Value |
 |---|---|
@@ -18,7 +18,7 @@ Status 2026-11-04: implemented in code, verified on an **emulator with a host To
 | `smpProxyMode` / `smpProxyFallback` | `never` / `prohibit` (no relay-to-relay private routing, no fallback) |
 | `smpWebPortServers` | `off` |
 
-Readiness gate: `ChatController.startChat()` first probes the proxy with a SOCKS5 no-auth handshake. If it fails, the chat agent is not started, nothing is sent or received, and an alert ("Tor is not available") with Retry is shown. The probe shows a SOCKS listener exists, not that Tor has circuits; circuit failures appear as connection errors and never as direct connections because the proxy is always configured.
+Readiness gate: `ChatController.startChat()` first probes the proxy with a SOCKS5 no-auth handshake. If it fails, the chat is not started, nothing is sent or received, and an alert ("Tor is not available") with Retry is shown. The probe shows a SOCKS listener exists, not that Tor has circuits; circuit failures appear as connection errors and never as direct connections because the proxy is always configured.
 
 Single choke point: `ChatController.apiSetNetworkConfig` is the only place that builds `CC.APISetNetworkConfig`, and it always sends `VeilNetworkPolicy.enforce(cfg)`, whoever the caller is (startup, the network settings screens, the migration temporary database). `setNetCfg` also stores the enforced config, so saved preferences never show a non-compliant value. `scripts/ci/policy-check.sh` fails if `CC.APISetNetworkConfig(` appears anywhere else or if the function stops calling `enforce`.
 

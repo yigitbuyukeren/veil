@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Inventory guard for VEIL-008: Android-relevant sources may only use network APIs in files listed in docs/NETWORK_EGRESS.md.
+# Inventory guard for VEIL-008: Android-relevant sources may only use network APIs in files listed in docs/veil/NETWORK_EGRESS.md.
 # A new use of an HTTP/socket/WebView API outside the allow-list fails CI until it is reviewed and documented.
 set -u
 cd "$(git rev-parse --show-toplevel)"

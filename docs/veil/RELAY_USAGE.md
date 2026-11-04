@@ -6,7 +6,7 @@ Checked: 2026-11-04. Source: https://simplex.chat/privacy/ (section "Conditions 
 
 | Condition | Veil approach | Status |
 |---|---|---|
-| Protocol specs not older than 1 year | Track upstream stable; manual update procedure in `docs/UPSTREAM.md` (VEIL-003) | Planned |
+| Protocol specs not older than 1 year | Track upstream stable; manual update procedure in `docs/veil/UPSTREAM.md` (VEIL-003) | Planned |
 | User-to-user messaging only (or clearly labeled bots) | M1 is private 1:1 and small group messaging only; no bots | Compliant by scope |
 | Same limits, rules and restrictions as official software | Do not alter client limits or relay rate/size handling | Must verify at VEIL-017 |
 | Users accept the same Conditions of Use before access | First-run screen with link to the conditions, acceptance recorded locally; relays unreachable before acceptance | Planned (VEIL-009/016) |

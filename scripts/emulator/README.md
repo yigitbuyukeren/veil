@@ -1,6 +1,6 @@
 # Emulator test harness
 
-Emulator evidence only (see `docs/EMULATOR_TESTS.md`); it does not replace real-device or Orbot tests.
+Emulator evidence only (see `docs/veil/EMULATOR_TESTS.md`); it does not replace real-device or Orbot tests.
 
 Prerequisites: Android SDK with an arm64 Android 15 `google_apis` AVD, `tor` on the host (SOCKS on 127.0.0.1:9050), the debug APK.
 

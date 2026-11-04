@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Interim: fetch upstream's official native libs for arm64-v8a from the pinned release APK, verify checksum and GPG signatures.
-# See docs/ANDROID_BUILD.md. Not a reproducible build of the core.
+# Fetch upstream's official native libs for arm64-v8a from the pinned release APK, verify checksum and GPG signatures.
+# See docs/veil/ANDROID_BUILD.md and docs/veil/NATIVE_CORE.md. The prebuilt core is not built from source (by decision).
 set -euo pipefail
 TAG=v7.0.3
 APK_SHA=d535e5a8986d4e11b9abd5656a3c0e1be5a08e06b00a7b20d6b7587ed0c3457f
