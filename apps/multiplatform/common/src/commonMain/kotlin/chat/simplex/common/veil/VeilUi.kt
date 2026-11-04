@@ -12,7 +12,7 @@ object VeilUi {
   /** Onboarding stages (SimpleXInfo, CreateFirstProfile, network commitments...). Android only; desktop keeps the upstream onboarding. */
   var onboarding: Boolean = true
   /** Chat list (home) screen. */
-  var chatList: Boolean = false
+  var chatList: Boolean = true
   /** Conversation screen. */
   var chat: Boolean = false
   /** New chat flows: create link, connect via link / scan / paste. */

@@ -25,6 +25,7 @@ import chat.simplex.common.platform.*
 import chat.simplex.common.ui.theme.*
 import chat.simplex.common.veil.VeilUi
 import chat.simplex.common.veil.screens.onboarding.VeilOnboarding
+import chat.simplex.common.veil.screens.chatlist.VeilChatListScreen
 import chat.simplex.common.views.CreateFirstProfile
 import chat.simplex.common.views.helpers.SimpleButton
 import chat.simplex.common.views.SplashView
@@ -138,9 +139,10 @@ fun MainScreen() {
 
   // Veil: screen routing. This is the single place where later tasks branch to the redesigned screens, e.g.
   //   VeilUi.onboarding -> VeilOnboarding(...) instead of the upstream onboarding in the `else ->` branch below (Android; done),
-  //   VeilUi.chatList / VeilUi.chat -> Veil home inside AndroidScreen / DesktopScreen (OnboardingComplete branch).
+  //   VeilUi.chatList -> VeilChatListScreen inside StartPartOfScreen (OnboardingComplete branch), wired;
+  //   VeilUi.chat -> Veil conversation screen inside AndroidScreen / DesktopScreen (OnboardingComplete branch).
   // The other groups (newChat, groups, settings, system) are opened from upstream views; see VeilUi. All flags are
-  // false for now, so nothing is rerouted.
+  // false until their screens exist; onboarding and chatList are on.
   Box {
     val unauthorized = remember { derivedStateOf { AppLock.userAuthorized.value != true } }
     val onboarding by remember { chatModel.controller.appPrefs.onboardingStage.state }
@@ -381,7 +383,12 @@ fun StartPartOfScreen(userPickerState: MutableStateFlow<AnimatedViewState>) {
     val stopped = chatModel.chatRunning.value == false
     if (chatModel.sharedContent.value == null) {
       CompositionLocalProvider(LocalAppBarHandler provides rememberAppBarHandler()) {
-        ChatListView(chatModel, userPickerState, AppLock::setPerformLA, stopped)
+        // Veil: screen routing, chat list (group B). Android only; desktop keeps upstream's list.
+        if (VeilUi.chatList && appPlatform.isAndroid) {
+          VeilChatListScreen(userPickerState, AppLock::setPerformLA, stopped)
+        } else {
+          ChatListView(chatModel, userPickerState, AppLock::setPerformLA, stopped)
+        }
       }
     } else {
       // LALAL initial load of view doesn't show blur. Focusing text field shows it
