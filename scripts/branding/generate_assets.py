@@ -2,7 +2,7 @@
 """Generates Veil's own raster brand assets (original artwork, no upstream assets). Run from the repo root: python3 -I scripts/branding/generate_assets.py
 
 Palette "Tül": night #0B0F14, accent gradient #7CF5D3 -> #8A7CFF -> #FF8FB1 (diagonal, top-left to bottom-right), text #EEF2F6.
-Optional: set VEIL_WORDMARK_FONT to a Bricolage Grotesque file (Bold instance is used) for the wordmark text.
+Wordmark font: the bundled Bricolage Grotesque Bold (MR/fonts/BricolageGrotesque-Bold.ttf). Optional: set VEIL_WORDMARK_FONT to another Bricolage Grotesque file (Bold instance is used).
 """
 from PIL import Image, ImageDraw, ImageFont
 import os
@@ -50,8 +50,9 @@ def mark_layer(size, ox, oy, s):
     return Image.alpha_composite(layer, stroke)
 def font(size):
     env = os.environ.get("VEIL_WORDMARK_FONT")
-    if env and os.path.exists(env):
-        f = ImageFont.truetype(env, size)
+    path = env if env and os.path.exists(env) else R + "common/src/commonMain/resources/MR/fonts/BricolageGrotesque-Bold.ttf"
+    if os.path.exists(path):
+        f = ImageFont.truetype(path, size)
         try:
             f.set_variation_by_name("Bold")
         except (OSError, ValueError):
