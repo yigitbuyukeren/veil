@@ -27,7 +27,7 @@
     <string name="veil_status_previews">Bağlantı önizlemeleri kapalı: %1$s</string>
     <string name="veil_status_calls">Aramalar kapalı: %1$s</string>
     <string name="veil_licenses">Açık kaynak lisansları</string>
-    <string name="veil_licenses_text">Veil, GNU AGPL-3.0 altında özgür yazılımdır ve SimpleX Chat’e (Telif hakkı SimpleX Chat Ltd ve katkıda bulunanlar) dayanır. Apache-2.0, MIT, BSD ve LGPL-2.1 lisanslı üçüncü taraf kütüphaneleri içerir; tam liste bildirim dosyasındadır.</string>
+    <string name="veil_licenses_text">Veil, GNU AGPL-3.0 altında özgür yazılımdır ve SimpleX Chat’e (Telif hakkı SimpleX Chat Ltd ve katkıda bulunanlar) dayanır. Apache-2.0, MIT, BSD, ISC, LGPL (2.1 ve 3.0), SIL OFL 1.1 lisanslı ve kamu malı üçüncü taraf bileşenler içerir; tam liste bildirim dosyasındadır.</string>
     <string name="veil_licenses_notices">Üçüncü taraf bildirimleri</string>
     <string name="veil_source_code">Veil kaynak kodu (AGPL-3.0)</string>
     <string name="notifications">Bildirimler</string>
