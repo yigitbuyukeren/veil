@@ -5,6 +5,9 @@
   <string name="veil_about_text">Veil is an app for using the SimpleX network. It is an independent, unaudited alpha and is not made by or affiliated with SimpleX Chat Ltd. It is based on SimpleX Chat source code under AGPL-3.0. By using the network you accept the SimpleX Conditions of Use (https://simplex.chat/privacy/).</string>
   <string name="veil_tor_unavailable_title">Tor is not available</string>
   <string name="veil_tor_unavailable_text">Veil connects only through Tor and never directly. Start Orbot (SOCKS proxy on 127.0.0.1:9050), then retry. Nothing is sent or received until Tor is available.</string>
+  <string name="veil_calls_disabled_title">Calls are off</string>
+  <string name="veil_calls_disabled_text">Voice and video calls send media outside Tor and are disabled in Veil.</string>
+  <string name="veil_external_link_warning">This opens the link in another app, outside Tor. The website can see your IP address.</string>
   <string name="veil_tor_retry">Retry</string>
   <string name="veil_source_code">Veil source code (AGPL-3.0)</string>
 

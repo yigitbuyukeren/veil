@@ -28,6 +28,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import chat.simplex.common.model.VeilNetworkPolicy
 import org.jsoup.Jsoup
 import java.net.Authenticator
 import java.net.InetSocketAddress
@@ -46,6 +47,8 @@ private val IMAGE_SUFFIXES = listOf(".jpg", ".png", ".ico", ".webp", ".gif")
 private val previewMutex = Mutex()
 
 suspend fun getLinkPreview(url: String): LinkPreview? {
+  // Veil: previews fetch third-party pages over plain HTTP(S) from the app process, outside the relay policy
+  if (!VeilNetworkPolicy.LINK_PREVIEWS_ENABLED) return null
   return withContext(Dispatchers.IO) {
     previewMutex.withLock {
       try {

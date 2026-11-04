@@ -9,6 +9,8 @@ import kotlin.time.Duration.Companion.minutes
 class CallManager(val chatModel: ChatModel) {
   fun reportNewIncomingCall(invitation: RcvCallInvitation) {
     Log.d(TAG, "CallManager.reportNewIncomingCall")
+    // Veil: WebRTC media would bypass Tor; reject without ringing
+    if (!VeilNetworkPolicy.CALLS_ENABLED) { endCall(invitation); return }
     with (chatModel) {
       callInvitations[invitation.contact.id] = invitation
       if (invitation.user.showNotifications) {

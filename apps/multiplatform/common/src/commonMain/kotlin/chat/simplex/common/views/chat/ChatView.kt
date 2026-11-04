@@ -885,6 +885,10 @@ private fun connectingText(chatInfo: ChatInfo): String? {
 }
 
 fun startChatCall(remoteHostId: Long?, chatInfo: ChatInfo, media: CallMediaType) {
+  if (!VeilNetworkPolicy.CALLS_ENABLED) {
+    AlertManager.shared.showAlertMsg(generalGetString(MR.strings.veil_calls_disabled_title), generalGetString(MR.strings.veil_calls_disabled_text))
+    return
+  }
   withBGApi {
     if (chatInfo is ChatInfo.Direct) {
       val contactInfo = chatModel.controller.apiContactInfo(remoteHostId, chatInfo.contact.contactId)

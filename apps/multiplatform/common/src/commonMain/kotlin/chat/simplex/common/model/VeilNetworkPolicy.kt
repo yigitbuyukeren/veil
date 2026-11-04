@@ -11,6 +11,10 @@ object VeilNetworkPolicy {
   const val SOCKS_HOST = "127.0.0.1"
   const val SOCKS_PORT = 9050
 
+  /** Features whose traffic does not go through the SMP/XFTP core and cannot be routed through the policy proxy: off in M1. */
+  const val LINK_PREVIEWS_ENABLED = false
+  const val CALLS_ENABLED = false
+
   /** Overrides every user-visible network preference that could route traffic outside Tor. */
   fun enforce(cfg: NetCfg): NetCfg = cfg.copy(
     socksProxy = ":$SOCKS_PORT",

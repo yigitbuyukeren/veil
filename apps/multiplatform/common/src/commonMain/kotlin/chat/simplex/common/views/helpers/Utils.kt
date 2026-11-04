@@ -575,11 +575,26 @@ fun UriHandler.openVerifiedSimplexUri(uri: String) {
 
 fun uriCreateOrNull(uri: String) = try { URI.create(uri) } catch (e: Exception) { null }
 
-fun UriHandler.openUriCatching(uri: String) {
+private fun UriHandler.openUriRaw(uri: String) {
   try {
     openUri(uri)
   } catch (e: Exception/*ActivityNotFoundException*/) {
     Log.e(TAG, e.stackTraceToString())
+  }
+}
+
+// Veil: web links open in another app, outside Tor. Always ask first and say so.
+fun UriHandler.openUriCatching(uri: String) {
+  val uriHandler = this
+  if (uri.startsWith("http://", ignoreCase = true) || uri.startsWith("https://", ignoreCase = true)) {
+    AlertManager.shared.showAlertDialog(
+      title = generalGetString(MR.strings.open_external_link_title),
+      text = uri + "\n\n" + generalGetString(MR.strings.veil_external_link_warning),
+      confirmText = generalGetString(MR.strings.open_verb),
+      onConfirm = { uriHandler.openUriRaw(uri) }
+    )
+  } else {
+    openUriRaw(uri)
   }
 }
 
@@ -588,12 +603,7 @@ fun UriHandler.openExternalLink(uri: String) {
   if (uri.startsWith("https://simplex.chat/contact#") || (uri.startsWith("https://smp") && ".simplex.im/a#" in uri)) {
     uriHandler.openVerifiedSimplexUri(uri)
   } else {
-    AlertManager.shared.showAlertDialog(
-      title = generalGetString(MR.strings.open_external_link_title),
-      text = uri,
-      confirmText = generalGetString(MR.strings.open_verb),
-      onConfirm = { uriHandler.openUriCatching(uri) }
-    )
+    uriHandler.openUriCatching(uri)
   }
 }
 
