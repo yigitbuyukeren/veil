@@ -7,6 +7,7 @@ apps/multiplatform/common/src/androidMain/kotlin/chat/simplex/common/views/chat/
 apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/model/SimpleXAPI.kt
 apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/model/VeilNetworkPolicy.kt
 apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/platform/Images.kt
+apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/veil/screens/settings/VeilAboutScreen.kt
 apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/views/call/WebRTC.kt
 apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/views/chat/group/GroupChatInfoView.kt
 apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/views/chat/item/CIFileView.kt
