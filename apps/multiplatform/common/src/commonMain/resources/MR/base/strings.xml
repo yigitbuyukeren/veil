@@ -3339,4 +3339,47 @@
   <string name="veil_list_act_reject">İsteği reddet</string>
   <string name="veil_list_act_rename_connection">Bağlantıya ad ver</string>
   <string name="veil_list_act_delete_connection">Bağlantıyı sil</string>
+
+  <!-- Veil chat -->
+  <string name="veil_chat_back">Geri</string>
+  <string name="veil_chat_open_info">Sohbet bilgisi</string>
+  <string name="veil_chat_search">Sohbette ara</string>
+  <string name="veil_chat_verified">Doğrulandı</string>
+  <string name="veil_chat_unverified">Doğrulanmadı · kodu karşılaştır</string>
+  <string name="veil_chat_incognito">gizli profil</string>
+  <string name="veil_chat_members">%1$d üye</string>
+  <string name="veil_chat_today">Bugün</string>
+  <string name="veil_chat_yesterday">Dün</string>
+  <string name="veil_chat_month_1">Ocak</string>
+  <string name="veil_chat_month_2">Şubat</string>
+  <string name="veil_chat_month_3">Mart</string>
+  <string name="veil_chat_month_4">Nisan</string>
+  <string name="veil_chat_month_5">Mayıs</string>
+  <string name="veil_chat_month_6">Haziran</string>
+  <string name="veil_chat_month_7">Temmuz</string>
+  <string name="veil_chat_month_8">Ağustos</string>
+  <string name="veil_chat_month_9">Eylül</string>
+  <string name="veil_chat_month_10">Ekim</string>
+  <string name="veil_chat_month_11">Kasım</string>
+  <string name="veil_chat_month_12">Aralık</string>
+  <string name="veil_chat_state_sending">Gönderiliyor…</string>
+  <string name="veil_chat_state_sent">Gönderildi</string>
+  <string name="veil_chat_state_sent_partly">Kısmen gönderildi</string>
+  <string name="veil_chat_state_delivered">Teslim edildi</string>
+  <string name="veil_chat_state_delivered_partly">Kısmen teslim edildi</string>
+  <string name="veil_chat_state_delivered_integrity">Teslim edildi · bütünlük uyarısı</string>
+  <string name="veil_chat_state_retrying">Yeniden deneniyor…</string>
+  <string name="veil_chat_state_failed">Gönderilemedi</string>
+  <string name="veil_chat_state_unknown">Durum bilinmiyor</string>
+  <string name="veil_chat_edited">düzenlendi</string>
+  <string name="veil_chat_deleted_own">Bu mesajı sildin</string>
+  <string name="veil_chat_deleted">Bu mesaj silindi</string>
+  <string name="veil_chat_moderated">Bu mesaj yönetici tarafından kaldırıldı</string>
+  <string name="veil_chat_blocked">Bu mesaj engellendi</string>
+  <string name="veil_chat_blocked_admin">Bu mesaj yönetici tarafından engellendi</string>
+  <string name="veil_chat_you">Sen</string>
+  <string name="veil_chat_replying_to">%1$s kişisine yanıt</string>
+  <string name="veil_chat_editing">Mesajı düzenliyorsun</string>
+  <string name="veil_chat_close_bar">Kapat</string>
+  <string name="veil_chat_tor_down">Tor yok — hiçbir şey gönderilmiyor</string>
 </resources>
