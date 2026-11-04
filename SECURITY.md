@@ -1,6 +1,6 @@
-# Security policy (planning stage)
+# Security policy (closed alpha)
 
-No deployment or security audit has been completed. Do not rely on Veil for high-stakes security until independently validated.
+No independent security audit has been completed; not distributed. Do not rely on Veil for high-stakes security until independently validated.
 
 **Threat model:** relay operator observation, network correlation, malicious counterparty, compromised device, side-channel metadata, unauthorized group access and supply chain.
 

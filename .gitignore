@@ -104,3 +104,7 @@ local.properties
 build/
 .idea/
 .ops-state/
+
+# Python bytecode
+__pycache__/
+*.pyc

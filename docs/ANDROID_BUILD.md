@@ -47,19 +47,19 @@ Resource generation lowercases names with the default locale; with a Turkish loc
 | Check | Result |
 |---|---|
 | `./gradlew assembleFossDebug -Pveil.abis=arm64-v8a` | PASS (BUILD SUCCESSFUL, about 2 min after dependency download) |
-| APK: package `chat.simplex.app`, versionName 7.0.3, native-code `arm64-v8a`, targetSdk 35 | PASS (`aapt2 dump badging`) |
+| APK: package `io.github.yigitbuyukeren.veil` (see `BRANDING.md`), versionName 7.0.3, native-code `arm64-v8a`, targetSdk 35 | PASS (`aapt2 dump badging`) |
 | FOSS flavor, no Play Billing | PASS: `billingclient` string occurrences in all dex files: 0 |
 | `:android:testFossDebugUnitTest` | PASS (only the template `ExampleUnitTest` exists) |
 | Lint | NOT RUN |
 | `armeabi-v7a` build | NOT RUN (no armv7a native libs fetched) |
-| Install/run on a device or emulator | NOT TESTED |
+| Install/run on an emulator | PASS (see `EMULATOR_TESTS.md`); real device NOT TESTED |
 | Reproducible build of the native core | NOT DONE, **BLOCKED**: upstream builds it with Nix (haskell.nix cross-compilation to Android) on x86_64 Linux through its Hydra cache; this Mac has no Nix, GHC or Docker and about 4 GB free disk, and the CI job URL is not in the repository. A GitHub-hosted Nix build was not attempted (multi-hour cross-compile without a known cache). Until it is done, release builds are NO-GO |
 
 APK size 260 MB (debug, one ABI). The signing key and all outputs stay out of Git.
 
 ## Open points (not solved by this task)
 
-- Package id is still upstream's `chat.simplex.app` and the app is still upstream-branded: VEIL-006.
+- Branding is partly done; remaining items in `docs/BRANDING.md`.
 - The manifest requests camera/microphone/foreground-service permissions and others that M1 may not need: review in VEIL-006/008.
 
 Options and decision for building the native core from source: `NATIVE_BUILD_PLAN.md`.
