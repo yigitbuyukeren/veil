@@ -61,3 +61,5 @@ APK size 260 MB (debug, one ABI). The signing key and all outputs stay out of Gi
 
 - Package id is still upstream's `chat.simplex.app` and the app is still upstream-branded: VEIL-006.
 - The manifest requests camera/microphone/foreground-service permissions and others that M1 may not need: review in VEIL-006/008.
+
+Options and decision for building the native core from source: `NATIVE_BUILD_PLAN.md`.

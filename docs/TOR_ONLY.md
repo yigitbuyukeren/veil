@@ -35,6 +35,7 @@ Environment: Android 15 arm64 emulator, host `tor 0.4.x` (Homebrew) on 127.0.0.1
 | Direct egress while testing | none seen | iptables rule matching uid 10208 on non-loopback output: 0 packets |
 | Two emulators (see `EMULATOR_TESTS.md`): pairing, messages both ways, offline delivery, Tor killed and restarted with a queued message; app sockets only to 127.0.0.1:9050 | PASS (emulator + host Tor, not Orbot, not real devices) |
 | Preset servers all carry `.onion` (`scripts/ci/presets-onion-check.sh`, 27 of 27) | PASS (static check of the pinned source) |
+| Network policy fields, getNetCfg wrapping, disabled previews/calls and app name guarded in CI (`scripts/ci/policy-check.sh`) | PASS (static grep check; behavior is covered by `VeilNetworkPolicyTest`) |
 | Orbot | NOT TESTED | app not exercised against Orbot |
 | Real device | NOT TESTED | acceptance item "proxy correctly configured on a real device" is **not met** |
 | Tor lost mid-session | NOT TESTED | |
