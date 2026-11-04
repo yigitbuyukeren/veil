@@ -297,6 +297,17 @@ Artifacts: 273; with declared license: 273; UNKNOWN (needs manual review): 0
 | org.rauschig:jarchivelib | 1.2.0 | Apache 2 |
 | org.yaml:snakeyaml | 2.2 | Apache License, Version 2.0 |
 
+## Fonts
+
+Bundled in `apps/multiplatform/common/src/commonMain/resources/MR/fonts/`. Static text in this script, not read from the Gradle cache.
+
+| Font | Files | License | Source |
+|---|---|---|---|
+| Bricolage Grotesque | Medium, Semibold, Bold (static) | SIL Open Font License 1.1 (text: `MR/fonts/BricolageGrotesque-OFL.txt`) | https://github.com/google/fonts/tree/main/ofl/bricolagegrotesque |
+| Inter | Light, Regular, Medium, Semibold, Bold, Italic | SIL Open Font License 1.1 | https://github.com/rsms/inter |
+
+The Inter license text is not yet in `MR/fonts/`; it has to be added there as `Inter-OFL.txt`.
+
 <!-- haskell-core:begin -->
 ## Haskell core (libsimplex.so, libsupport.so)
 

@@ -49,6 +49,10 @@ print("## License summary\n\n| License (first declared) | Artifacts |\n|---|---|
 for n, c in by.most_common(): print(f"| {n} | {c} |")
 print("\n## Artifacts\n\n| Artifact | Version | License |\n|---|---|---|")
 for g, a, v, l in rows: print(f"| {g}:{a} | {v} | {l} |")
+print("\n## Fonts\n\nBundled in `apps/multiplatform/common/src/commonMain/resources/MR/fonts/`. Static text in this script, not read from the Gradle cache.\n\n| Font | Files | License | Source |\n|---|---|---|---|")
+print("| Bricolage Grotesque | Medium, Semibold, Bold (static) | SIL Open Font License 1.1 (text: `MR/fonts/BricolageGrotesque-OFL.txt`) | https://github.com/google/fonts/tree/main/ofl/bricolagegrotesque |")
+print("| Inter | Light, Regular, Medium, Semibold, Bold, Italic | SIL Open Font License 1.1 | https://github.com/rsms/inter |")
+print("\nThe Inter license text is not yet in `MR/fonts/`; it has to be added there as `Inter-OFL.txt`.")
 if unknown:
     print("\n## UNKNOWN license (manual review required)\n")
     for g, a, v in unknown: print(f"- {g}:{a}:{v}")
