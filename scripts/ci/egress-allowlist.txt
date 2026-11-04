@@ -21,3 +21,4 @@ apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/views/userse
 apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/views/usersettings/RTCServers.kt
 apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/views/usersettings/SetSimplexNameView.kt
 apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/views/usersettings/SettingsView.kt
+apps/multiplatform/common/src/commonMain/kotlin/chat/simplex/common/views/usersettings/VeilStatusView.kt
