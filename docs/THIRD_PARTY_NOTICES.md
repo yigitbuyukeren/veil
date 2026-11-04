@@ -304,9 +304,8 @@ Bundled in `apps/multiplatform/common/src/commonMain/resources/MR/fonts/`. Stati
 | Font | Files | License | Source |
 |---|---|---|---|
 | Bricolage Grotesque | Medium, Semibold, Bold (static) | SIL Open Font License 1.1 (text: `MR/fonts/BricolageGrotesque-OFL.txt`) | https://github.com/google/fonts/tree/main/ofl/bricolagegrotesque |
-| Inter | Light, Regular, Medium, Semibold, Bold, Italic | SIL Open Font License 1.1 | https://github.com/rsms/inter |
-
-The Inter license text is not yet in `MR/fonts/`; it has to be added there as `Inter-OFL.txt`.
+| Inter | Light, Regular, Medium, Semibold, Bold, Italic | SIL Open Font License 1.1 (text: `MR/fonts/Inter-OFL.txt`) | https://github.com/rsms/inter |
+| Noto Color Emoji | Regular | SIL Open Font License 1.1 (text: `MR/fonts/NotoColorEmoji-OFL.txt`) | https://github.com/googlefonts/noto-emoji |
 
 <!-- haskell-core:begin -->
 ## Haskell core (libsimplex.so, libsupport.so)
