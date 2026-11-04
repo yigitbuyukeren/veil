@@ -1,6 +1,8 @@
 @file:UseSerializers(UriSerializer::class, ComposeMessageSerializer::class)
 package chat.simplex.common.views.chat
 
+import chat.simplex.common.veil.screens.chat.*
+
 import SectionItemView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -1242,12 +1244,20 @@ fun ComposeView(
   fun contextItemView() {
     when (val contextItem = composeState.value.contextItem) {
       ComposeContextItem.NoContextItem -> {}
-      is ComposeContextItem.QuotedItem -> ContextItemView(listOf(contextItem.chatItem), painterResource(MR.images.ic_reply), chatInfo = chat.chatInfo) {
-        composeState.value = composeState.value.copy(contextItem = ComposeContextItem.NoContextItem)
-      }
-      is ComposeContextItem.EditingItem -> ContextItemView(listOf(contextItem.chatItem), painterResource(MR.images.ic_edit_filled),  chatInfo = chat.chatInfo) {
-        clearState()
-      }
+      is ComposeContextItem.QuotedItem ->
+        if (veilChatActive() && veilContextBarApplies(contextItem.chatItem)) { // Veil: reply bar
+          VeilContextBar(chat.chatInfo, contextItem.chatItem, editing = false) {
+            composeState.value = composeState.value.copy(contextItem = ComposeContextItem.NoContextItem)
+          }
+        } else ContextItemView(listOf(contextItem.chatItem), painterResource(MR.images.ic_reply), chatInfo = chat.chatInfo) {
+          composeState.value = composeState.value.copy(contextItem = ComposeContextItem.NoContextItem)
+        }
+      is ComposeContextItem.EditingItem ->
+        if (veilChatActive() && veilContextBarApplies(contextItem.chatItem)) { // Veil: edit bar
+          VeilContextBar(chat.chatInfo, contextItem.chatItem, editing = true) { clearState() }
+        } else ContextItemView(listOf(contextItem.chatItem), painterResource(MR.images.ic_edit_filled),  chatInfo = chat.chatInfo) {
+          clearState()
+        }
       is ComposeContextItem.ForwardingItems -> ContextItemView(contextItem.chatItems, painterResource(MR.images.ic_forward), showSender = false,  chatInfo = chat.chatInfo) {
         composeState.value = composeState.value.copy(contextItem = ComposeContextItem.NoContextItem)
       }
@@ -1819,6 +1829,18 @@ fun ComposeView(
           contact = chat.chatInfo.contact,
           groupDirectInv = chat.chatInfo.contact.groupDirectInv
         )
+      } else if (veilChatActive() && veilTorDown()) {
+        // Veil: no Tor, nothing can be sent; the draft stays in composeState
+        VeilComposerLocked()
+      } else if (veilChatActive()) {
+        // Veil: Veil frame around upstream's field, send and voice buttons
+        VeilComposerRow(attach = { AttachmentAndCommandsButtons() }) {
+          val broadcastPlaceholder = (chat.chatInfo as? ChatInfo.Group)?.groupInfo?.let { gi ->
+            if (gi.useRelays && gi.membership.memberRole >= GroupMemberRole.Owner && chat.chatInfo.groupChatScope() == null) generalGetString(MR.strings.compose_view_broadcast)
+            else null
+          }
+          SendMsgView_(disableSendButton = disableSendButton, placeholder = broadcastPlaceholder)
+        }
       } else {
         Row(Modifier.padding(end = 8.dp), verticalAlignment = Alignment.Bottom) {
           AttachmentAndCommandsButtons()

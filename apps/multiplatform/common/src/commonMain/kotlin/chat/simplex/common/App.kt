@@ -140,9 +140,10 @@ fun MainScreen() {
   // Veil: screen routing. This is the single place where later tasks branch to the redesigned screens, e.g.
   //   VeilUi.onboarding -> VeilOnboarding(...) instead of the upstream onboarding in the `else ->` branch below (Android; done),
   //   VeilUi.chatList -> VeilChatListScreen inside StartPartOfScreen (OnboardingComplete branch), wired;
-  //   VeilUi.chat -> Veil conversation screen inside AndroidScreen / DesktopScreen (OnboardingComplete branch).
+  //   VeilUi.chat -> Veil conversation screen: no branch here; upstream's ChatView/ChatLayout/ChatItemView/ComposeView call
+  //     into veil/screens/chat at marked "Veil:" points, so opening a chat on Android shows the Veil screen (wired);
   // The other groups (newChat, groups, settings, system) are opened from upstream views; see VeilUi. All flags are
-  // false until their screens exist; onboarding and chatList are on.
+  // false until their screens exist; onboarding, chatList and chat are on.
   Box {
     val unauthorized = remember { derivedStateOf { AppLock.userAuthorized.value != true } }
     val onboarding by remember { chatModel.controller.appPrefs.onboardingStage.state }

@@ -1,5 +1,8 @@
 package chat.simplex.common.views.chat
 
+import chat.simplex.common.veil.screens.chat.veilChatActive
+import chat.simplex.common.veil.design.VeilTheme
+
 import androidx.compose.animation.core.*
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.*
@@ -483,13 +486,16 @@ private fun SendMsgButton(
     Icon(
       icon,
       stringResource(MR.strings.icon_descr_send_message),
-      tint = Color.White,
+      tint = if (veilChatActive() && enabled) VeilTheme.colors.onGradient else Color.White, // Veil: dark arrow on the gradient
       modifier = Modifier
         .size(sizeDp.value.dp)
         .padding(4.dp)
         .alpha(alpha.value)
         .clip(CircleShape)
-        .background(if (enabled) sendButtonColor else MaterialTheme.colors.secondary.copy(alpha = 0.75f))
+        .then(
+          if (veilChatActive() && enabled) Modifier.background(VeilTheme.colors.gradient) // Veil: gradient send button
+          else Modifier.background(if (enabled) sendButtonColor else MaterialTheme.colors.secondary.copy(alpha = 0.75f))
+        )
         .padding(3.dp)
     )
   }

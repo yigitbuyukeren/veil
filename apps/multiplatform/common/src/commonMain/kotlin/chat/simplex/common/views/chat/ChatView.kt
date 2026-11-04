@@ -1,5 +1,8 @@
 package chat.simplex.common.views.chat
 
+import chat.simplex.common.veil.screens.chat.*
+import chat.simplex.common.veil.design.VeilTheme
+
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.desktop.ui.tooling.preview.Preview
@@ -987,12 +990,12 @@ fun ChatLayout(
       sheetShape = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp)
     ) {
       val composeViewHeight = remember { mutableStateOf(0.dp) }
-      Box(Modifier.fillMaxSize().chatViewBackgroundModifier(MaterialTheme.colors, MaterialTheme.wallpaper, LocalAppBarHandler.current?.backgroundGraphicsLayerSize, LocalAppBarHandler.current?.backgroundGraphicsLayer, drawWallpaper = chatsCtx.secondaryContextFilter == null)) {
+      Box(Modifier.fillMaxSize().then(if (veilChatActive()) Modifier.background(VeilTheme.colors.night) else Modifier.chatViewBackgroundModifier(MaterialTheme.colors, MaterialTheme.wallpaper, LocalAppBarHandler.current?.backgroundGraphicsLayerSize, LocalAppBarHandler.current?.backgroundGraphicsLayer, drawWallpaper = chatsCtx.secondaryContextFilter == null))) { // Veil: night background, no wallpaper
         val remoteHostId = remember { remoteHostId }.value
         val chat = remember { chat }.value
         val chatInfo = chat?.chatInfo
-        val oneHandUI = remember { appPrefs.oneHandUI.state }
-        val chatBottomBar = remember { appPrefs.chatBottomBar.state }
+        val oneHandUI = remember { veilForceOff(appPrefs.oneHandUI.state) } // Veil: the chat bar is always on top
+        val chatBottomBar = remember { veilForceOff(appPrefs.chatBottomBar.state) }
         val composeViewFocusRequester = remember { if (appPlatform.isDesktop) FocusRequester() else null }
         AdaptingBottomPaddingLayout(Modifier, CHAT_COMPOSE_LAYOUT_ID, composeViewHeight) {
           if (chat != null) {
@@ -1156,7 +1159,12 @@ fun ChatLayout(
               Box {
                 if (selectedChatItems.value == null) {
                   if (chatInfo != null) {
-                    ChatInfoToolbar(chatsCtx, chatInfo, back, info, startCall, endCall, addMembers, openGroupLink, changeNtfsState, onSearchValueChanged, showSearch, contentFilter, availableContent, searchPlaceholder)
+                    // Veil: Veil top bar, except while searching (the search field is upstream's app bar)
+                    if (veilChatActive() && !showSearch.value && contentFilter.value == null) {
+                      VeilChatTopBar(chatInfo, back, openInfo = info, openSearch = { showSearch.value = true })
+                    } else {
+                      ChatInfoToolbar(chatsCtx, chatInfo, back, info, startCall, endCall, addMembers, openGroupLink, changeNtfsState, onSearchValueChanged, showSearch, contentFilter, availableContent, searchPlaceholder)
+                    }
                   }
                 } else {
                   SelectedItemsCounterToolbar(selectedChatItems, !oneHandUI.value || !chatBottomBar.value)
@@ -1923,7 +1931,8 @@ fun BoxScope.ChatItemsList(
       // With default touchSlop when you scroll LazyColumn, you can unintentionally open reply view.
       // remember: pointerInput handlers observe ViewConfiguration and reset on any change, so a new
       // instance per recomposition kills in-flight presses/hover whenever a message is inserted
-      LocalViewConfiguration provides remember(viewConfiguration) { viewConfiguration.bigTouchSlop() }
+      LocalViewConfiguration provides remember(viewConfiguration) { viewConfiguration.bigTouchSlop() },
+      LocalVeilItemContext provides remember(showAvatar) { VeilItemContext(firstInRun = showAvatar) } // Veil
     ) {
       val provider = {
         providerForGallery(reversedChatItems.value.asReversed(), cItem.id) { indexInReversed ->
@@ -2079,7 +2088,7 @@ fun BoxScope.ChatItemsList(
                       }
                     }
                   }
-                  if (cItem.content.showMemberName) {
+                  if (cItem.content.showMemberName && !(veilChatActive() && veilBubbleEligible(cItem))) { // Veil: the bubble shows the sender name itself
                     DependentLayout(Modifier, CHAT_BUBBLE_LAYOUT_ID) {
                       MemberNameAndRole(range)
                       Item()
@@ -2379,7 +2388,7 @@ fun BoxScope.ChatItemsList(
     reverseLayout = true,
     additionalBarOffset = composeViewHeight,
     additionalTopBar = rememberUpdatedState(chatsCtx.secondaryContextFilter == null && (reportsCount > 0 || supportUnreadCount > 0)),
-    chatBottomBar = remember { appPrefs.chatBottomBar.state }
+    chatBottomBar = remember { veilForceOff(appPrefs.chatBottomBar.state) } // Veil
   ) {
     val mergedItemsValue = mergedItems.value
     itemsIndexed(mergedItemsValue.items, key = { _, merged -> keyForItem(merged.newest().item) }) { index, merged ->
@@ -2819,6 +2828,10 @@ val MEMBER_IMAGE_SIZE: Dp = 37.dp
 
 @Composable
 fun MemberImage(member: GroupMember) {
+  if (veilChatActive()) { // Veil: mask avatar
+    VeilMemberAvatar(member, MEMBER_IMAGE_SIZE * fontSizeSqrtMultiplier)
+    return
+  }
   MemberProfileImage(MEMBER_IMAGE_SIZE * fontSizeSqrtMultiplier, member, backgroundColor = MaterialTheme.colors.background)
 }
 
@@ -2855,8 +2868,8 @@ private fun TopEndFloatingButton(
 
 @Composable
 fun topPaddingToContent(chatView: Boolean, additionalTopBar: Boolean = false): Dp {
-  val oneHandUI = remember { appPrefs.oneHandUI.state }
-  val chatBottomBar = remember { appPrefs.chatBottomBar.state }
+  val oneHandUI = remember { if (chatView) veilForceOff(appPrefs.oneHandUI.state) else appPrefs.oneHandUI.state } // Veil
+  val chatBottomBar = remember { if (chatView) veilForceOff(appPrefs.chatBottomBar.state) else appPrefs.chatBottomBar.state }
   val reportsPadding = if (additionalTopBar) AppBarHeight * fontSizeSqrtMultiplier else 0.dp
   return if (oneHandUI.value && (!chatView || chatBottomBar.value)) {
     WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + reportsPadding
@@ -2867,8 +2880,8 @@ fun topPaddingToContent(chatView: Boolean, additionalTopBar: Boolean = false): D
 
 @Composable
 private fun numberOfBottomAppBars(): Int {
-  val oneHandUI = remember { appPrefs.oneHandUI.state }
-  val chatBottomBar = remember { appPrefs.chatBottomBar.state }
+  val oneHandUI = remember { veilForceOff(appPrefs.oneHandUI.state) } // Veil
+  val chatBottomBar = remember { veilForceOff(appPrefs.chatBottomBar.state) }
   return if (oneHandUI.value && chatBottomBar.value) {
     2
   } else {
@@ -3045,6 +3058,10 @@ private fun ButtonRow(horizontalArrangement: Arrangement.Horizontal, content: @C
 
 @Composable
 private fun DateSeparator(date: Instant) {
+  if (veilChatActive()) { // Veil: date divider
+    VeilDateDivider(date)
+    return
+  }
   Text(
     text = getTimestampDateText(date),
     Modifier.padding(vertical = DEFAULT_PADDING_HALF + 4.dp, horizontal = DEFAULT_PADDING_HALF).fillMaxWidth(),

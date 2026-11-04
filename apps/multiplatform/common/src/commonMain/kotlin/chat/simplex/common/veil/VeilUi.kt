@@ -14,7 +14,7 @@ object VeilUi {
   /** Chat list (home) screen. */
   var chatList: Boolean = true
   /** Conversation screen. */
-  var chat: Boolean = false
+  var chat: Boolean = true
   /** New chat flows: create link, connect via link / scan / paste. */
   var newChat: Boolean = false
   /** Group screens: create, info, members, invite. */

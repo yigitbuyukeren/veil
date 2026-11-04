@@ -1,5 +1,7 @@
 package chat.simplex.common.views.chat.item
 
+import chat.simplex.common.veil.screens.chat.*
+
 import SectionItemView
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.*
@@ -139,7 +141,7 @@ fun ChatItemView(
 
     @Composable
     fun ChatItemReactions() {
-      Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.chatItemOffset(cItem, itemSeparation.largeGap, inverted = true, revealed = true)) {
+      Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.chatItemOffset(cItem, itemSeparation.largeGap, inverted = true, revealed = true).then(if (veilChatActive()) Modifier.veilReactionPill() else Modifier)) { // Veil: reaction pill
         cItem.reactions.forEach { r ->
           val showReactionMenu = remember { mutableStateOf(false) }
           val reactionMenuItems = remember { mutableStateOf(emptyList<ChatItemReactionMenuItem>()) }
@@ -301,6 +303,9 @@ fun ChatItemView(
       }
     }
 
+    // Veil: items the Veil chat draws itself (see VeilChatItems.kt); everything else stays upstream's
+    val veilBubble = veilChatActive() && veilBubbleEligible(cItem)
+    val veilDeleted = veilChatActive() && veilDeletedPlaceholderApplies(cItem) && (!revealed.value || cItem.isDeletedContent)
     Column(horizontalAlignment = if (cItem.chatDir.sent) Alignment.End else Alignment.Start) {
       val canReply = (cItem.content is CIContent.SndMsgContent || cItem.content is CIContent.RcvMsgContent) &&
           cInfo !is ChatInfo.Local && !cItem.isReport && !cItem.meta.isLive && cItem.meta.itemDeleted == null
@@ -322,10 +327,10 @@ fun ChatItemView(
           }
           Column(
             Modifier
-              .clipChatItem(cItem, itemSeparation.largeGap, revealed.value)
+              .then(if (veilBubble || veilDeleted) Modifier else Modifier.clipChatItem(cItem, itemSeparation.largeGap, revealed.value)) // Veil: the bubble clips itself
               .hoverable(bubbleInteractionSource)
               .combinedClickable(
-                onLongClick = { showMenu.value = true },
+                onLongClick = { if (veilChatActive()) VeilChatHooks.onMessageActions(cItem) { showMenu.value = true } else showMenu.value = true }, // Veil: T11 hook
                 onClick = {
                   if (appPlatform.isAndroid && (searchIsNotBlank.value || cItem.meta.itemForwarded?.chatTypeApiIdMsgId != null)) {
                     hoveredItemId.value = if (hoveredItemId.value == cItem.id) null else cItem.id
@@ -336,7 +341,15 @@ fun ChatItemView(
           ) {
             @Composable
             fun framedItemView() {
-              FramedItemView(chatsCtx, chat, cItem, uriHandler, imageProvider, linkMode = linkMode, showViaProxy = showViaProxy, showMenu, showTimestamp = showTimestamp, tailVisible = itemSeparation.largeGap, receiveFile, onLinkLongClick, scrollToItem, scrollToItemId, scrollToQuotedItemFromItem)
+              if (veilBubble) {
+                // Veil: folded-corner bubble instead of FramedItemView
+                VeilTextBubble(chatsCtx, chat, cItem, linkMode, onLinkLongClick, onQuoteClick = {
+                  val quotedId = cItem.quotedItem?.itemId
+                  if (quotedId != null) scrollToItem(quotedId) else scrollToQuotedItemFromItem(cItem.id)
+                })
+              } else {
+                FramedItemView(chatsCtx, chat, cItem, uriHandler, imageProvider, linkMode = linkMode, showViaProxy = showViaProxy, showMenu, showTimestamp = showTimestamp, tailVisible = itemSeparation.largeGap, receiveFile, onLinkLongClick, scrollToItem, scrollToItemId, scrollToQuotedItemFromItem)
+              }
             }
 
             fun deleteMessageQuestionText(): String {
@@ -696,7 +709,8 @@ fun ChatItemView(
             }
 
             if (cItem.meta.itemDeleted != null && (!revealed.value || cItem.isDeletedContent)) {
-              MarkedDeletedItemView(chatsCtx, cItem, cInfo, cInfo.timedMessagesTTL, revealed, showViaProxy = showViaProxy, showTimestamp = showTimestamp)
+              if (veilDeleted) VeilDeletedBubble(cItem) // Veil: dashed placeholder
+              else MarkedDeletedItemView(chatsCtx, cItem, cInfo, cInfo.timedMessagesTTL, revealed, showViaProxy = showViaProxy, showTimestamp = showTimestamp)
               MarkedDeletedItemDropdownMenu()
             } else {
               when (val c = cItem.content) {
