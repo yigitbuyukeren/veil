@@ -23,6 +23,7 @@ jobs:
       - run: python3 scripts/ci/workflow-lint.py
       - run: bash scripts/ci/egress-check.sh
       - run: bash scripts/ci/presets-onion-check.sh
+      - run: bash scripts/ci/policy-check.sh
 
   android-foss-debug:
     runs-on: ubuntu-24.04
