@@ -578,6 +578,18 @@ object ChatController {
   suspend fun startChat(user: User) {
     Log.d(TAG, "user: $user")
     try {
+      // Veil: never start the network agent without a Tor SOCKS proxy; offer a retry instead
+      if (!withContext(Dispatchers.IO) { VeilNetworkPolicy.torProxyReady() }) {
+        Log.w(TAG, "startChat: Tor proxy unavailable, chat not started")
+        chatModel.chatRunning.value = false
+        AlertManager.shared.showAlertMsg(
+          title = generalGetString(MR.strings.veil_tor_unavailable_title),
+          text = generalGetString(MR.strings.veil_tor_unavailable_text),
+          confirmText = generalGetString(MR.strings.veil_tor_retry),
+          onConfirm = { withBGApi { startChat(user) } }
+        )
+        return
+      }
       apiSetNetworkConfig(getNetCfg())
       val chatRunning = apiCheckChatRunning()
       val users = listUsers(null)
@@ -3704,7 +3716,7 @@ object ChatController {
     } else {
       null
     }
-    return NetCfg(
+    return VeilNetworkPolicy.enforce(NetCfg(
       socksProxy = socksProxy,
       hostMode = hostMode,
       requiredHostMode = requiredHostMode,
@@ -3719,7 +3731,7 @@ object ChatController {
       tcpKeepAlive = tcpKeepAlive,
       smpPingInterval = smpPingInterval,
       smpPingCount = smpPingCount
-    )
+    ))
   }
 
   /**
