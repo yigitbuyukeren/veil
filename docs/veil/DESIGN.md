@@ -95,9 +95,9 @@ Audit of 2026-11-04, tracing navigation from every Veil screen. Status values: *
 | Chat info (direct), "Kişi tercihleri" | `ContactPreferencesView` (calls preference hidden unless calls are on) | Veil (`VeilContactPreferencesScreen`; upstream screen only in source) |
 | Chat info (direct), "Gelişmiş" | `ChatInfoView` (call buttons hidden unless calls are on) | Veil (`VeilContactAdvancedScreen`; address switch and delete-after dialogs stay upstream's; search, call buttons and the chat theme editor are not offered; upstream screen only in source) |
 | Chat info, security code | Veil verify screen with `ScanCodeView` camera scanner | Veil, upstream scanner |
-| Group info, preferences, edit, welcome | `VeilGroupPrefsScreen`, `VeilGroupProfileScreen`, `VeilGroupWelcomeScreen` (upstream's own copies stay reachable from the group "Gelişmiş" screen) | Veil |
-| Group info, "Gelişmiş" | `GroupChatInfoView`, `AddGroupMembersView`, `GroupLinkView` | on purpose; gap |
-| Group member, "Ayrıntılar" | `GroupMemberInfoView` (call buttons hidden unless calls are on) | on purpose; gap |
+| Group info, preferences, edit, welcome | `VeilGroupPrefsScreen`, `VeilGroupProfileScreen`, `VeilGroupWelcomeScreen` | Veil |
+| Group info, "Gelişmiş", add members, group link | `GroupChatInfoView`, `AddGroupMembersView`, `GroupLinkView` | Veil (`VeilGroupAdvancedScreen`, `VeilGroupBulkScreen`, `VeilAddMembersScreen`; the group link card of the Veil group info stands in for `GroupLinkView`; member support, reports and own support chat open upstream's screens; search and the chat theme editor are not offered; upstream screens only in source) |
+| Group member, "Ayrıntılar" | `GroupMemberInfoView` (call buttons hidden unless calls are on) | Veil (`VeilMemberDetailsScreen`; call buttons are not offered; upstream screen only in source) |
 | Groups that use relays (channels) | opened in upstream group info; creation is not offered | closed (creation); gap (viewing) |
 | New chat sheet: invite, paste, scan, group | Veil sheet with `QRCodeScanner` and upstream connect-plan dialogs | Veil, upstream scanner |
 | Chat items: media, files, events, call history | upstream renderers inside the Veil frame | on purpose; call items are history; incoming calls are rejected unless calls are on |

@@ -27,6 +27,9 @@ import chat.simplex.common.veil.screens.chat.VeilScreenScaffold
 import chat.simplex.common.veil.screens.chat.chatAvatarSeed
 import chat.simplex.common.veil.screens.chat.veilShowSheet
 import chat.simplex.common.veil.screens.chatlist.VeilIcon
+import chat.simplex.common.veil.screens.system.VeilAlertButton
+import chat.simplex.common.veil.screens.system.VeilAlertButtons
+import chat.simplex.common.veil.screens.system.VeilAlertRole
 import chat.simplex.common.views.chat.*
 import chat.simplex.common.views.chat.group.*
 import chat.simplex.common.views.chatlist.cantInviteIncognitoAlert
@@ -45,9 +48,10 @@ import kotlinx.coroutines.withContext
  * Veil group info (screen group E) for Android: header, members with role chips, group link card, preferences.
  *
  * Every action is upstream's: `apiCreateGroupLink` / `apiGroupLinkMemberRole` / `apiDeleteGroupLink` / `apiAddGroupShortLink`
- * for the link, `addGroupMembers` for invitations, `VeilGroupPrefsScreen` / `VeilGroupProfileScreen` / `VeilGroupWelcomeScreen` (upstream actions) for
- * preferences, `clearChatDialog` / `leaveGroupDialog` / `deleteGroupDialog` for the destructive actions, and upstream's full
- * `GroupChatInfoView` stays reachable from the "Gelişmiş" row. Which rows appear follows [VeilGroupsLogic].
+ * for the link (this card also stands in for upstream's `GroupLinkView`), the Veil add-members page (VeilGroupAddMembers.kt,
+ * instead of `AddGroupMembersView`) for invitations, `VeilGroupPrefsScreen` / `VeilGroupProfileScreen` / `VeilGroupWelcomeScreen` for
+ * preferences, `clearChatDialog` / `leaveGroupDialog` / `deleteGroupDialog` for the destructive actions, and the "Gelişmiş" row
+ * opens the Veil page that replaces `GroupChatInfoView` (VeilGroupAdvanced.kt). Which rows appear follows [VeilGroupsLogic].
  */
 
 /**
@@ -137,7 +141,7 @@ fun VeilGroupInfoScreen(rhId: Long?, groupId: Long, initialLink: GroupLink?, clo
           title = stringResource(MR.strings.veil_grp_add_members),
           onClick = {
             if (groupInfo.incognito) cantInviteIncognitoAlert()
-            else addGroupMembers(groupInfo = groupInfo, rhId = rhId)
+            else veilShowAddMembers(rhId, groupInfo)
           },
         )
       }
@@ -215,11 +219,11 @@ fun VeilGroupInfoScreen(rhId: Long?, groupId: Long, initialLink: GroupLink?, clo
     }
 
     VeilCard(Modifier.padding(bottom = 14.dp), contentPadding = PaddingValues(8.dp)) {
-      // upstream's full group info: send receipts, disappearing messages timer, wallpaper, reports, support chats
+      // delivery receipts, disappearing messages timer, local name, support chats, reports, several members at once
       VeilInfoRow(
         icon = MR.images.ic_settings_backup_restore,
         title = stringResource(MR.strings.veil_chatinfo_advanced),
-        onClick = { openUpstreamGroupInfo(rhId, groupId, link) { link = it } },
+        onClick = { veilShowGroupAdvanced(rhId, groupId) },
       )
     }
 
@@ -243,27 +247,6 @@ fun VeilGroupInfoScreen(rhId: Long?, groupId: Long, initialLink: GroupLink?, clo
         onClick = { deleteGroupDialog(chat, groupInfo, chatModel, close) },
         style = VeilButtonStyle.Danger,
       )
-    }
-  }
-}
-
-/** Upstream's `GroupChatInfoView` in its own modal, with the same wiring `ChatView` gives it. */
-private fun openUpstreamGroupInfo(rhId: Long?, groupId: Long, link: GroupLink?, onLinkUpdated: (GroupLink?) -> Unit) {
-  val selectedItems: MutableState<Set<Long>?> = mutableStateOf(null)
-  val scrollToItemId: MutableState<Long?> = mutableStateOf(null)
-  ModalManager.end.showCustomModal { closeAdvanced ->
-    val appBar = remember { mutableStateOf(null as @Composable (BoxScope.() -> Unit)?) }
-    ModalView(closeAdvanced, cardScreen = true, appBar = appBar.value) {
-      val info = remember(groupId) { derivedStateOf { chatModel.getGroupChat(groupId)?.chatInfo } }.value
-      if (info is ChatInfo.Group) {
-        var current by remember { mutableStateOf(link) }
-        GroupChatInfoView(chatModel.chatsContext, rhId, info.id, current, selectedItems, appBar, scrollToItemId, {
-          current = it
-          onLinkUpdated(it)
-        }, closeAdvanced, { })
-      } else {
-        LaunchedEffect(Unit) { closeAdvanced() }
-      }
     }
   }
 }
@@ -392,18 +375,50 @@ private fun GroupLinkCard(rhId: Long?, groupInfo: GroupInfo, link: GroupLink?, o
     }
   }
 
+  fun addShortLink(shareOnCompletion: Boolean) {
+    creating = true
+    withBGApi {
+      val updated = chatModel.controller.apiAddGroupShortLink(rhId, groupInfo.groupId)
+      if (updated != null) {
+        withContext(Dispatchers.Main) {
+          onLinkChanged(updated)
+          if (shareOnCompletion) clipboard.shareText(updated.connLinkContact.simplexChatUri(short = true))
+        }
+      }
+      creating = false
+    }
+  }
+
   fun upgrade() {
     AlertManager.shared.showAlertDialog(
       title = generalGetString(MR.strings.share_group_profile_via_link),
       text = generalGetString(MR.strings.share_group_profile_via_link_alert_text),
       confirmText = generalGetString(MR.strings.share_profile_via_link_alert_confirm),
-      onConfirm = {
-        creating = true
-        withBGApi {
-          val updated = chatModel.controller.apiAddGroupShortLink(rhId, groupInfo.groupId)
-          if (updated != null) withContext(Dispatchers.Main) { onLinkChanged(updated) }
-          creating = false
-        }
+      onConfirm = { addShortLink(shareOnCompletion = false) },
+    )
+  }
+
+  /** Sharing a link that should be upgraded first asks, like upstream's `GroupLinkView`: upgrade and share, share the old one, or cancel. */
+  fun share(current: GroupLink, text: String) {
+    if (!current.shouldBeUpgraded) {
+      clipboard.shareText(text)
+      return
+    }
+    AlertManager.shared.showAlertDialogButtonsColumn(
+      title = generalGetString(MR.strings.share_group_profile_via_link),
+      text = generalGetString(MR.strings.share_group_profile_via_link_alert_text),
+      buttons = {
+        VeilAlertButtons(listOf(
+          VeilAlertButton(generalGetString(MR.strings.share_profile_via_link_alert_confirm), VeilAlertRole.Primary) {
+            AlertManager.shared.hideAlert()
+            addShortLink(shareOnCompletion = true)
+          },
+          VeilAlertButton(generalGetString(MR.strings.share_old_link_alert_button), VeilAlertRole.Secondary) {
+            AlertManager.shared.hideAlert()
+            clipboard.shareText(text)
+          },
+          VeilAlertButton(generalGetString(MR.strings.cancel_verb), VeilAlertRole.Secondary) { AlertManager.shared.hideAlert() },
+        ))
       },
     )
   }
@@ -454,7 +469,7 @@ private fun GroupLinkCard(rhId: Long?, groupInfo: GroupInfo, link: GroupLink?, o
           )
           VeilButton(
             stringResource(MR.strings.veil_new_share),
-            onClick = { clipboard.shareText(text) },
+            onClick = { share(link, text) },
             modifier = Modifier.weight(1f),
             enabled = active,
           )

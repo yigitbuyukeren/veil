@@ -34,8 +34,8 @@ import dev.icerock.moko.resources.compose.stringResource
  * Veil member screen: who, role, security code, and the actions the user's role allows (change role, remove, block).
  * Every action is upstream's dialog and API call (`updateMemberRoleDialog` + `updateMembersRole`, `removeMemberDialog`,
  * `blockMemberAlert`, `blockForAllAlert`, ...); [memberPermissions] decides which are offered, with upstream's rules.
- * Everything else about a member (direct message, connection details, address switch) is in upstream's own member
- * info, behind the "Ayrıntılar" row.
+ * Everything else about a member (direct message, connection details, address switch) is on the Veil details page
+ * (VeilGroupMemberDetails.kt, instead of upstream's `GroupMemberInfoView`), behind the "Ayrıntılar" row.
  */
 
 /** Opens the screen for one member of the open group. */
@@ -153,11 +153,11 @@ fun VeilMemberScreen(rhId: Long?, groupId: Long, groupMemberId: Long, code: Stri
     }
 
     VeilCard(Modifier.padding(bottom = 14.dp), contentPadding = PaddingValues(8.dp)) {
-      // upstream's full member info: direct message, connection details, address switch
+      // direct message, support chat, address, connection details, address switch
       VeilInfoRow(
         icon = MR.images.ic_settings_backup_restore,
         title = stringResource(MR.strings.veil_grp_member_details),
-        onClick = { openUpstreamMemberInfo(rhId, groupInfo, member, code, close) },
+        onClick = { veilShowMemberDetails(rhId, groupInfo, member, close) },
       )
     }
 
@@ -240,22 +240,6 @@ private fun veilShowRoleSheet(rhId: Long?, groupInfo: GroupInfo, member: GroupMe
             BasicText(stringResource(roleLabel(role)), style = type.bodyLarge.copy(color = colors.ink))
           }
           if (current) VeilIcon(MR.images.ic_check, colors.mintInk, size = 20.dp)
-        }
-      }
-    }
-  }
-}
-
-/** Upstream's `GroupMemberInfoView` in its own modal, with the same preload and wiring as `GroupChatInfoView` gives it. */
-private fun openUpstreamMemberInfo(rhId: Long?, groupInfo: GroupInfo, member: GroupMember, code: String?, closeScreen: () -> Unit) {
-  val scrollToItemId: MutableState<Long?> = mutableStateOf(null)
-  withBGApi {
-    val stats = chatModel.controller.apiGroupMemberInfo(rhId, groupInfo.groupId, member.groupMemberId)?.second
-    ModalManager.end.showModalCloseable(showClose = true, cardScreen = true) { closeCurrent ->
-      remember { derivedStateOf { chatModel.getGroupMember(member.groupMemberId) } }.value?.let { mem ->
-        GroupMemberInfoView(rhId, groupInfo, mem, scrollToItemId, stats, code, chatModel, openedFromSupportChat = false, groupRelay = null, close = closeCurrent) {
-          closeCurrent()
-          closeScreen()
         }
       }
     }

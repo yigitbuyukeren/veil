@@ -355,7 +355,7 @@ fun removeMemberAlert(rhId: Long?, groupInfo: GroupInfo, mem: GroupMember) {
   }
 }
 
-private fun removeMembersAlert(rhId: Long?, groupInfo: GroupInfo, memberIds: List<Long>, onSuccess: () -> Unit = {}) {
+fun removeMembersAlert(rhId: Long?, groupInfo: GroupInfo, memberIds: List<Long>, onSuccess: () -> Unit = {}) { // Veil: was private, the Veil members page calls it
   val messageId = if (groupInfo.businessChat == null)
     MR.strings.members_will_be_removed_from_group_cannot_be_undone
   else
