@@ -11,6 +11,7 @@ import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.newchat.*
 import chat.simplex.common.veil.VeilUi
 import chat.simplex.common.veil.data.VeilPins
+import chat.simplex.common.veil.screens.chat.VeilContactConnectionScreen
 import chat.simplex.common.veil.screens.newchat.veilShowNewChatSheetModal
 import chat.simplex.res.MR
 import dev.icerock.moko.resources.ImageResource
@@ -166,8 +167,12 @@ fun veilChatActions(chat: Chat): List<VeilChatAction> {
       VeilChatAction(MR.strings.veil_list_act_rename_connection, MR.images.ic_edit) {
         ModalManager.center.closeModals()
         ModalManager.end.closeModals()
-        ModalManager.center.showModalCloseable(settings = true, showClose = appPlatform.isAndroid, cardScreen = true) { close ->
-          ContactConnectionInfoView(chatModel, rh, info.contactConnection.connLinkInv, info.contactConnection, true, close)
+        if (VeilUi.chat) {
+          ModalManager.center.showCustomModal { close -> VeilContactConnectionScreen(rh, info.contactConnection.connLinkInv, info.contactConnection, true, close) }
+        } else {
+          ModalManager.center.showModalCloseable(settings = true, showClose = appPlatform.isAndroid, cardScreen = true) { close ->
+            ContactConnectionInfoView(chatModel, rh, info.contactConnection.connLinkInv, info.contactConnection, true, close)
+          }
         }
       },
       VeilChatAction(MR.strings.veil_list_act_delete_connection, MR.images.ic_delete, VeilActionTone.Danger) {

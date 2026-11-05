@@ -140,29 +140,19 @@ fun VeilContactInfoScreen(rhId: Long?, contactId: Long, connectionStats: Connect
           icon = MR.images.ic_settings,
           title = stringResource(MR.strings.veil_chatinfo_preferences),
           onClick = {
-            ModalManager.end.showCustomModal { closePrefs ->
-              val user = chatModel.currentUser.value
-              if (user != null) ContactPreferencesView(chatModel, user, rhId, contactId, closePrefs)
-            }
+            ModalManager.end.showCustomModal { closePrefs -> VeilContactPreferencesScreen(rhId, contactId, closePrefs) }
           },
         )
       }
     }
 
     VeilCard(Modifier.padding(bottom = 14.dp), contentPadding = PaddingValues(8.dp)) {
-      // upstream's full contact info: resync, address switch, send receipts, disappearing messages timer, servers
+      // receipts, delete-after time, encryption, address, servers, address switch, fix connection (upstream's full contact info, in Veil design)
       VeilInfoRow(
         icon = MR.images.ic_settings_backup_restore,
         title = stringResource(MR.strings.veil_chatinfo_advanced),
         onClick = {
-          ModalManager.end.showCustomModal { closeAdvanced ->
-            ModalView(closeAdvanced, cardScreen = true) {
-              val ct = remember { derivedStateOf { (chatModel.getContactChat(contactId)?.chatInfo as? ChatInfo.Direct)?.contact } }.value
-              if (ct != null) {
-                ChatInfoView(chatModel.chatsContext, chatModel, ct, connectionStats, customUserProfile, ct.localAlias, connectionCode, closeAdvanced) { }
-              } else LaunchedEffect(Unit) { closeAdvanced() }
-            }
-          }
+          ModalManager.end.showCustomModal { closeAdvanced -> VeilContactAdvancedScreen(rhId, contactId, connectionStats, closeAdvanced) }
         },
       )
     }

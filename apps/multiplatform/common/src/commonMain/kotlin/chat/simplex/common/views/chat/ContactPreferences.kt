@@ -219,7 +219,7 @@ private fun ResetSaveButtons(reset: () -> Unit, save: () -> Unit, disabled: Bool
   }
 }
 
-private fun showUnsavedChangesAlert(save: () -> Unit, revert: () -> Unit) {
+internal fun showUnsavedChangesAlert(save: () -> Unit, revert: () -> Unit) { // Veil: private -> internal, the Veil contact preferences ask the same question
   AlertManager.shared.showAlertDialogStacked(
     title = generalGetString(MR.strings.save_preferences_question),
     confirmText = generalGetString(MR.strings.save_and_notify_contact),

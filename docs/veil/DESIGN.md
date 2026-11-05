@@ -91,9 +91,9 @@ Audit of 2026-11-04, tracing navigation from every Veil screen. Status values: *
 | Settings, Tor and status, "Sunucular ve ağ" | `NetworkAndServersView` (read-only; WebRTC servers section now hidden) | Veil read-only relay list (`VeilServersScreen`: hosts of enabled message and file servers, `.onion` marked); upstream's `NetworkAndServersView` only in debug builds |
 | Settings, Gelişmiş | `VersionInfoView`, `DeveloperView` (terminal and terminal-app link now debug builds only) | on purpose; gap: upstream look |
 | Settings, Hakkında | Veil about and licenses; design gallery in debug builds | Veil |
-| Chat list, avatar sheet, rename connection | `ContactConnectionInfoView` | on purpose; gap |
-| Chat info (direct), "Kişi tercihleri" | `ContactPreferencesView` (calls preference hidden unless calls are on) | on purpose; gap |
-| Chat info (direct), "Gelişmiş" | `ChatInfoView` (call buttons hidden unless calls are on) | on purpose; gap |
+| Chat list, avatar sheet, rename connection; tap on a pending connection | `ContactConnectionInfoView` | Veil (`VeilContactConnectionScreen`; upstream screen only in source; its explainers `AddContactLearnMore` and `IncognitoView` and the delete dialog stay upstream's) |
+| Chat info (direct), "Kişi tercihleri" | `ContactPreferencesView` (calls preference hidden unless calls are on) | Veil (`VeilContactPreferencesScreen`; upstream screen only in source) |
+| Chat info (direct), "Gelişmiş" | `ChatInfoView` (call buttons hidden unless calls are on) | Veil (`VeilContactAdvancedScreen`; address switch and delete-after dialogs stay upstream's; search, call buttons and the chat theme editor are not offered; upstream screen only in source) |
 | Chat info, security code | Veil verify screen with `ScanCodeView` camera scanner | Veil, upstream scanner |
 | Group info, preferences, edit, welcome | `GroupPreferencesView`, `GroupProfileView`, `GroupWelcomeView` | on purpose; gap |
 | Group info, "Gelişmiş" | `GroupChatInfoView`, `AddGroupMembersView`, `GroupLinkView` | on purpose; gap |

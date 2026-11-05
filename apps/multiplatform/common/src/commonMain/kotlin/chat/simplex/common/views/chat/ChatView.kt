@@ -809,7 +809,9 @@ fun ChatView(
       }
       is ChatInfo.ContactConnection -> {
         val close = { chatModel.chatId.value = null }
-          ModalView(close, showClose = appPlatform.isAndroid, cardScreen = true, content = {
+          if (veilChatActive()) { // Veil: Veil page of a pending connection
+            VeilContactConnectionScreen(chatRh, chatInfo.contactConnection.connLinkInv, chatInfo.contactConnection, false, close)
+          } else ModalView(close, showClose = appPlatform.isAndroid, cardScreen = true, content = {
             ContactConnectionInfoView(chatModel, chatRh, chatInfo.contactConnection.connLinkInv, chatInfo.contactConnection, false, close)
           })
           LaunchedEffect(chatInfo.id) {
