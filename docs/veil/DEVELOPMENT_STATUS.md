@@ -77,6 +77,10 @@ Voice and video calls are back as an explicit opt-in, **off by default**, and th
 
 Settings > Notifications is a Veil page (`VeilNotificationsScreen`). It does what upstream's `NotificationsSettingsView` does and nothing else: choose the mode (instant, periodic, only while the app is open; Android only) through `changeNotificationsMode`, and show the Xiaomi autostart hint for the two background modes. The wording is the onboarding step's, so "SimpleX runs in background" no longer appears here. Decision helpers (`VeilNotificationsLogic.kt`) are unit-tested; appearance and behavior NOT TESTED on a device.
 
+## Other privacy settings (N6c, 2026-11-05)
+
+Settings > Privacy > "Diğer gizlilik ayarları" is a Veil page (`VeilMorePrivacyScreen`, decisions in `VeilMorePrivacyLogic`) instead of upstream's `PrivacySettingsView` / `MorePrivacyView`. Same preferences and side effects as upstream: remove link tracking, keep message draft (turning it off drops the open draft), show encryption marks, download images automatically, media blur (four levels), encrypt local files (`apiSetEncryptLocalFiles`), confirm unknown file servers, auto-accept contact requests from groups (`apiSetUserAutoAcceptMemberContacts`). Delivery receipts stay on the Veil privacy page but now use upstream's keep/replace dialog and texts when chats have their own choice (`veilSetReceipts`). Already on the Veil privacy page and unchanged: list and notification previews, app lock, screen protection, incognito, the locked link-previews row, the calls opt-in. Not offered: "Verify SimpleX names" (the preference is read nowhere, so a switch would do nothing). The upstream screens stay in source. Unit tests cover the pure decisions; build and tests pass, the screens are NOT TESTED on a device.
+
 ## Open items
 
 - **Device and emulator tests of the whole redesign are pending.** The emulator run waits for the owner's go; real devices and Orbot are needed for the M1 gates and for the evidence in the claims list.

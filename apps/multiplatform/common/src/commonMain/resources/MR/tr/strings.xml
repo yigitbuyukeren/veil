@@ -3161,7 +3161,7 @@
   <string name="veil_set_privacy_receipts">Teslim bilgisi</string>
   <string name="veil_set_privacy_receipts_contacts">Kişilere gönder</string>
   <string name="veil_set_privacy_receipts_groups">Küçük gruplara gönder</string>
-  <string name="veil_set_privacy_receipts_note">Açıkken mesajı aldığını karşı taraf görür. Mevcut sohbetlerdeki ayrı seçimler korunur.</string>
+  <string name="veil_set_privacy_receipts_note">Açıkken mesajı aldığını karşı taraf görür. Bazı sohbetlerin ayrı bir seçimi varsa, onlara ne yapılacağı sorulur.</string>
   <string name="veil_set_privacy_more">Diğer gizlilik ayarları</string>
   <string name="veil_set_appearance_title">Görünüm</string>
   <string name="veil_set_appearance_theme">Tema</string>
@@ -3312,7 +3312,6 @@
   <string name="veil_grp_create_no_contacts">Eklenecek kişi yok. Grubu kurduktan sonra link ile de üye alabilirsin.</string>
   <string name="veil_grp_create_button">Grubu oluştur</string>
   <string name="veil_grp_create_button_with">Grubu oluştur ve %1$d kişiyi ekle</string>
-||||||| parent of b8217b659 (Add Sis light theme, theme setting and contrast tests)
 
 
   <!-- Veil theme and accessibility -->
@@ -3341,4 +3340,28 @@
   <string name="veil_set_ntf_modes">Mesajlardan nasıl haberdar olacağın</string>
   <string name="veil_set_ntf_note">Üç seçenekte de bildirimler bir push sunucusundan geçmez; uygulama mesajları kendisi alır.</string>
   <string name="veil_set_ntf_unavailable">Bildirim modu yalnızca Android\'de değiştirilebilir.</string>
+  <!-- Veil N6c: other privacy settings -->
+  <string name="veil_mp_chats">Sohbetler</string>
+  <string name="veil_mp_sanitize">Bağlantı izleyicilerini kaldır</string>
+  <string name="veil_mp_sanitize_desc">Yazdığın bağlantılardan izleme parametreleri çıkarılır.</string>
+  <string name="veil_mp_draft">Mesaj taslağını sakla</string>
+  <string name="veil_mp_draft_desc">Gönderilmemiş metin sohbette kalır. Kapatırsan şu an açık olan taslak silinir.</string>
+  <string name="veil_mp_encryption">Şifreleme işaretlerini göster</string>
+  <string name="veil_mp_encryption_desc">Mesaj ve dosyaların saatinin yanında kilit işareti gösterir.</string>
+  <string name="veil_mp_files">Dosyalar ve medya</string>
+  <string name="veil_mp_accept_images">Görselleri otomatik indir</string>
+  <string name="veil_mp_accept_images_desc">Küçük görseller, videolar ve sesli mesajlar kendiliğinden iner.</string>
+  <string name="veil_mp_blur">Medyayı bulanıklaştır</string>
+  <string name="veil_mp_blur_off">Kapalı</string>
+  <string name="veil_mp_blur_soft">Hafif</string>
+  <string name="veil_mp_blur_medium">Orta</string>
+  <string name="veil_mp_blur_strong">Güçlü</string>
+  <string name="veil_mp_encrypt_files">Cihazdaki dosyaları şifrele</string>
+  <string name="veil_mp_encrypt_files_desc">Bundan sonra kaydedilen dosyalar için geçerli.</string>
+  <string name="veil_mp_relays">Bilinmeyen dosya sunucularını onayla</string>
+  <string name="veil_mp_relays_on">Veil, tanımadığı bir dosya sunucusundan indirmeden önce sorar.</string>
+  <string name="veil_mp_relays_off">Bilinmeyen dosya sunucularından indirme sormadan başlar.</string>
+  <string name="veil_mp_groups">Gruplardan gelen kişi istekleri</string>
+  <string name="veil_mp_groups_auto">Otomatik kabul et</string>
+  <string name="veil_mp_groups_note">Bu ayar şu anki profilin için: %1$s.</string>
 </resources>

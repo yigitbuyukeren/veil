@@ -11,7 +11,7 @@ import dev.icerock.moko.resources.compose.stringResource
 
 /**
  * Veil privacy screen. The toggles use upstream's preference objects and side effects; what is not grouped here is
- * reachable through "Diğer gizlilik ayarları" (upstream's privacy screen).
+ * reachable through "Diğer gizlilik ayarları" ([VeilMorePrivacyScreen]).
  */
 @Composable
 fun VeilPrivacyScreen(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
@@ -116,25 +116,13 @@ fun VeilPrivacyScreen(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
         VeilSwitchRow(
           stringResource(MR.strings.veil_set_privacy_receipts_contacts),
           checked = user.sendRcptsContacts,
-          onChange = { on ->
-            withLongRunningApi(slow = 60_000) {
-              chatModel.controller.apiSetUserContactReceipts(user, UserMsgReceiptSettings(on, clearOverrides = false))
-              appPrefs.privacyDeliveryReceiptsSet.set(true)
-              chatModel.currentUser.value = user.copy(sendRcptsContacts = on)
-            }
-          }
+          onChange = { on -> veilSetReceipts(user, forContacts = true, enable = on) }
         )
         VeilRowDivider()
         VeilSwitchRow(
           stringResource(MR.strings.veil_set_privacy_receipts_groups),
           checked = user.sendRcptsSmallGroups,
-          onChange = { on ->
-            withLongRunningApi(slow = 60_000) {
-              chatModel.controller.apiSetUserGroupReceipts(user, UserMsgReceiptSettings(on, clearOverrides = false))
-              appPrefs.privacyDeliveryReceiptsSet.set(true)
-              chatModel.currentUser.value = user.copy(sendRcptsSmallGroups = on)
-            }
-          }
+          onChange = { on -> veilSetReceipts(user, forContacts = false, enable = on) }
         )
       }
       VeilNote(stringResource(MR.strings.veil_set_privacy_receipts_note))
@@ -144,15 +132,7 @@ fun VeilPrivacyScreen(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
     VeilGroup {
       VeilValueRow(
         stringResource(MR.strings.veil_set_privacy_more), sub = null, readOnly = false,
-        onClick = {
-          showUpstreamSettings {
-            PrivacySettingsView(
-              chatModel,
-              showSettingsModal = { modalView -> { ModalManager.start.showModal(settings = true, cardScreen = true) { modalView(chatModel) } } },
-              setPerformLA = setPerformLA
-            )
-          }
-        }
+        onClick = { veilShowSettingsPage { c -> VeilMorePrivacyScreen(c) } }
       )
     }
   }
