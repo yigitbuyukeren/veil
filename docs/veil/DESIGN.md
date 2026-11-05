@@ -84,7 +84,7 @@ Audit of 2026-11-04, tracing navigation from every Veil screen. Status values: *
 
 | Entry point | Screen | Status |
 |---|---|---|
-| Settings, Profiles | `UserProfilesView` (switch, create, hide, delete) | on purpose; gap: upstream look |
+| Settings, Profiles | `VeilProfilesScreen` (switch, create, hide, unhide, mute, delete through `userProfilesActions`, the code `UserProfilesView` itself uses; hidden-profile password screens and delete confirmations are upstream's; `UserProfilesView` stays in source for the upstream user picker) | Veil |
 | Settings, Notifications | `VeilNotificationsScreen` (mode choice through upstream's `changeNotificationsMode`; `NotificationsSettingsView` stays in source) | Veil |
 | Settings, Database and passphrase | `DatabaseView` (export, import, passphrase, start and stop chat, delete) | on purpose (safety-critical) |
 | Settings, Privacy, "Diğer gizlilik ayarları" | `PrivacySettingsView`, `MorePrivacyView` (link previews toggle is policy-locked) | Veil (`VeilMorePrivacyScreen`; the link-previews row stays locked in `VeilPrivacyScreen`; upstream screens only in source) |

@@ -3,7 +3,6 @@ package chat.simplex.common.veil.screens.settings
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -151,31 +150,25 @@ fun VeilSettingsHome(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
   }
 }
 
-/** Profiles: upstream's profile list (switch, create, hide, delete), same wrapper as the user picker uses. */
+/** Profiles: the Veil profiles screen. The device credential check is the one the upstream entry used (once per opening). */
 private fun openProfiles() {
   ModalManager.start.showCustomModal(keyboardCoversBar = false) { close ->
-    val search = rememberSaveable { mutableStateOf("") }
-    val profileHidden = rememberSaveable { mutableStateOf(false) }
     val authorized = remember { stateGetOrPut("authorized") { false } }
-    ModalView(
-      { close() },
-      showSearch = true,
-      searchAlwaysVisible = true,
-      onSearchValueChanged = { search.value = it },
-      content = {
-        UserProfilesView(chatModel, search, profileHidden) { block ->
-          if (authorized.value) {
+    VeilProfilesScreen(
+      authorize = { block ->
+        if (authorized.value) {
+          block()
+        } else {
+          doWithAuth(
+            generalGetString(MR.strings.auth_open_chat_profiles),
+            generalGetString(MR.strings.auth_log_in_using_credential)
+          ) {
+            authorized.value = true
             block()
-          } else {
-            doWithAuth(
-              generalGetString(MR.strings.auth_open_chat_profiles),
-              generalGetString(MR.strings.auth_log_in_using_credential)
-            ) {
-              authorized.value = true
-              block()
-            }
           }
         }
-      })
+      },
+      close = close
+    )
   }
 }

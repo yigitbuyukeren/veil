@@ -39,6 +39,7 @@ fun UserProfilesView(m: ChatModel, search: MutableState<String>, profileHidden: 
   val searchTextOrPassword = rememberSaveable { search }
   val users by remember { derivedStateOf { m.users.map { it.user } } }
   val filteredUsers by remember { derivedStateOf { filteredUsers(m, searchTextOrPassword.value) } }
+  val actions = userProfilesActions(m, searchTextOrPassword, profileHidden, { users }, withAuth)
   UserProfilesLayout(
     users = users,
     filteredUsers = filteredUsers,
@@ -46,6 +47,38 @@ fun UserProfilesView(m: ChatModel, search: MutableState<String>, profileHidden: 
     searchTextOrPassword = searchTextOrPassword,
     showHiddenProfilesNotice = m.controller.appPrefs.showHiddenProfilesNotice,
     visibleUsersCount = visibleUsersCount(m),
+    addUser = actions.addUser,
+    activateUser = actions.activateUser,
+    removeUser = actions.removeUser,
+    unhideUser = actions.unhideUser,
+    muteUser = actions.muteUser,
+    unmuteUser = actions.unmuteUser,
+    showHiddenProfile = actions.showHiddenProfile
+  )
+  KeyChangeEffect(remember { m.currentRemoteHost }.value) {
+    ModalManager.start.closeModal()
+  }
+}
+
+// Veil: the actions of the profile list, moved out of `UserProfilesView` unchanged so the Veil profiles screen calls
+// the same code (password flow, delete confirmations, ChatController calls).
+class UserProfilesActions(
+  val addUser: () -> Unit,
+  val activateUser: (User) -> Unit,
+  val removeUser: (User) -> Unit,
+  val unhideUser: (User) -> Unit,
+  val muteUser: (User) -> Unit,
+  val unmuteUser: (User) -> Unit,
+  val showHiddenProfile: (User) -> Unit,
+)
+
+fun userProfilesActions(
+  m: ChatModel,
+  searchTextOrPassword: MutableState<String>,
+  profileHidden: MutableState<Boolean>,
+  users: () -> List<User>,
+  withAuth: (block: () -> Unit) -> Unit
+): UserProfilesActions = UserProfilesActions(
     addUser = {
       withAuth {
         ModalManager.center.showModalCloseable { close ->
@@ -80,13 +113,13 @@ fun UserProfilesView(m: ChatModel, search: MutableState<String>, profileHidden: 
             Column {
               SectionItemView({
                 AlertManager.shared.hideAlert()
-                removeUser(m, user, users, true, searchTextOrPassword.value.trim())
+                removeUser(m, user, users(), true, searchTextOrPassword.value.trim())
               }) {
                 Text(stringResource(MR.strings.users_delete_with_connections), Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = Color.Red)
               }
               SectionItemView({
                 AlertManager.shared.hideAlert()
-                removeUser(m, user, users, false, searchTextOrPassword.value.trim())
+                removeUser(m, user, users(), false, searchTextOrPassword.value.trim())
               }
               ) {
                 Text(stringResource(MR.strings.users_delete_data_only), Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = Color.Red)
@@ -141,8 +174,19 @@ fun UserProfilesView(m: ChatModel, search: MutableState<String>, profileHidden: 
       }
     }
   )
-  KeyChangeEffect(remember { m.currentRemoteHost }.value) {
-    ModalManager.start.closeModal()
+
+// Veil: the notice that explains hiding and muting; shared with the Veil profiles screen.
+fun showHiddenProfilesNoticeIfNeeded(showHiddenProfilesNotice: SharedPreference<Boolean>, usersCount: Int) {
+  if (showHiddenProfilesNotice.state.value && usersCount > 1) {
+    AlertManager.shared.showAlertDialog(
+      title = generalGetString(MR.strings.make_profile_private),
+      text = generalGetString(MR.strings.you_can_hide_or_mute_user_profile),
+      confirmText = generalGetString(MR.strings.ok),
+      dismissText = generalGetString(MR.strings.dont_show_again),
+      onDismiss = {
+        showHiddenProfilesNotice.set(false)
+      },
+    )
   }
 }
 
@@ -188,17 +232,7 @@ private fun UserProfilesLayout(
     }
     SectionTextFooter(stringResource(MR.strings.tap_to_activate_profile))
     LaunchedEffect(Unit) {
-      if (showHiddenProfilesNotice.state.value && users.size > 1) {
-        AlertManager.shared.showAlertDialog(
-          title = generalGetString(MR.strings.make_profile_private),
-          text = generalGetString(MR.strings.you_can_hide_or_mute_user_profile),
-          confirmText = generalGetString(MR.strings.ok),
-          dismissText = generalGetString(MR.strings.dont_show_again),
-          onDismiss = {
-            showHiddenProfilesNotice.set(false)
-          },
-        )
-      }
+      showHiddenProfilesNoticeIfNeeded(showHiddenProfilesNotice, users.size)
     }
     SectionBottomSpacer()
   }
@@ -314,7 +348,7 @@ fun filteredUsers(m: ChatModel, searchTextOrPassword: String): List<UserInfo> {
   }
 }
 
-private fun visibleUsersCount(m: ChatModel): Int = m.users.filter { u -> !u.user.hidden }.size
+fun visibleUsersCount(m: ChatModel): Int = m.users.filter { u -> !u.user.hidden }.size
 
 fun correctPassword(user: User, pwd: String): Boolean {
   val ph = user.viewPwdHash

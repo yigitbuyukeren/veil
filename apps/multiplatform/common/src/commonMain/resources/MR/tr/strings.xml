@@ -3364,4 +3364,11 @@
   <string name="veil_mp_groups">Gruplardan gelen kişi istekleri</string>
   <string name="veil_mp_groups_auto">Otomatik kabul et</string>
   <string name="veil_mp_groups_note">Bu ayar şu anki profilin için: %1$s.</string>
+  <string name="veil_prof_search">Ara ya da gizli profilin parolasını yaz</string>
+  <string name="veil_prof_hint">Geçmek için bir profile dokun. Gizlemek, sessize almak ya da silmek için basılı tut veya üç noktaya dokun.</string>
+  <string name="veil_prof_menu">Profil seçenekleri</string>
+  <string name="veil_prof_active">Etkin</string>
+  <string name="veil_prof_hidden">Gizli</string>
+  <string name="veil_prof_muted">Sessiz</string>
+  <string name="veil_prof_unhide">Gizliliği kaldır</string>
 </resources>

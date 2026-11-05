@@ -3672,4 +3672,11 @@
   <string name="veil_mp_groups">Contact requests from groups</string>
   <string name="veil_mp_groups_auto">Accept automatically</string>
   <string name="veil_mp_groups_note">This setting is for your current profile %1$s.</string>
+  <string name="veil_prof_search">Search, or type a hidden profile\'s password</string>
+  <string name="veil_prof_hint">Tap a profile to switch to it. Hold it, or use the three dots, to hide, mute or delete it.</string>
+  <string name="veil_prof_menu">Profile options</string>
+  <string name="veil_prof_active">Active</string>
+  <string name="veil_prof_hidden">Hidden</string>
+  <string name="veil_prof_muted">Muted</string>
+  <string name="veil_prof_unhide">Unhide</string>
 </resources>
