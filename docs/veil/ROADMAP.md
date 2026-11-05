@@ -28,7 +28,7 @@ Goal: a Tor-only Android closed alpha, not a finished or audited product. Issue 
 
 Status 2026-11-04: all nine groups below exist in code and build (arm64 FOSS debug) with unit tests for the logic, the contrast of both themes and the design system. **No screen has been run on a device or an emulator**, so by the acceptance rule below no group is "done" yet. Commits per group are in [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md). Remaining: the emulator run (waits for the owner's go), the upstream screens that are opened on purpose and still have the upstream look ([DESIGN.md](DESIGN.md), "Reachable upstream screens"), English translation, and the remaining upstream wording ([BRANDING.md](BRANDING.md)).
 
-A whole-app redesign on a Veil design system, Turkish-first. It replaces the upstream screens one by one without touching upstream logic (architecture rule in [DESIGN.md](DESIGN.md)). The app builds and runs after every screen group. Calls, desktop, remote connection and device migration stay hidden.
+A whole-app redesign on a Veil design system, Turkish-first. It replaces the upstream screens one by one without touching upstream logic (architecture rule in [DESIGN.md](DESIGN.md)). The app builds and runs after every screen group. Calls and desktop and remote connection stay hidden; device migration is under Gelişmiş.
 
 Screen groups (details in the screen map of [DESIGN.md](DESIGN.md)):
 

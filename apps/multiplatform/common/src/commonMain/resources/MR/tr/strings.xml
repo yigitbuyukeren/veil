@@ -3122,6 +3122,15 @@
   <string name="veil_set_row_about">Hakkında ve lisanslar</string>
   <string name="veil_set_row_advanced">Gelişmiş</string>
   <string name="veil_set_sum_advanced">Geliştirici araçları ve sohbet konsolu</string>
+  <string name="veil_adv_sum_advanced">Başka cihaza taşı, sürüm, geliştirici araçları</string>
+  <string name="veil_adv_row_migrate">Başka cihaza taşı</string>
+  <string name="veil_adv_sum_migrate">Sohbetlerini yeni bir telefona aktar</string>
+  <string name="veil_adv_row_version">Sürüm bilgisi</string>
+  <string name="veil_adv_row_dev">Geliştirici araçları</string>
+  <string name="veil_adv_migrate_note">Arşiv şifrelenir ve Tor üzerinden yüklenir.</string>
+  <string name="veil_adv_migrate_tor_title">Tor yanıt vermiyor</string>
+  <string name="veil_adv_migrate_tor_text">Başka cihaza taşıma bir arşiv yükler; bu yüzden yalnızca Orbot çalışıp yanıt verirken başlar. Orbot\'u başlatıp yeniden dene.</string>
+  <string name="veil_onb_migrate">Başka bir cihazdan taşı</string>
   <string name="veil_set_sum_profiles">%1$s profil</string>
   <string name="veil_set_sum_profiles_hidden">%1$s gizli</string>
   <string name="veil_set_sum_previews_on">Listede önizleme açık</string>

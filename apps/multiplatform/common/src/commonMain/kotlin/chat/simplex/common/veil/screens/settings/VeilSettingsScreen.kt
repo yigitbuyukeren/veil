@@ -139,15 +139,8 @@ fun VeilSettingsHome(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
     VeilGroup {
       VeilNavRow(
         MR.images.ic_code, stringResource(MR.strings.veil_set_row_advanced),
-        stringResource(MR.strings.veil_set_sum_advanced),
-        onClick = {
-          ModalManager.start.showModal(cardScreen = true) {
-            VersionInfoView(
-              showSettingsModal = { modalView -> { ModalManager.start.showModal(settings = true, cardScreen = true) { modalView(chatModel) } } },
-              withAuth = ::doWithAuth
-            )
-          }
-        }
+        stringResource(MR.strings.veil_adv_sum_advanced),
+        onClick = { veilShowSettingsPage { c -> VeilAdvancedScreen(c) } }
       )
     }
     BasicText(

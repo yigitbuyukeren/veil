@@ -16,6 +16,10 @@ import chat.simplex.common.model.ChatController.appPrefs
 import chat.simplex.common.model.ChatModel
 import chat.simplex.common.platform.BackHandler
 import chat.simplex.common.veil.design.*
+import chat.simplex.common.views.migration.MigrationToState
+import chat.simplex.common.platform.chatModel
+import chat.simplex.common.views.helpers.ModalManager
+import chat.simplex.common.views.migration.MigrateToDeviceView
 import chat.simplex.common.views.createProfileOnboarding
 import chat.simplex.common.views.mkValidName
 import chat.simplex.common.views.onboarding.OnboardingStage
@@ -93,5 +97,17 @@ internal fun NameScreen(chatModel: ChatModel) {
       )
     }
     OnbNote(stringResource(MR.strings.veil_onb_name_note), Modifier.padding(start = 4.dp, end = 4.dp, top = 10.dp))
+    Spacer(Modifier.height(18.dp))
+    VeilButton(stringResource(MR.strings.veil_onb_migrate), onClick = { veilStartMigrationToDevice() }, style = VeilButtonStyle.Secondary)
   }
+}
+
+/**
+ * "Başka bir cihazdan taşı": upstream's receiving flow, opened the way its first-profile screen does. The Orbot step has
+ * already run, and the temporary controller's network config goes through `VeilNetworkPolicy.enforce`, so the archive
+ * is downloaded through the Tor proxy. A state left by an earlier attempt is resumed, not discarded.
+ */
+private fun veilStartMigrationToDevice() {
+  if (chatModel.migrationState.value == null) chatModel.migrationState.value = MigrationToState.PasteOrScanLink
+  ModalManager.fullscreen.showCustomModal(animated = false) { close -> MigrateToDeviceView { close() } }
 }

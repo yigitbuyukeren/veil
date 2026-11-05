@@ -102,4 +102,10 @@ class VeilSettingsLogicTest {
     assertFalse(privacyDefaultRows(true, linkPreviewsEnabled = true).first { it.kind == PrivacyDefaultKind.LinkPreviewsOff }.ok)
     assertFalse(privacyDefaultRows(true, callsEnabled = true).first { it.kind == PrivacyDefaultKind.CallsOff }.ok)
   }
+
+  @Test
+  fun migrationStartsOnlyWhileTheProxyAnswers() {
+    assertTrue(veilMigrationMayStart(true))
+    assertFalse(veilMigrationMayStart(false))
+  }
 }

@@ -3430,6 +3430,15 @@
   <string name="veil_set_row_about">About and licenses</string>
   <string name="veil_set_row_advanced">Advanced</string>
   <string name="veil_set_sum_advanced">Developer tools and chat console</string>
+  <string name="veil_adv_sum_advanced">Move to another device, version, developer tools</string>
+  <string name="veil_adv_row_migrate">Move to another device</string>
+  <string name="veil_adv_sum_migrate">Transfer your chats to a new phone</string>
+  <string name="veil_adv_row_version">Version info</string>
+  <string name="veil_adv_row_dev">Developer tools</string>
+  <string name="veil_adv_migrate_note">The archive is encrypted and uploaded over Tor.</string>
+  <string name="veil_adv_migrate_tor_title">Tor is not answering</string>
+  <string name="veil_adv_migrate_tor_text">Moving to another device uploads an archive, so it only starts while Orbot is running and answers. Start Orbot and try again.</string>
+  <string name="veil_onb_migrate">Move from another device</string>
   <string name="veil_set_sum_profiles">%1$s profiles</string>
   <string name="veil_set_sum_profiles_hidden">%1$s hidden</string>
   <string name="veil_set_sum_previews_on">Previews on in the list</string>

@@ -50,6 +50,13 @@ Final audit result of 2026-11-04: navigation was traced from every Veil screen (
 
 Chats can be pinned from the avatar sheet (up to 5, shown first in pin order, pin marker in the row). The core has no pinning, so pins are kept on the device per profile (`veil_pinned_chats_<userId>`, `VeilPins`); known limit: they are not part of a database export and do not move with a device migration. Unit tests for the ordering and the limit pass; behavior on a device NOT TESTED.
 
+## Gelişmiş and device migration (N2, 2026-11-05)
+
+Settings > Gelişmiş is a Veil page (`VeilAdvancedScreen`): move to another device, version info, developer tools (terminal still debug builds only). Upstream's `MigrateFromDeviceView` / `MigrateToDeviceView` do the work; the receiving side is a button on the onboarding name step. Behavior on phones NOT TESTED (needs two phones).
+
+- **Tor evidence:** both migration flows run a temporary chat controller and set its network config with `ChatController.apiSetNetworkConfig(netCfg, ctrl = ctrl)` (`startChatWithTemporaryDatabase`, `SimpleXAPI.kt`), which wraps the config in `VeilNetworkPolicy.enforce` for every controller. The sender also checks `VeilNetworkPolicy.torProxyReady()` before starting and shows an explanation instead when Orbot does not answer. The sentence "the archive is encrypted and uploaded over Tor" is a claim pending device evidence ([PRIVACY_CLAIMS.md](PRIVACY_CLAIMS.md)).
+- **Upstream issue simplex-chat/simplex-chat#7696** ("Android migration fails, exported archive corrupted"): the report is about one very large profile (about 5.6 GB, 3000 files) on 7.0.2; small profiles migrate. No fix exists upstream and it is not in the core we ship; very large profiles may fail to migrate, small ones are expected to work. NOT verified on 7.0.3.
+
 ## Open items
 
 - **Device and emulator tests of the whole redesign are pending.** The emulator run waits for the owner's go; real devices and Orbot are needed for the M1 gates and for the evidence in the claims list.

@@ -61,7 +61,7 @@ The name comes from the idea of a veil, and it matches the layers of Tor.
 | **E. Groups** | Create group; group info; members and roles; group link (observer role, deleting the link); add members |
 | **F. Settings** | Simplified: Profiles, Privacy, Notifications, Appearance, Database and passphrase, **Tor and status**, About and licenses. Network settings are **read-only** |
 | **G. System** | App lock; empty and error states; dialogs; database error screens |
-| **Hidden** | Calls, desktop, remote connection ("link a mobile", "use from desktop"), device migration, channel creation, upstream promotions, the core's "Ask SimpleX Team" card, terminal (debug builds only). How each path is closed is in "Reachable upstream screens" |
+| **Hidden** | Calls, desktop, remote connection ("link a mobile", "use from desktop"), channel creation, upstream promotions, the core's "Ask SimpleX Team" card, terminal (debug builds only). How each path is closed is in "Reachable upstream screens" |
 
 ## Decisions taken during implementation
 
@@ -104,7 +104,7 @@ Audit of 2026-11-04, tracing navigation from every Veil screen. Status values: *
 | Lock, passcode, database error, splash, alerts | Veil system screens | Veil |
 | User picker ("use from desktop", "link a mobile") | `UserPicker` is composed, but nothing opens it on Android | closed (not reachable) |
 | Upstream `SettingsView`, `HelpView`, `WhatsNewView`, `SimpleXInfo` ("About SimpleX Chat") | reachable only from the upstream chat list and user picker | closed (not reachable) |
-| Device migration ("Başka cihaza taşı", "Migrate here") | `MigrateFromDeviceView` only from the upstream settings; `MigrateToDeviceView` only from the upstream onboarding; `App.kt` no longer shows a leftover migration state on Android | closed |
+| Device migration ("Başka cihaza taşı", "Başka bir cihazdan taşı") | `MigrateFromDeviceView` from Settings > Gelişmiş (`VeilAdvancedScreen`, Tor proxy checked first); `MigrateToDeviceView` from the Veil name step of the onboarding; `App.kt` still does not show a leftover migration state on Android | on purpose (Gelişmiş) |
 | Upstream chat list, new chat sheet, channel creation, promotions | not routed on Android; promotions stay off behind `VeilBranding.UPSTREAM_PROMOTIONS` | closed |
 | Calls: call buttons, calls preference, WebRTC servers, incoming calls | guarded by `VeilNetworkPolicy.CALLS_ENABLED` | closed |
 

@@ -62,3 +62,4 @@ The app is not distributed, so the copy stays. **Distribution is NO-GO until eac
 | `veil_chat_state_sent_partly` | Kısmen gönderildi | delivery state wording | same as `veil_chat_state_sent` |
 | `veil_chat_state_delivered` | Teslim edildi | delivery state wording ("delivered" means the recipient's device acknowledged) | same as `veil_chat_state_sent` |
 | `veil_chat_state_delivered_partly` | Kısmen teslim edildi | delivery state wording | same as `veil_chat_state_sent` |
+| `veil_adv_migrate_note` | Arşiv şifrelenir ve Tor üzerinden yüklenir. | the migration archive is encrypted and its upload goes through the Tor proxy | two-phone migration with Orbot on, capture shows only loopback to the proxy; migration refused with Orbot off |
