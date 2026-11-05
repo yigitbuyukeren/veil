@@ -3419,4 +3419,9 @@
   <string name="veil_cconn_share">Tek seferlik bağlantıyı paylaş</string>
   <string name="veil_cconn_learn_more">Daha fazla bilgi</string>
   <string name="veil_cconn_delete">Bağlantıyı sil</string>
+  <string name="veil_gpref_custom_time">Özel</string>
+  <string name="veil_gprof_name">Grup adı</string>
+  <string name="veil_gprof_fullname">Tam ad</string>
+  <string name="veil_gprof_descr">Kısa açıklama</string>
+  <string name="veil_gwel_hint">Gruba katılan yeni üyeler bu mesajı görür.</string>
 </resources>

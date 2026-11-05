@@ -95,7 +95,7 @@ Audit of 2026-11-04, tracing navigation from every Veil screen. Status values: *
 | Chat info (direct), "Kişi tercihleri" | `ContactPreferencesView` (calls preference hidden unless calls are on) | Veil (`VeilContactPreferencesScreen`; upstream screen only in source) |
 | Chat info (direct), "Gelişmiş" | `ChatInfoView` (call buttons hidden unless calls are on) | Veil (`VeilContactAdvancedScreen`; address switch and delete-after dialogs stay upstream's; search, call buttons and the chat theme editor are not offered; upstream screen only in source) |
 | Chat info, security code | Veil verify screen with `ScanCodeView` camera scanner | Veil, upstream scanner |
-| Group info, preferences, edit, welcome | `GroupPreferencesView`, `GroupProfileView`, `GroupWelcomeView` | on purpose; gap |
+| Group info, preferences, edit, welcome | `VeilGroupPrefsScreen`, `VeilGroupProfileScreen`, `VeilGroupWelcomeScreen` (upstream's own copies stay reachable from the group "Gelişmiş" screen) | Veil |
 | Group info, "Gelişmiş" | `GroupChatInfoView`, `AddGroupMembersView`, `GroupLinkView` | on purpose; gap |
 | Group member, "Ayrıntılar" | `GroupMemberInfoView` (call buttons hidden unless calls are on) | on purpose; gap |
 | Groups that use relays (channels) | opened in upstream group info; creation is not offered | closed (creation); gap (viewing) |

@@ -45,7 +45,7 @@ import kotlinx.coroutines.withContext
  * Veil group info (screen group E) for Android: header, members with role chips, group link card, preferences.
  *
  * Every action is upstream's: `apiCreateGroupLink` / `apiGroupLinkMemberRole` / `apiDeleteGroupLink` / `apiAddGroupShortLink`
- * for the link, `addGroupMembers` for invitations, `GroupPreferencesView` / `GroupProfileView` / `GroupWelcomeView` for
+ * for the link, `addGroupMembers` for invitations, `VeilGroupPrefsScreen` / `VeilGroupProfileScreen` / `VeilGroupWelcomeScreen` (upstream actions) for
  * preferences, `clearChatDialog` / `leaveGroupDialog` / `deleteGroupDialog` for the destructive actions, and upstream's full
  * `GroupChatInfoView` stays reachable from the "Gelişmiş" row. Which rows appear follows [VeilGroupsLogic].
  */
@@ -195,21 +195,21 @@ fun VeilGroupInfoScreen(rhId: Long?, groupId: Long, initialLink: GroupLink?, clo
         title = stringResource(MR.strings.veil_grp_preferences),
         value = if (groupInfo.isOwner) null else stringResource(MR.strings.veil_grp_preferences_readonly),
         onClick = {
-          ModalManager.end.showCustomModal { closePrefs -> GroupPreferencesView(chatModel, rhId, chat.id, closePrefs) }
+          ModalManager.end.showCustomModal { closePrefs -> VeilGroupPrefsScreen(rhId, chat.id, closePrefs) }
         },
       )
       if (groupInfo.isOwner) {
         VeilInfoRow(
           icon = MR.images.ic_edit,
           title = stringResource(MR.strings.veil_grp_edit_profile),
-          onClick = { ModalManager.end.showCustomModal { closeEdit -> GroupProfileView(rhId, groupInfo, chatModel, closeEdit) } },
+          onClick = { ModalManager.end.showCustomModal { closeEdit -> VeilGroupProfileScreen(rhId, groupInfo, closeEdit) } },
         )
       }
       if (groupInfo.groupProfile.description != null || groupInfo.isOwner) {
         VeilInfoRow(
           icon = MR.images.ic_chat_bubble,
           title = stringResource(MR.strings.veil_grp_welcome),
-          onClick = { ModalManager.end.showCustomModal { closeWelcome -> GroupWelcomeView(chatModel, rhId, groupInfo, closeWelcome) } },
+          onClick = { ModalManager.end.showCustomModal { closeWelcome -> VeilGroupWelcomeScreen(rhId, groupInfo, closeWelcome) } },
         )
       }
     }
