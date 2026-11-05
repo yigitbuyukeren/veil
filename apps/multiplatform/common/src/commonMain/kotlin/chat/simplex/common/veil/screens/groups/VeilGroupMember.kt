@@ -22,6 +22,9 @@ import chat.simplex.common.veil.screens.chat.chatAvatarSeed
 import chat.simplex.common.veil.screens.chat.veilShowMemberSecurityCode
 import chat.simplex.common.veil.screens.chat.veilShowSheet
 import chat.simplex.common.veil.screens.chatlist.VeilIcon
+import chat.simplex.common.veil.screens.system.VeilAlertButton
+import chat.simplex.common.veil.screens.system.VeilAlertButtons
+import chat.simplex.common.veil.screens.system.VeilAlertRole
 import chat.simplex.common.views.chat.group.*
 import chat.simplex.common.views.helpers.*
 import chat.simplex.res.MR
@@ -161,7 +164,7 @@ fun VeilMemberScreen(rhId: Long?, groupId: Long, groupMemberId: Long, code: Stri
     if (perms.canRemove) {
       VeilButton(
         stringResource(MR.strings.veil_grp_remove),
-        onClick = { removeMemberDialog(rhId, groupInfo, member, chatModel, close) },
+        onClick = { veilConfirmRemoveMember(rhId, groupInfo, member, linkActive, close) },
         style = VeilButtonStyle.Danger,
       )
       if (linkActive) {
@@ -180,6 +183,31 @@ fun VeilMemberScreen(rhId: Long?, groupId: Long, groupMemberId: Long, code: Stri
       )
     }
   }
+}
+
+/**
+ * Removal from the member screen. While the group link is open, removed members can rejoin with it, so a Veil alert
+ * shows the same note as group info first. Its button then opens upstream's removal dialog unchanged.
+ */
+private fun veilConfirmRemoveMember(rhId: Long?, groupInfo: GroupInfo, member: GroupMember, linkActive: Boolean, close: () -> Unit) {
+  if (!linkActive) {
+    removeMemberDialog(rhId, groupInfo, member, chatModel, close)
+    return
+  }
+  AlertManager.shared.showAlertDialogButtonsColumn(
+    title = generalGetString(MR.strings.button_remove_member_question),
+    text = generalGetString(MR.strings.veil_grp_rejoin_note),
+    buttons = {
+      VeilAlertButtons(listOf(
+        // hide this alert first: hideAlert() removes the last alert, so it must run before upstream's dialog is shown
+        VeilAlertButton(generalGetString(MR.strings.remove_member_confirmation), VeilAlertRole.Danger) {
+          AlertManager.shared.hideAlert()
+          removeMemberDialog(rhId, groupInfo, member, chatModel, close)
+        },
+        VeilAlertButton(generalGetString(MR.strings.cancel_verb), VeilAlertRole.Secondary) { AlertManager.shared.hideAlert() },
+      ))
+    },
+  )
 }
 
 /** Role picker as a sheet; the choice goes through upstream's confirmation dialog and API call. */
