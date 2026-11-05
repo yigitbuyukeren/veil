@@ -238,7 +238,8 @@ class AlertManager {
         buttons = {
           AlertContent(text, hostDevice, extraPadding = true) {
             val focusRequester = remember { FocusRequester() }
-            LaunchedEffect(Unit) {
+            // Veil: the Veil buttons manage their own focus; this requester is attached only to the upstream button.
+            if (!VeilUi.system) LaunchedEffect(Unit) {
               // Wait before focusing to prevent auto-confirming if a user used Enter key on hardware keyboard
               delay(200)
               focusRequester.requestFocus()
@@ -412,7 +413,7 @@ class AlertManager {
                 horizontalAlignment = Alignment.CenterHorizontally
               ) {
                 val focusRequester = remember { FocusRequester() }
-                LaunchedEffect(Unit) {
+                if (!VeilUi.system) LaunchedEffect(Unit) {
                   // Wait before focusing to prevent auto-confirming if a user used Enter key on hardware keyboard
                   delay(200)
                   focusRequester.requestFocus()
