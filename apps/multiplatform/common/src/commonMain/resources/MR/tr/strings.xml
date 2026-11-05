@@ -3453,4 +3453,19 @@
   <string name="veil_gmem_support">Bu üyeyle destek sohbeti</string>
   <string name="veil_gmem_fix_note">Şifrelemeyi bu üyeyle yeniden kurar.</string>
   <string name="veil_gmem_connect">Bu üyeyle bağlan</string>
+  <string name="veil_db_messages">Mesajlar</string>
+  <string name="veil_db_ttl">Mesajları şu süre sonra sil</string>
+  <string name="veil_db_ttl_note">Bu ayar yalnızca şu anki profilin mesajlarını etkiler: %1$s. Daha kısa bir süre seçersen eski mesajlar silinir; önce onay istenir.</string>
+  <string name="veil_db_manage">Parola ve dışa aktarma</string>
+  <string name="veil_db_files">Dosyalar ve medya</string>
+  <string name="veil_db_section_db">Sohbet veritabanı</string>
+  <string name="veil_db_passphrase">Veritabanı parolası</string>
+  <string name="veil_db_export">Veritabanını dışa aktar</string>
+  <string name="veil_db_export_sum">Arşiv dosyası olarak kaydet</string>
+  <string name="veil_db_import">Veritabanını içe aktar</string>
+  <string name="veil_db_import_sum">Şu anki veritabanının yerine geçer; önce onay istenir</string>
+  <string name="veil_db_delete">Veritabanını sil</string>
+  <string name="veil_db_delete_sum">Sohbetleri, profilleri ve dosyaları bu cihazdan siler; önce onay istenir</string>
+  <string name="veil_db_stops_note">Dışa aktarma, içe aktarma ve silme sohbeti durdurur. Sohbet yeniden başlamazsa aşağıdaki anahtardan başlatabilirsin.</string>
+  <string name="veil_db_run">Sohbeti çalıştır</string>
 </resources>

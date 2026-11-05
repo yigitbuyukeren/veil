@@ -14,7 +14,6 @@ import chat.simplex.common.veil.VeilUi
 import chat.simplex.common.veil.data.rememberTorRingState
 import chat.simplex.common.veil.design.*
 import chat.simplex.common.veil.screens.chatlist.avatarSeed
-import chat.simplex.common.views.database.DatabaseView
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.usersettings.*
 import chat.simplex.res.MR
@@ -118,7 +117,7 @@ fun VeilSettingsHome(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
       VeilNavRow(
         MR.images.ic_database, stringResource(MR.strings.veil_set_row_database),
         summary(databaseSummary(chatModel.chatDbEncrypted.value)),
-        onClick = { showUpstreamSettings { DatabaseView() } }
+        onClick = { veilShowSettingsPage { c -> VeilDatabaseScreen(c) } }
       )
       VeilRowDivider()
       VeilNavRow(

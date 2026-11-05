@@ -3761,4 +3761,19 @@
   <string name="veil_gmem_support">Support chat with this member</string>
   <string name="veil_gmem_fix_note">Negotiates the encryption with this member again.</string>
   <string name="veil_gmem_connect">Connect with this member</string>
+  <string name="veil_db_messages">Messages</string>
+  <string name="veil_db_ttl">Delete messages after</string>
+  <string name="veil_db_ttl_note">This only affects the messages of your current profile %1$s. A shorter time deletes older messages; you are asked to confirm first.</string>
+  <string name="veil_db_manage">Passphrase and export</string>
+  <string name="veil_db_files">Files and media</string>
+  <string name="veil_db_section_db">Chat database</string>
+  <string name="veil_db_passphrase">Database passphrase</string>
+  <string name="veil_db_export">Export database</string>
+  <string name="veil_db_export_sum">Save it as an archive file</string>
+  <string name="veil_db_import">Import database</string>
+  <string name="veil_db_import_sum">Replaces the current database; you are asked to confirm first</string>
+  <string name="veil_db_delete">Delete database</string>
+  <string name="veil_db_delete_sum">Removes chats, profiles and files from this device; you are asked to confirm first</string>
+  <string name="veil_db_stops_note">Export, import and delete stop the chat. If it does not start again, turn it on with the switch below.</string>
+  <string name="veil_db_run">Run chat</string>
 </resources>

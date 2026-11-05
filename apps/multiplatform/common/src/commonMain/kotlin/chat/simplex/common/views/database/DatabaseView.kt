@@ -52,6 +52,7 @@ fun DatabaseView() {
   ) {
     val user = m.currentUser.value
     val rhId = user?.remoteHostId
+    val actions = databaseActions(m, rhId, stopped, chatLastStart, progressIndicator, appFilesCountAndSize, chatItemTTL)
     DatabaseLayout(
       progressIndicator.value,
       stopped,
@@ -62,26 +63,8 @@ fun DatabaseView() {
       chatItemTTL,
       user,
       m.users,
-      deleteAppFilesAndMedia = {
-        deleteFilesAndMediaAlert {
-          stopChatRunBlockStartChat(stopped, chatLastStart, progressIndicator) {
-            deleteFiles(appFilesCountAndSize)
-            true
-          }
-        }
-      },
-      onChatItemTTLSelected = {
-        if (it == null) {
-          return@DatabaseLayout
-        }
-        val oldValue = chatItemTTL.value
-        chatItemTTL.value = it
-        if (it < oldValue) {
-          setChatItemTTLAlert(m, rhId, chatItemTTL, progressIndicator, appFilesCountAndSize)
-        } else if (it != oldValue) {
-          setCiTTL(m, rhId, chatItemTTL, progressIndicator, appFilesCountAndSize)
-        }
-      },
+      deleteAppFilesAndMedia = actions.deleteAppFilesAndMedia,
+      onChatItemTTLSelected = actions.onChatItemTTLSelected,
       showDatabaseManagement = {
         ModalManager.start.showModal(cardScreen = true) { DatabaseManagementView() }
       },
@@ -102,6 +85,45 @@ fun DatabaseView() {
     }
   }
 }
+
+// Veil: the actions of the chat data screen, moved out of `DatabaseView` unchanged (only the `return@` label differs)
+// so the Veil database screen calls the same code: the delete-files confirmation, the stop-chat / run / start-chat
+// sequence, the delete-messages-after confirmation and `setCiTTL`.
+class DatabaseActions(
+  val deleteAppFilesAndMedia: () -> Unit,
+  val onChatItemTTLSelected: (ChatItemTTL?) -> Unit,
+)
+
+fun databaseActions(
+  m: ChatModel,
+  rhId: Long?,
+  stopped: Boolean,
+  chatLastStart: MutableState<Instant?>,
+  progressIndicator: MutableState<Boolean>,
+  appFilesCountAndSize: MutableState<Pair<Int, Long>>,
+  chatItemTTL: MutableState<ChatItemTTL>,
+): DatabaseActions = DatabaseActions(
+  deleteAppFilesAndMedia = {
+    deleteFilesAndMediaAlert {
+      stopChatRunBlockStartChat(stopped, chatLastStart, progressIndicator) {
+        deleteFiles(appFilesCountAndSize)
+        true
+      }
+    }
+  },
+  onChatItemTTLSelected = {
+    if (it == null) {
+      return@DatabaseActions
+    }
+    val oldValue = chatItemTTL.value
+    chatItemTTL.value = it
+    if (it < oldValue) {
+      setChatItemTTLAlert(m, rhId, chatItemTTL, progressIndicator, appFilesCountAndSize)
+    } else if (it != oldValue) {
+      setCiTTL(m, rhId, chatItemTTL, progressIndicator, appFilesCountAndSize)
+    }
+  },
+)
 
 @Composable
 fun DatabaseLayout(
@@ -185,29 +207,9 @@ fun DatabaseManagementView() {
   val prefs = m.controller.appPrefs
   val useKeychain = remember { mutableStateOf(prefs.storeDBPassphrase.get()) }
   val chatLastStart = remember { mutableStateOf(prefs.chatLastStart.get()) }
-  val chatArchiveFile = remember { mutableStateOf<String?>(null) }
   val stopped = remember { m.chatRunning }.value == false
-  val saveArchiveLauncher = rememberFileChooserLauncher(false) { to: URI? ->
-    val archive = chatArchiveFile.value
-    if (archive != null && to != null) {
-      copyFileToFile(File(archive), to) {}
-    }
-    // delete no matter the database was exported or canceled the export process
-    if (archive != null) {
-      File(archive).delete()
-      chatArchiveFile.value = null
-    }
-  }
   val appFilesCountAndSize = remember { mutableStateOf(directoryFileCountAndSize(appFilesDir.absolutePath)) }
-  val importArchiveLauncher = rememberFileChooserLauncher(true) { to: URI? ->
-    if (to != null) {
-      importArchiveAlert {
-        stopChatRunBlockStartChat(stopped, chatLastStart, progressIndicator) {
-          importArchive(to, appFilesCountAndSize, progressIndicator, false)
-        }
-      }
-    }
-  }
+  val actions = databaseManagementActions(m, stopped, chatLastStart, progressIndicator, appFilesCountAndSize)
   val operationsDisabled = progressIndicator.value && !m.desktopNoUserNoRemote
 
   Box(Modifier.fillMaxSize()) {
@@ -215,12 +217,7 @@ fun DatabaseManagementView() {
       AppBarTitle(stringResource(MR.strings.database_passphrase_and_export))
 
       val toggleEnabled = remember { chatModel.remoteHosts }.none { it.sessionState is RemoteHostSessionState.Connected }
-      val disconnectAllHosts = {
-        val connected = chatModel.remoteHosts.filter { it.sessionState is RemoteHostSessionState.Connected }
-        connected.forEachIndexed { index, h ->
-          controller.stopRemoteHostAndReloadHosts(h, index == connected.lastIndex && chatModel.connectedToRemote())
-        }
-      }
+      val disconnectAllHosts = actions.disconnectAllHosts
       SectionView(stringResource(MR.strings.chat_database_section)) {
         if (chatModel.localUserCreated.value != true && !toggleEnabled) {
           SectionItemView(disconnectAllHosts) {
@@ -247,18 +244,7 @@ fun DatabaseManagementView() {
         SettingsActionItem(
           painterResource(MR.images.ic_ios_share),
           stringResource(MR.strings.export_database),
-          click = {
-            if (prefs.initialRandomDBPassphrase.get()) {
-              exportProhibitedAlert()
-              ModalManager.start.showModal {
-                DatabaseEncryptionView(chatModel, false)
-              }
-            } else {
-              stopChatRunBlockStartChat(stopped, chatLastStart, progressIndicator) {
-                exportArchive(m, progressIndicator, chatArchiveFile, saveArchiveLauncher)
-              }
-            }
-          },
+          click = actions.exportDatabase,
           textColor = MaterialTheme.colors.primary,
           iconColor = MaterialTheme.colors.primary,
           disabled = operationsDisabled
@@ -266,7 +252,7 @@ fun DatabaseManagementView() {
         SettingsActionItem(
           painterResource(MR.images.ic_download),
           stringResource(MR.strings.import_database),
-          { withLongRunningApi { importArchiveLauncher.launch("application/zip") } },
+          actions.importDatabase,
           textColor = Color.Red,
           iconColor = Color.Red,
           disabled = operationsDisabled
@@ -274,14 +260,7 @@ fun DatabaseManagementView() {
         SettingsActionItem(
           painterResource(MR.images.ic_delete_forever),
           stringResource(MR.strings.delete_database),
-          {
-            deleteChatAlert {
-              stopChatRunBlockStartChat(stopped, chatLastStart, progressIndicator) {
-                deleteChat(m, progressIndicator)
-                true
-              }
-            }
-          },
+          actions.deleteDatabase,
           textColor = Color.Red,
           iconColor = Color.Red,
           disabled = operationsDisabled
@@ -302,8 +281,8 @@ fun DatabaseManagementView() {
           RunChatSetting(
             stopped,
             toggleEnabled && !progressIndicator.value,
-            startChat = { startChat(m, chatLastStart, m.chatDbChanged, progressIndicator) },
-            stopChatAlert = { stopChatAlert(m, progressIndicator) }
+            startChat = actions.startChat,
+            stopChatAlert = actions.stopChatAlert
           )
         }
         if (stopped) SectionTextFooter(stringResource(MR.strings.you_must_use_the_most_recent_version_of_database))
@@ -325,6 +304,82 @@ fun DatabaseManagementView() {
       }
     }
   }
+}
+
+// Veil: the actions of the database management screen, moved out of `DatabaseManagementView` unchanged so the Veil
+// screen calls the same code: the export (with the "set a passphrase first" stop for a random passphrase, the
+// stop-chat / run / start-chat sequence and the save-file picker), the import (file picker, then the replace
+// confirmation, then the sequence), the delete confirmation and sequence, start chat and the stop-chat dialog.
+class DatabaseManagementActions(
+  val disconnectAllHosts: () -> Unit,
+  val exportDatabase: () -> Unit,
+  val importDatabase: () -> Unit,
+  val deleteDatabase: () -> Unit,
+  val startChat: () -> Unit,
+  val stopChatAlert: () -> Unit,
+)
+
+@Composable
+fun databaseManagementActions(
+  m: ChatModel,
+  stopped: Boolean,
+  chatLastStart: MutableState<Instant?>,
+  progressIndicator: MutableState<Boolean>,
+  appFilesCountAndSize: MutableState<Pair<Int, Long>>,
+): DatabaseManagementActions {
+  val prefs = m.controller.appPrefs
+  val chatArchiveFile = remember { mutableStateOf<String?>(null) }
+  val saveArchiveLauncher = rememberFileChooserLauncher(false) { to: URI? ->
+    val archive = chatArchiveFile.value
+    if (archive != null && to != null) {
+      copyFileToFile(File(archive), to) {}
+    }
+    // delete no matter the database was exported or canceled the export process
+    if (archive != null) {
+      File(archive).delete()
+      chatArchiveFile.value = null
+    }
+  }
+  val importArchiveLauncher = rememberFileChooserLauncher(true) { to: URI? ->
+    if (to != null) {
+      importArchiveAlert {
+        stopChatRunBlockStartChat(stopped, chatLastStart, progressIndicator) {
+          importArchive(to, appFilesCountAndSize, progressIndicator, false)
+        }
+      }
+    }
+  }
+  return DatabaseManagementActions(
+    disconnectAllHosts = {
+      val connected = chatModel.remoteHosts.filter { it.sessionState is RemoteHostSessionState.Connected }
+      connected.forEachIndexed { index, h ->
+        controller.stopRemoteHostAndReloadHosts(h, index == connected.lastIndex && chatModel.connectedToRemote())
+      }
+    },
+    exportDatabase = {
+      if (prefs.initialRandomDBPassphrase.get()) {
+        exportProhibitedAlert()
+        ModalManager.start.showModal {
+          DatabaseEncryptionView(chatModel, false)
+        }
+      } else {
+        stopChatRunBlockStartChat(stopped, chatLastStart, progressIndicator) {
+          exportArchive(m, progressIndicator, chatArchiveFile, saveArchiveLauncher)
+        }
+      }
+    },
+    importDatabase = { withLongRunningApi { importArchiveLauncher.launch("application/zip") } },
+    deleteDatabase = {
+      deleteChatAlert {
+        stopChatRunBlockStartChat(stopped, chatLastStart, progressIndicator) {
+          deleteChat(m, progressIndicator)
+          true
+        }
+      }
+    },
+    startChat = { startChat(m, chatLastStart, m.chatDbChanged, progressIndicator) },
+    stopChatAlert = { stopChatAlert(m, progressIndicator) },
+  )
 }
 
 private fun setChatItemTTLAlert(
