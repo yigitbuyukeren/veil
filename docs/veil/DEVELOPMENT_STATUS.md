@@ -131,6 +131,14 @@ Settings > "Veritabanı ve parola" is two Veil pages: `VeilDatabaseScreen` (dele
 | #17 VEIL-016 minimal UI and indicators | partial | c4856e810, bc40525b3, f0add36b9, 72a0ad9b4 | artwork, promotions hidden, Tor-unavailable alert, Tor and privacy status screen with licenses section (E16-E18), chat-list SOCKS indicator (E20), core-created "SimpleX Team" card hidden in the interface (E21), app name in all locales; non-English strings still open. Superseded in scope by the redesign (see [ROADMAP.md](ROADMAP.md)) |
 | #18 VEIL-017 M1 validation, GO/NO-GO | report: **NO-GO** | | see `M1_RELEASE_REPORT.md` |
 
+## M3-1 and M3-5: notification privacy and invitations (2026-11-05), NOT TESTED on a device
+
+- New installs get the hidden notification preview (stored by the onboarding notification step, which explains it); existing installs are unchanged.
+- Per-chat "hide content in notifications" in the chat action sheet (`VeilNtfPrivacy`, device-local, per profile), applied in `NtfManager.android.kt` with `// Veil:` hooks; message notifications use lock-screen visibility PRIVATE with a generic public version.
+- The call notification channel (same id) is created only while calls are allowed, and lazily before a call notification after calls were turned on.
+- The pending-invitation action reads "Daveti iptal et" (same upstream delete). Veil has no permanent-address screen, so no address label was added; the chat top bar already shows the incognito chip.
+- `VeilPins.save` was a lambda that never ran (pins were not persisted); fixed.
+
 ## Next step
 
 The ordered list of remaining work, with acceptance gates, is [ROADMAP.md](ROADMAP.md) (M1 gates and the redesign). The blocking items right now:

@@ -19,7 +19,7 @@ object VeilPins {
     return settings.getString(key(userId), "").split('\n').filter { it.isNotEmpty() }
   }
 
-  private fun save(userId: Long, ids: List<String>) = {
+  private fun save(userId: Long, ids: List<String>) {
     settings.putString(key(userId), ids.joinToString("\n"))
     version.value++
   }

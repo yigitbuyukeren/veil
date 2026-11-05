@@ -3776,4 +3776,9 @@
   <string name="veil_db_delete_sum">Removes chats, profiles and files from this device; you are asked to confirm first</string>
   <string name="veil_db_stops_note">Export, import and delete stop the chat. If it does not start again, turn it on with the switch below.</string>
   <string name="veil_db_run">Run chat</string>
+  <!-- Veil M3: notification privacy and invitations -->
+  <string name="veil_onb_ntf_preview_note">Notifications show neither the contact name nor the message text, only “New message”. You can change this in the privacy settings.</string>
+  <string name="veil_list_act_ntf_content_hide">Hide content in notifications</string>
+  <string name="veil_list_act_ntf_content_show">Show content in notifications</string>
+  <string name="veil_list_act_cancel_invitation">Cancel invitation</string>
 </resources>

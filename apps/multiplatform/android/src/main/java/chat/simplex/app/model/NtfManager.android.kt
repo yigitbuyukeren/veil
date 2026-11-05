@@ -21,6 +21,8 @@ import chat.simplex.common.model.*
 import chat.simplex.common.platform.*
 import chat.simplex.common.views.call.CallMediaType
 import chat.simplex.common.views.call.RcvCallInvitation
+import chat.simplex.common.veil.data.VeilNtfPrivacy
+import chat.simplex.common.veil.data.effectivePreviewModeName
 import kotlinx.datetime.Clock
 import chat.simplex.res.MR
 
@@ -105,7 +107,8 @@ object NtfManager {
     val now = Clock.System.now().toEpochMilliseconds()
     val recentNotification = (now - prevNtfTime.getOrDefault(user.userId to chatId, 0) < msgNtfTimeoutMs)
     prevNtfTime[user.userId to chatId] = now
-    val previewMode = appPreferences.notificationPreviewMode.get()
+    // Veil: a chat can be set to never show message content; the stricter of the global and the chat mode applies
+    val previewMode = effectivePreviewModeName(appPreferences.notificationPreviewMode.get(), VeilNtfPrivacy.isContentHidden(user.userId, chatId)).name
     val title = if (previewMode == NotificationPreviewMode.HIDDEN.name) generalGetString(MR.strings.notification_preview_somebody) else displayName
     val content = if (previewMode != NotificationPreviewMode.MESSAGE.name) generalGetString(MR.strings.notification_preview_new_message) else msgText
     val largeIcon = when {
@@ -126,6 +129,8 @@ object NtfManager {
       .setVibrate(if (actions.isEmpty()) null else longArrayOf(0, 250, 250, 250))
       .setContentIntent(chatPendingIntent(OpenChatAction, user.userId, chatId))
       .setSilent(if (actions.isEmpty()) recentNotification else false)
+      .setVisibility(NotificationCompat.VISIBILITY_PRIVATE) // Veil: the lock screen shows the generic version below, whatever the system setting
+      .setPublicVersion(lockScreenVersion())
 
     for (action in actions) {
       val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
@@ -146,6 +151,8 @@ object NtfManager {
       .setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_CHILDREN)
       .setGroupSummary(true)
       .setContentIntent(chatPendingIntent(ShowChatsAction, null))
+      .setVisibility(NotificationCompat.VISIBILITY_PRIVATE) // Veil
+      .setPublicVersion(lockScreenVersion())
       .build()
 
     with(NotificationManagerCompat.from(context)) {
@@ -156,6 +163,15 @@ object NtfManager {
       }
     }
   }
+
+  // Veil: what the lock screen shows for message notifications (no name, no text)
+  private fun lockScreenVersion(): Notification =
+    NotificationCompat.Builder(context, MessageChannel)
+      .setSmallIcon(R.drawable.ntf_icon)
+      .setColor(0x88FFFF)
+      .setContentTitle(generalGetString(MR.strings.notification_preview_somebody))
+      .setContentText(generalGetString(MR.strings.notification_preview_new_message))
+      .build()
 
   fun notifyCallInvitation(invitation: RcvCallInvitation): Boolean {
     val keyguardManager = getKeyguardManager(context)
@@ -172,6 +188,7 @@ object NtfManager {
     val image = invitation.contact.image
     val displayManager = context.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
     val screenOff = displayManager.displays.all { it.state != Display.STATE_ON }
+    ensureCallChannel() // Veil: the call channel exists only once calls are allowed
     var ntfBuilder =
       if ((keyguardManager.isKeyguardLocked || screenOff) && appPreferences.callOnLockScreen.get() != CallOnLockScreen.DISABLE) {
         val fullScreenIntent = Intent(context, CallActivity::class.java)
@@ -288,6 +305,13 @@ object NtfManager {
 
   fun areNotificationsEnabledInSystem() = manager.areNotificationsEnabled()
 
+  // Veil: creates the call channel when calls were turned on after the channels were first created (same id and settings)
+  private fun ensureCallChannel() {
+    if (VeilNetworkPolicy.callsAllowed() && manager.getNotificationChannel(CallChannel) == null) {
+      manager.createNotificationChannel(callNotificationChannel(CallChannel, generalGetString(MR.strings.ntf_channel_calls)))
+    }
+  }
+
   /**
    * This function creates notifications channels. On Android 13+ calling it for the first time will trigger system alert,
    * The alert asks a user to allow or disallow to show notifications for the app. That's why it should be called only when the user
@@ -297,7 +321,7 @@ object NtfManager {
    * */
   fun createNtfChannelsMaybeShowAlert() {
     manager.createNotificationChannel(NotificationChannel(MessageChannel, generalGetString(MR.strings.ntf_channel_messages), NotificationManager.IMPORTANCE_HIGH))
-    manager.createNotificationChannel(callNotificationChannel(CallChannel, generalGetString(MR.strings.ntf_channel_calls)))
+    if (VeilNetworkPolicy.callsAllowed()) manager.createNotificationChannel(callNotificationChannel(CallChannel, generalGetString(MR.strings.ntf_channel_calls))) // Veil: no call channel while calls are off
     // Remove old channels since they can't be edited
     manager.deleteNotificationChannel("chat.simplex.app.CALL_NOTIFICATION")
     manager.deleteNotificationChannel("chat.simplex.app.CALL_NOTIFICATION_1")

@@ -3468,4 +3468,9 @@
   <string name="veil_db_delete_sum">Sohbetleri, profilleri ve dosyaları bu cihazdan siler; önce onay istenir</string>
   <string name="veil_db_stops_note">Dışa aktarma, içe aktarma ve silme sohbeti durdurur. Sohbet yeniden başlamazsa aşağıdaki anahtardan başlatabilirsin.</string>
   <string name="veil_db_run">Sohbeti çalıştır</string>
+  <!-- Veil M3: bildirim gizliliği ve davetler -->
+  <string name="veil_onb_ntf_preview_note">Bildirimlerde kişi adı ve mesaj metni görünmez; yalnızca “Yeni mesaj” yazar. Bunu Gizlilik ayarlarından değiştirebilirsin.</string>
+  <string name="veil_list_act_ntf_content_hide">Bildirimde içerik gösterme</string>
+  <string name="veil_list_act_ntf_content_show">Bildirimde içerik göster</string>
+  <string name="veil_list_act_cancel_invitation">Daveti iptal et</string>
 </resources>

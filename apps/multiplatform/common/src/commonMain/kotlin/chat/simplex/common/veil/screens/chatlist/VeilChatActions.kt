@@ -10,6 +10,7 @@ import chat.simplex.common.views.contacts.onRequestAccepted
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.newchat.*
 import chat.simplex.common.veil.VeilUi
+import chat.simplex.common.veil.data.VeilNtfPrivacy
 import chat.simplex.common.veil.data.VeilPins
 import chat.simplex.common.veil.screens.chat.VeilContactConnectionScreen
 import chat.simplex.common.veil.screens.newchat.veilShowNewChatSheetModal
@@ -81,6 +82,15 @@ fun veilChatActions(chat: Chat): List<VeilChatAction> {
     }
   }
 
+  fun ntfContentAction(): VeilChatAction {
+    val userId = chatModel.currentUser.value?.userId
+    val hidden = userId != null && VeilNtfPrivacy.isContentHidden(userId, chat.id)
+    return VeilChatAction(
+      if (hidden) MR.strings.veil_list_act_ntf_content_show else MR.strings.veil_list_act_ntf_content_hide,
+      MR.images.ic_visibility_off
+    ) { if (userId != null) VeilNtfPrivacy.toggle(userId, chat.id) }
+  }
+
   fun muteAction(next: MsgFilter) = VeilChatAction(
     when (next) {
       MsgFilter.None -> MR.strings.veil_list_act_mute
@@ -121,6 +131,7 @@ fun veilChatActions(chat: Chat): List<VeilChatAction> {
             add(pinAction())
             add(favoriteAction())
             add(muteAction(contact.chatSettings.enableNtfs.nextMode(false)))
+            add(ntfContentAction())
             add(clearAction())
           }
           add(deleteContact())
@@ -149,6 +160,7 @@ fun veilChatActions(chat: Chat): List<VeilChatAction> {
             add(pinAction())
             add(favoriteAction())
             add(muteAction(g.chatSettings.enableNtfs.nextMode(true)))
+            add(ntfContentAction())
             add(clearAction())
             if (canLeave) add(leave)
             if (g.canDelete) add(delete)
@@ -175,7 +187,11 @@ fun veilChatActions(chat: Chat): List<VeilChatAction> {
           }
         }
       },
-      VeilChatAction(MR.strings.veil_list_act_delete_connection, MR.images.ic_delete, VeilActionTone.Danger) {
+      // Cancelling a pending invitation is upstream's delete of the pending connection (it also invalidates the link).
+      VeilChatAction(
+        if (info.contactConnection.initiated) MR.strings.veil_list_act_cancel_invitation else MR.strings.veil_list_act_delete_connection,
+        MR.images.ic_delete, VeilActionTone.Danger
+      ) {
         deleteContactConnectionAlert(rh, info.contactConnection, chatModel) { chatModel.dismissConnReqView(info.contactConnection.id) }
       },
     )

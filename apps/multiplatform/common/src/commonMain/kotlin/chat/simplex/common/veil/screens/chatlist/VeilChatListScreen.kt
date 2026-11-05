@@ -42,6 +42,7 @@ import chat.simplex.common.platform.*
 import chat.simplex.common.veil.design.*
 import chat.simplex.common.views.chatlist.UserPicker
 import chat.simplex.common.views.chatlist.filteredChats
+import chat.simplex.common.veil.data.VeilNtfPrivacy
 import chat.simplex.common.veil.data.VeilPins
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.onboarding.SetNotificationsModeAdditions
@@ -108,7 +109,11 @@ fun VeilChatListScreen(
   val userId = chatModel.currentUser.value?.userId
   val pins = if (userId != null) VeilPins.pinnedIds(userId) else emptyList()
   LaunchedEffect(allChats.size, userId) { // forget pins of chats that are gone
-    if (userId != null && allChats.isNotEmpty()) VeilPins.prune(userId, allChats.mapTo(HashSet()) { it.id })
+    if (userId != null && allChats.isNotEmpty()) {
+      val ids = allChats.mapTo(HashSet()) { it.id }
+      VeilPins.prune(userId, ids)
+      VeilNtfPrivacy.prune(userId, ids)
+    }
   }
   val chats = if (pins.isEmpty() || query.isNotBlank()) shown else {
     val byId = shown.associateBy { it.id }

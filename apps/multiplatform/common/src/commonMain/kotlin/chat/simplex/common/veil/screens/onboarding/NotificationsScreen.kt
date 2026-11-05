@@ -12,6 +12,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import chat.simplex.common.model.ChatController.appPrefs
 import chat.simplex.common.model.ChatModel
+import chat.simplex.common.model.NotificationPreviewMode
 import chat.simplex.common.model.NotificationsMode
 import chat.simplex.common.veil.design.*
 import chat.simplex.common.views.onboarding.OnboardingStage
@@ -46,6 +47,10 @@ internal fun NotificationsScreen(chatModel: ChatModel) {
         stringResource(MR.strings.veil_onb_continue),
         onClick = {
           changeNotificationsMode(mode, chatModel)
+          // New installs start with the most hidden notification preview. It is stored here, so installs that already
+          // exist (which never pass this step again) keep their current mode.
+          appPrefs.notificationPreviewMode.set(NotificationPreviewMode.HIDDEN.name)
+          chatModel.notificationPreviewMode.value = NotificationPreviewMode.HIDDEN
           appPrefs.onboardingStage.set(OnboardingStage.Step4_NetworkCommitments)
         }
       )
@@ -61,6 +66,8 @@ internal fun NotificationsScreen(chatModel: ChatModel) {
         ChoiceCard(selected = mode == c.mode, title = stringResource(c.title), text = stringResource(c.text)) { mode = c.mode }
       }
     }
+    Spacer(Modifier.height(14.dp))
+    OnbBody(stringResource(MR.strings.veil_onb_ntf_preview_note))
     Spacer(Modifier.height(10.dp))
   }
 }
