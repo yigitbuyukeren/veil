@@ -227,6 +227,7 @@ class AppPreferences {
   val shouldImportAppSettings = mkBoolPreference(SHARED_PREFS_SHOULD_IMPORT_APP_SETTINGS, false)
 
   val currentTheme = mkStrPreference(SHARED_PREFS_CURRENT_THEME, DefaultTheme.SYSTEM_THEME_NAME)
+  val veilCallsOptIn = mkBoolPreference(SHARED_PREFS_VEIL_CALLS_OPT_IN, false) // Veil: voice/video calls are off unless the user opts in (outside Tor)
   val veilTheme = mkStrPreference(SHARED_PREFS_VEIL_THEME, "gece") // Veil: "gece" | "sis" | "sistem" (VeilThemeMode); upstream's theme prefs are ignored
   val systemDarkTheme = mkStrPreference(SHARED_PREFS_SYSTEM_DARK_THEME, DefaultTheme.DARK.themeName)
   val currentThemeIds = mkMapPreference(SHARED_PREFS_CURRENT_THEME_IDs, mapOf(), encode = {
@@ -492,6 +493,7 @@ class AppPreferences {
     private const val SHARED_PREFS_PQ_EXPERIMENTAL_ENABLED = "PQExperimentalEnabled" // no longer used
     private const val SHARED_PREFS_CURRENT_THEME = "CurrentTheme"
     private const val SHARED_PREFS_VEIL_THEME = "VeilTheme"
+    private const val SHARED_PREFS_VEIL_CALLS_OPT_IN = "VeilCallsOptIn"
     private const val SHARED_PREFS_CURRENT_THEME_IDs = "CurrentThemeIds"
     private const val SHARED_PREFS_SYSTEM_DARK_THEME = "SystemDarkTheme"
     private const val SHARED_PREFS_THEMES_OLD = "Themes"
@@ -3299,7 +3301,7 @@ object ChatController {
         // TODO check encryption is compatible
         withCall(r, r.contact) { call ->
           chatModel.activeCall.value = call.copy(callState = CallState.OfferReceived, sharedKey = r.sharedKey)
-          val useRelay = appPrefs.webrtcPolicyRelay.get()
+          val useRelay = VeilNetworkPolicy.callRelayPolicy(appPrefs.webrtcPolicyRelay.get()) // Veil: relay-only is forced
           val iceServers = getIceServers()
           Log.d(TAG, ".callOffer iceServers $iceServers")
           chatModel.callCommand.add(WCallCommand.Offer(

@@ -6,7 +6,7 @@
     <string name="veil_tor_unavailable_title">Tor kullanılamıyor</string>
     <string name="veil_tor_unavailable_text">Veil yalnızca Tor üzerinden bağlanır, doğrudan bağlanmaz. Orbot’u başlatın (SOCKS proxy 127.0.0.1:9050), ardından yeniden deneyin. Tor kullanılabilir olana kadar hiçbir şey gönderilmez veya alınmaz.</string>
     <string name="veil_calls_disabled_title">Aramalar kapalı</string>
-    <string name="veil_calls_disabled_text">Sesli ve görüntülü aramalar medyayı Tor dışından gönderdiği için Veil’de devre dışıdır.</string>
+    <string name="veil_calls_disabled_text">Aramalar kapalı. Ayarlar → Gizlilik’ten açabilirsin; aramalar Tor üzerinden gitmez.</string>
     <string name="veil_external_link_warning">Bu işlem bağlantıyı Tor dışında, başka bir uygulamada açar. Web sitesi IP adresinizi görebilir.</string>
     <string name="veil_tor_retry">Yeniden dene</string>
     <string name="veil_status_title">Tor ve gizlilik durumu</string>
@@ -25,7 +25,7 @@
     <string name="veil_onb_story1_title">Hesap yok</string>
     <string name="veil_onb_story1_text">Telefon numarası, e-posta ya da kullanıcı adı istemiyoruz. Veil’in seni tanıdığı bir kayıt yok; profilin cihazında saklanır ve yalnızca bağlandığın kişilerle paylaşılır.</string>
     <string name="veil_onb_story2_title">Yalnızca Tor</string>
-    <string name="veil_onb_story2_text">Tüm trafik Tor üzerinden gider. Tor çalışmıyorsa Veil hiçbir şey göndermez; doğrudan bağlantıya geçmez.</string>
+    <string name="veil_onb_story2_text">Mesajlar ve dosyalar yalnızca Tor üzerinden gider; aramalar (açarsan) hariç. Tor çalışmıyorsa Veil hiçbir şey göndermez; doğrudan bağlantıya geçmez.</string>
     <string name="veil_onb_story3_title">Her sohbete ayrı kimlik</string>
     <string name="veil_onb_story3_text">Varsayılan olarak her bağlantıda rastgele bir takma kimlik kullanılır. Bunu ayarlardan kapatırsan seçtiğin ad bağlandığın kişilere görünür.</string>
     <string name="veil_onb_next">İleri</string>
@@ -64,7 +64,7 @@
     <string name="veil_onb_terms_independent">Veil, SimpleX ağını kullanan bağımsız bir uygulamadır. Ağı geliştiren projeyle resmî bir bağı yoktur.</string>
     <string name="veil_onb_terms_body">Mesajların, ağdaki aktarma sunucuları üzerinden ve yalnızca Tor aracılığıyla iletilir. Devam etmek için ağın kullanım koşullarını kabul etmen gerekir. Hiçbir ağ tüm riskleri ortadan kaldıramaz.</string>
     <string name="veil_onb_terms_link">Koşulları oku: simplex.chat/privacy</string>
-    <string name="veil_onb_terms_calls">Sesli ve görüntülü arama yok: arama verisi Tor dışından gider.</string>
+    <string name="veil_onb_terms_calls">Aramalar varsayılan olarak kapalı; açarsan Tor dışından gider.</string>
     <string name="veil_onb_terms_accept">Kabul et ve başla</string>
     <string name="veil_onb_terms_loading">Sunucu bilgisi yükleniyor…</string>
     <string name="notifications">Bildirimler</string>
@@ -3325,4 +3325,17 @@
   <string name="veil_a11y_pass_entered">%1$d hane girildi</string>
   <string name="veil_a11y_pass_show">Parolayı göster</string>
   <string name="veil_a11y_pass_hide">Parolayı gizle</string>
+  <string name="veil_calls_section">Aramalar</string>
+  <string name="veil_calls_toggle">Sesli ve görüntülü aramalar</string>
+  <string name="veil_calls_toggle_desc">Varsayılan olarak kapalı. Aramalar Tor üzerinden gitmez.</string>
+  <string name="veil_calls_optin_title">Aramalar Tor üzerinden gitmez</string>
+  <string name="veil_calls_optin_text">Mesajların Tor üzerinden gider, ama sesli ve görüntülü aramalar gitmez. Arama, bir arama sunucusu üzerinden kurulur: konuştuğun kişi IP adresini görmez, ama arama sunucusu görür. Görüşmenin içeriği şifrelidir. Gizliliğin önemliyse arama yerine sesli mesaj kullan.</string>
+  <string name="veil_calls_optin_confirm">Anladım, aç</string>
+  <string name="veil_calls_cancel">Vazgeç</string>
+  <string name="veil_calls_outside_tor_label">Tor dışı arama</string>
+  <string name="veil_calls_warn_short">Bu arama Tor üzerinden gitmez. IP adresin arama sunucusuna görünür.</string>
+  <string name="veil_calls_start_confirm">Ara</string>
+  <string name="veil_calls_accept_confirm">Kabul et</string>
+  <string name="veil_calls_strip">Tor dışı</string>
+  <string name="veil_calls_on_outside_tor">Açık, Tor dışı</string>
 </resources>

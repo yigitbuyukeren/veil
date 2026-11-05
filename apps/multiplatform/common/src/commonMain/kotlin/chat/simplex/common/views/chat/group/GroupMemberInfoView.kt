@@ -507,7 +507,7 @@ fun GroupMemberInfoLayout(
             }
 
             OpenChatButton(modifier = Modifier.fillMaxWidth(0.33f), onClick = { openDirectChat(contact.contactId) })
-            if (VeilNetworkPolicy.CALLS_ENABLED) { // Veil: calls are disabled
+            if (VeilNetworkPolicy.callsAllowed()) { // Veil: calls are offered only when turned on
               AudioCallButton(modifier = Modifier.fillMaxWidth(0.5f), chat, contact, knownContactConnectionStats)
               VideoButton(modifier = Modifier.fillMaxWidth(1f), chat, contact, knownContactConnectionStats)
             }
@@ -521,7 +521,7 @@ fun GroupMemberInfoLayout(
                 onClick = { createMemberContact() }
               )
             }
-            if (VeilNetworkPolicy.CALLS_ENABLED) { // Veil: calls are disabled
+            if (VeilNetworkPolicy.callsAllowed()) { // Veil: calls are offered only when turned on
               InfoViewActionButton(modifier = Modifier.fillMaxWidth(0.5f), painterResource(MR.images.ic_call), generalGetString(MR.strings.info_view_call_button), disabled = false, disabledLook = true, onClick = {
                 showSendMessageToEnableCallsAlert()
               })
@@ -534,7 +534,7 @@ fun GroupMemberInfoLayout(
             InfoViewActionButton(modifier = Modifier.fillMaxWidth(0.33f), painterResource(MR.images.ic_chat_bubble), generalGetString(MR.strings.info_view_message_button), disabled = false, disabledLook = true, onClick = {
               showDirectMessagesProhibitedAlert(generalGetString(MR.strings.cant_send_message_to_member_alert_title), messageId)
             })
-            if (VeilNetworkPolicy.CALLS_ENABLED) { // Veil: calls are disabled
+            if (VeilNetworkPolicy.callsAllowed()) { // Veil: calls are offered only when turned on
               InfoViewActionButton(modifier = Modifier.fillMaxWidth(0.5f), painterResource(MR.images.ic_call), generalGetString(MR.strings.info_view_call_button), disabled = false, disabledLook = true, onClick = {
                 showDirectMessagesProhibitedAlert(generalGetString(MR.strings.cant_call_member_alert_title), messageId)
               })

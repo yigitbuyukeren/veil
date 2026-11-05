@@ -61,7 +61,7 @@ The name comes from the idea of a veil, and it matches the layers of Tor.
 | **E. Groups** | Create group; group info; members and roles; group link (observer role, deleting the link); add members |
 | **F. Settings** | Simplified: Profiles, Privacy, Notifications, Appearance, Database and passphrase, **Tor and status**, About and licenses. Network settings are **read-only** |
 | **G. System** | App lock; empty and error states; dialogs; database error screens |
-| **Hidden** | Calls, desktop, remote connection ("link a mobile", "use from desktop"), channel creation, upstream promotions, the core's "Ask SimpleX Team" card, terminal (debug builds only). How each path is closed is in "Reachable upstream screens" |
+| **Hidden** | Desktop, remote connection ("link a mobile", "use from desktop"), channel creation, upstream promotions, the core's "Ask SimpleX Team" card, terminal (debug builds only). How each path is closed is in "Reachable upstream screens" |
 
 ## Decisions taken during implementation
 
@@ -75,7 +75,8 @@ These were decided while the screens were built; the code is the reference.
 - **Settings open some upstream screens on purpose** (profiles, notifications, database and passphrase, privacy "more", network and servers read-only, contact and group preferences). Reason: they carry safety-critical options (database export and import, passphrase, profile hiding and deletion) whose logic must not be copied.
 - **Network settings** are shown read-only from the Tor and status screen; Tor-only is enforced at `apiSetNetworkConfig`, not in the screens.
 - **Honest status wording.** The Tor ring and the status screen say only whether the local proxy answers; they never say that circuits work. Wording that goes beyond what has been measured is tracked in the "In-app statements pending evidence" section of [PRIVACY_CLAIMS.md](PRIVACY_CLAIMS.md).
-- **What is hidden:** voice and video calls (call buttons, the calls preference and the WebRTC server settings are not offered, incoming calls are rejected without ringing, a call attempt shows an explanation), moving the app to another device, linking a mobile or desktop, channel creation, upstream promotions (investment banner, news, founder contact, crowdfunding, rate and star items), the core-created "Ask SimpleX Team" contact in lists, link previews (they would leave Tor), and the terminal (debug builds only).
+- **Calls are opt-in:** off by default (call buttons and the calls preference hidden, incoming calls rejected without ringing, a call attempt explains where to turn them on). Settings > Privacy > "Sesli ve görüntülü aramalar" turns them on after a one-time explanation; each outgoing call and each accept is confirmed, an incoming call carries the "Tor dışı arama" label and the active call shows a fixed "Tor dışı" strip. Calls are relay-only. The WebRTC server settings stay hidden. NOT TESTED on a device.
+- **What is hidden:** moving the app to another device, linking a mobile or desktop, channel creation, upstream promotions (investment banner, news, founder contact, crowdfunding, rate and star items), the core-created "Ask SimpleX Team" contact in lists, link previews (they would leave Tor), and the terminal (debug builds only).
 
 ## Reachable upstream screens (Android)
 
@@ -91,22 +92,23 @@ Audit of 2026-11-04, tracing navigation from every Veil screen. Status values: *
 | Settings, Gelişmiş | `VersionInfoView`, `DeveloperView` (terminal and terminal-app link now debug builds only) | on purpose; gap: upstream look |
 | Settings, Hakkında | Veil about and licenses; design gallery in debug builds | Veil |
 | Chat list, avatar sheet, rename connection | `ContactConnectionInfoView` | on purpose; gap |
-| Chat info (direct), "Kişi tercihleri" | `ContactPreferencesView` (calls preference now hidden) | on purpose; gap |
-| Chat info (direct), "Gelişmiş" | `ChatInfoView` (call buttons now hidden) | on purpose; gap |
+| Chat info (direct), "Kişi tercihleri" | `ContactPreferencesView` (calls preference hidden unless calls are on) | on purpose; gap |
+| Chat info (direct), "Gelişmiş" | `ChatInfoView` (call buttons hidden unless calls are on) | on purpose; gap |
 | Chat info, security code | Veil verify screen with `ScanCodeView` camera scanner | Veil, upstream scanner |
 | Group info, preferences, edit, welcome | `GroupPreferencesView`, `GroupProfileView`, `GroupWelcomeView` | on purpose; gap |
 | Group info, "Gelişmiş" | `GroupChatInfoView`, `AddGroupMembersView`, `GroupLinkView` | on purpose; gap |
-| Group member, "Ayrıntılar" | `GroupMemberInfoView` (call buttons now hidden) | on purpose; gap |
+| Group member, "Ayrıntılar" | `GroupMemberInfoView` (call buttons hidden unless calls are on) | on purpose; gap |
 | Groups that use relays (channels) | opened in upstream group info; creation is not offered | closed (creation); gap (viewing) |
 | New chat sheet: invite, paste, scan, group | Veil sheet with `QRCodeScanner` and upstream connect-plan dialogs | Veil, upstream scanner |
-| Chat items: media, files, events, call history | upstream renderers inside the Veil frame | on purpose; call items are history only (incoming calls are rejected) |
+| Chat items: media, files, events, call history | upstream renderers inside the Veil frame | on purpose; call items are history; incoming calls are rejected unless calls are on |
 | Link in a message | Tor warning dialog, then the external app | Veil |
 | Lock, passcode, database error, splash, alerts | Veil system screens | Veil |
 | User picker ("use from desktop", "link a mobile") | `UserPicker` is composed, but nothing opens it on Android | closed (not reachable) |
 | Upstream `SettingsView`, `HelpView`, `WhatsNewView`, `SimpleXInfo` ("About SimpleX Chat") | reachable only from the upstream chat list and user picker | closed (not reachable) |
 | Device migration ("Başka cihaza taşı", "Başka bir cihazdan taşı") | `MigrateFromDeviceView` from Settings > Gelişmiş (`VeilAdvancedScreen`, Tor proxy checked first); `MigrateToDeviceView` from the Veil name step of the onboarding; `App.kt` still does not show a leftover migration state on Android | on purpose (Gelişmiş) |
 | Upstream chat list, new chat sheet, channel creation, promotions | not routed on Android; promotions stay off behind `VeilBranding.UPSTREAM_PROMOTIONS` | closed |
-| Calls: call buttons, calls preference, WebRTC servers, incoming calls | guarded by `VeilNetworkPolicy.CALLS_ENABLED` | closed |
+| Calls: call buttons, calls preference, incoming calls | guarded by `VeilNetworkPolicy.callsAllowed()` (off unless the user opts in) | closed by default; opt-in |
+| Calls: WebRTC (ICE) servers | guarded by `VeilNetworkPolicy.CALLS_ENABLED` (always `false`) | closed |
 
 Gaps for a later pass: the upstream screens marked "on purpose" (look and Turkish wording), SimpleX wording in the system notification channels, the foreground service notification and the lock texts, viewing channels in the manifest ([BRANDING.md](BRANDING.md)).
 

@@ -19,6 +19,7 @@ fun VeilPrivacyScreen(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
   val showPreviews = remember { appPrefs.privacyShowChatPreviews.state }
   val protectScreen = remember { appPrefs.privacyProtectScreen.state }
   val incognito = remember { appPrefs.incognito.state }
+  val callsOptIn = remember { appPrefs.veilCallsOptIn.state }
   val performLA = remember { appPrefs.performLA.state }
   val laMode = remember { appPrefs.laMode.state }
   val notifPreviewMode = chatModel.notificationPreviewMode
@@ -83,6 +84,29 @@ fun VeilPrivacyScreen(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
         sub = stringResource(MR.strings.veil_set_privacy_link_previews_desc),
         readOnly = true,
         value = stringResource(MR.strings.veil_set_off)
+      )
+    }
+
+    // Calls are off by default; turning them on is confirmed once because call media does not go through Tor.
+    VeilSectionLabel(stringResource(MR.strings.veil_calls_section))
+    VeilGroup {
+      VeilSwitchRow(
+        stringResource(MR.strings.veil_calls_toggle),
+        description = stringResource(MR.strings.veil_calls_toggle_desc),
+        checked = callsOptIn.value,
+        onChange = { on ->
+          if (!on) {
+            appPrefs.veilCallsOptIn.set(false)
+          } else {
+            AlertManager.shared.showAlertDialog(
+              title = generalGetString(MR.strings.veil_calls_optin_title),
+              text = generalGetString(MR.strings.veil_calls_optin_text),
+              confirmText = generalGetString(MR.strings.veil_calls_optin_confirm),
+              dismissText = generalGetString(MR.strings.veil_calls_cancel),
+              onConfirm = { appPrefs.veilCallsOptIn.set(true) }
+            )
+          }
+        }
       )
     }
 

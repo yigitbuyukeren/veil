@@ -18,6 +18,12 @@ Veil may only publish a privacy or security claim that is (a) on the allowed lis
 | "Chat history is stored encrypted on your device." | VEIL-012 | Not protected on an unlocked or compromised device |
 | "Messages can be delivered while the recipient is offline." | VEIL-011 | Relays may drop queued messages |
 | "Veil is an app for using the SimpleX network." | Always shown (relay conditions) | — |
+| "Messages and files go only through Tor; calls are the exception." | Same evidence as the relay claim, plus the call opt-in observed on devices (N7) | Calls are off by default; when turned on, call media does not go through Tor |
+| "In a call, the other person does not see your IP address, but the call server does." | Relay-only ICE policy observed in a running call (connection type "relay"); N7 | Call content is end-to-end encrypted; the call server sees your IP and the timing. Never worded as anonymity |
+
+## Calls (N7)
+
+Never write "all traffic goes through Tor". The accurate form is "messages and files go only through Tor; calls (if you turn them on) are the exception". Call-related `veil_` strings (`veil_calls_*`, `veil_onb_terms_calls`, `veil_calls_disabled_text`) state limits and measured behaviour, not protections: they say the call does not go through Tor and that the call server sees the IP. Their device evidence (relay type in the call info, warnings shown at each step) is NOT TESTED.
 
 ## Alpha disclaimer (must appear in README and in-app)
 
@@ -37,7 +43,7 @@ The app is not distributed, so the copy stays. **Distribution is NO-GO until eac
 
 | Key | Text (Turkish) | Claim | Required evidence |
 |---|---|---|---|
-| `veil_onb_story2_text` | Tüm trafik Tor üzerinden gider. Tor çalışmıyorsa Veil hiçbir şey göndermez; doğrudan bağlantıya geçmez. | Tor-only, no fallback | VEIL-007/008: leak matrix in [NETWORK_EGRESS.md](NETWORK_EGRESS.md) PASS on real devices with Orbot (capture shows only loopback to the proxy; Tor off means no app egress). Add the Tor caveat (Tor does not protect against traffic correlation); the terms screen has only a general one |
+| `veil_onb_story2_text` | Mesajlar ve dosyalar yalnızca Tor üzerinden gider; aramalar (açarsan) hariç. Tor çalışmıyorsa Veil hiçbir şey göndermez; doğrudan bağlantıya geçmez. | Tor-only, no fallback | VEIL-007/008: leak matrix in [NETWORK_EGRESS.md](NETWORK_EGRESS.md) PASS on real devices with Orbot (capture shows only loopback to the proxy; Tor off means no app egress). Add the Tor caveat (Tor does not protect against traffic correlation); the terms screen has only a general one |
 | `veil_tor_unavailable_text` | Veil yalnızca Tor üzerinden bağlanır, doğrudan bağlanmaz. Orbot’u başlatın (SOCKS proxy 127.0.0.1:9050), ardından yeniden deneyin. Tor kullanılabilir olana kadar hiçbir şey gönderilmez veya alınmaz. | Tor-only; nothing sent or received while Tor is down | VEIL-007/008: leak matrix in [NETWORK_EGRESS.md](NETWORK_EGRESS.md) PASS on real devices with Orbot (capture shows only loopback to the proxy; Tor off means no app egress) |
 | `veil_socks_down` | SOCKS proxy yanıt vermiyor: hiçbir şey gönderilmez veya alınmaz | nothing sent or received while the proxy is down | VEIL-007/008: leak matrix in [NETWORK_EGRESS.md](NETWORK_EGRESS.md) PASS on real devices with Orbot (capture shows only loopback to the proxy; Tor off means no app egress) |
 | `veil_onb_terms_body` | Mesajların, ağdaki aktarma sunucuları üzerinden ve yalnızca Tor aracılığıyla iletilir. Devam etmek için ağın kullanım koşullarını kabul etmen gerekir. Hiçbir ağ tüm riskleri ortadan kaldıramaz. | messages travel only through Tor | VEIL-007/008: leak matrix in [NETWORK_EGRESS.md](NETWORK_EGRESS.md) PASS on real devices with Orbot (capture shows only loopback to the proxy; Tor off means no app egress) |

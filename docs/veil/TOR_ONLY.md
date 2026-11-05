@@ -26,7 +26,18 @@ Locked settings: in Settings > Network & servers the SOCKS switch (always on), p
 
 Status indicator: "Tor-only network settings enforced" in the Tor and privacy status screen reads the config the core reports as active (`APIGetNetworkConfig`) and checks it with `VeilNetworkPolicy.isCompliant`; if the call fails it shows "bilinmiyor" (unknown), never "yes". Web links in messages show the external-link warning (opens outside Tor) in the confirmation dialog.
 
-Status of this behaviour: implemented at code level and covered by unit tests of `enforce`/`isCompliant`; the UI locks, the active-config status check and the dialog text are NOT TESTED on a device. Known gaps: a Tor drop after start produces connection errors from the core (only the `startChat` path is gated); features that bypass the core (link previews, calls) are disabled rather than routed.
+Status of this behaviour: implemented at code level and covered by unit tests of `enforce`/`isCompliant`; the UI locks, the active-config status check and the dialog text are NOT TESTED on a device. Known gaps: a Tor drop after start produces connection errors from the core (only the `startChat` path is gated); link previews, which bypass the core, are disabled rather than routed. Calls are the one deliberate exception, see "Calls" below.
+
+
+## Calls: opt-in, outside Tor (N7)
+
+Messages and files go only through Tor. Voice and video calls do not: call signalling (ringing, accept) is an ordinary encrypted SimpleX message and goes through Tor, but the media is sent by WebRTC, which does not use the SOCKS proxy.
+
+- Default: off. `VeilNetworkPolicy.CALLS_ENABLED` stays `false`; the user preference `veilCallsOptIn` (default `false`) turns calls on, and every call surface reads `VeilNetworkPolicy.callsAllowed() = CALLS_ENABLED || veilCallsOptIn`. `policy-check.sh` fails if the constant or the default changes.
+- Turned on in Settings > Privacy > "Sesli ve görüntülü aramalar" after a one-time explanation. Each outgoing call is confirmed ("Bu arama Tor üzerinden gitmez"), an incoming call shows the "Tor dışı arama" label and is confirmed before accepting, and a fixed "Tor dışı" strip is shown during the call. The Tor and status screen shows "Aramalar: açık, Tor dışı" while calls are on.
+- Relay only: `VeilNetworkPolicy.callRelayPolicy` forces `iceTransportPolicy: relay` for both directions (`CallManager`, `ChatController` call offer handling); the user preference `webrtcPolicyRelay` and the ICE server screen cannot weaken it (the screen stays hidden). The other party never sees the user's IP address; the call server (TURN) does, with timing. The call content is end-to-end encrypted.
+- Off: call buttons and the calls preference hidden, incoming calls rejected before ringing, a call attempt explains where to turn calls on.
+- Status: code and unit tests (`callsAllowed`, relay policy) only; the dialogs, label, strip and the relay connection type in the call info are NOT TESTED on a device.
 
 ## Verification (2026-11-04)
 

@@ -2,7 +2,10 @@ package chat.simplex.common.views.call
 
 import chat.simplex.common.model.*
 import chat.simplex.common.platform.*
+import chat.simplex.common.views.helpers.AlertManager
+import chat.simplex.common.views.helpers.generalGetString
 import chat.simplex.common.views.helpers.withBGApi
+import chat.simplex.res.MR
 import kotlinx.datetime.Clock
 import kotlin.time.Duration.Companion.minutes
 
@@ -10,7 +13,7 @@ class CallManager(val chatModel: ChatModel) {
   fun reportNewIncomingCall(invitation: RcvCallInvitation) {
     Log.d(TAG, "CallManager.reportNewIncomingCall")
     // Veil: WebRTC media would bypass Tor; reject without ringing
-    if (!VeilNetworkPolicy.CALLS_ENABLED) { endCall(invitation); return }
+    if (!VeilNetworkPolicy.callsAllowed()) { endCall(invitation); return }
     with (chatModel) {
       callInvitations[invitation.contact.id] = invitation
       if (invitation.user.showNotifications) {
@@ -25,7 +28,18 @@ class CallManager(val chatModel: ChatModel) {
     }
   }
 
-  fun acceptIncomingCall(invitation: RcvCallInvitation) = withBGApi {
+  // Veil: the call media does not go through Tor, so accepting is confirmed every time
+  fun acceptIncomingCall(invitation: RcvCallInvitation) {
+    AlertManager.shared.showAlertDialog(
+      title = generalGetString(MR.strings.veil_calls_outside_tor_label),
+      text = generalGetString(MR.strings.veil_calls_warn_short),
+      confirmText = generalGetString(MR.strings.veil_calls_accept_confirm),
+      dismissText = generalGetString(MR.strings.veil_calls_cancel),
+      onConfirm = { acceptIncomingCallConfirmed(invitation) }
+    )
+  }
+
+  private fun acceptIncomingCallConfirmed(invitation: RcvCallInvitation) = withBGApi {
     val call = chatModel.activeCall.value
     val contactInfo = chatModel.controller.apiContactInfo(invitation.remoteHostId, invitation.contact.contactId)
     val profile = contactInfo?.second ?: invitation.user.profile.toProfile()
@@ -57,7 +71,7 @@ class CallManager(val chatModel: ChatModel) {
         androidCallState = platform.androidCreateActiveCallState()
       )
       showCallView.value = true
-      val useRelay = controller.appPrefs.webrtcPolicyRelay.get()
+      val useRelay = VeilNetworkPolicy.callRelayPolicy(controller.appPrefs.webrtcPolicyRelay.get()) // Veil: relay-only is forced
       val iceServers = getIceServers()
       Log.d(TAG, "answerIncomingCall iceServers: $iceServers")
       callCommand.add(WCallCommand.Start(

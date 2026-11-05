@@ -28,7 +28,7 @@ Goal: a Tor-only Android closed alpha, not a finished or audited product. Issue 
 
 Status 2026-11-04: all nine groups below exist in code and build (arm64 FOSS debug) with unit tests for the logic, the contrast of both themes and the design system. **No screen has been run on a device or an emulator**, so by the acceptance rule below no group is "done" yet. Commits per group are in [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md). Remaining: the emulator run (waits for the owner's go), the upstream screens that are opened on purpose and still have the upstream look ([DESIGN.md](DESIGN.md), "Reachable upstream screens"), English translation, and the remaining upstream wording ([BRANDING.md](BRANDING.md)).
 
-A whole-app redesign on a Veil design system, Turkish-first. It replaces the upstream screens one by one without touching upstream logic (architecture rule in [DESIGN.md](DESIGN.md)). The app builds and runs after every screen group. Calls and desktop and remote connection stay hidden; device migration is under Gelişmiş.
+A whole-app redesign on a Veil design system, Turkish-first. It replaces the upstream screens one by one without touching upstream logic (architecture rule in [DESIGN.md](DESIGN.md)). The app builds and runs after every screen group. Desktop and remote connection stay hidden, device migration is under Gelişmiş; calls are an opt-in, off by default and outside Tor (N7).
 
 Screen groups (details in the screen map of [DESIGN.md](DESIGN.md)):
 
@@ -80,7 +80,7 @@ What the redesign does not cover.
 
 1. Multi-device and sync without increasing account linkage (research first).
 2. Own relay support: add a relay, setup guide, relay selection and connection management; self-hosted relay discovery and fallback for operator independence.
-3. Calls: Tor compatibility research for 1:1 voice and video, anonymity and media routing, separate threat model and real-device tests. Calls stay disabled until then.
+3. Calls: 1:1 voice and video exist as an opt-in outside Tor (N7: off by default, warned at every step, relay-only). Still open: Tor-compatible media routing research, a separate threat model for call metadata and real-device tests.
 4. Other platforms (iOS, macOS, Windows, Linux) only after M1 to M3 are stable.
 
 Anything here that would need a change inside the prebuilt SimpleX core is not done (see [NATIVE_CORE.md](NATIVE_CORE.md)); it must be solved in the app layer or stay out of scope.

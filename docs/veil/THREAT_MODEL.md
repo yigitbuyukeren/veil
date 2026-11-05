@@ -35,6 +35,8 @@ Out of scope for M1: voice/video, files and media, backups, multi-device, iOS/de
 
 ## 4. Data flow: who can see what
 
+Calls are off by default. If the user turns them on, call media goes outside Tor through a call (TURN) server: the counterparty does not see the IP (relay-only), the call server sees the IP and the timing. See [TOR_ONLY.md](TOR_ONLY.md).
+
 Mode "Tor-only" is Veil's only mode. "Clear" is shown only to document what Veil must never do.
 
 | Observer | Message content | Sender/receiver IP | Who talks to whom | Message timing and size | Group membership |
@@ -45,6 +47,7 @@ Mode "Tor-only" is Veil's only mode. "Clear" is shown only to document what Veil
 | Global observer | No | Tor use | Possible by timing correlation | Yes | Possible by correlation |
 | Counterparty | Yes | No, if Tor-only | Yes (their own chats) | Yes | Members see each other's display names/IDs |
 | Other group members | Group content | No | Group graph they belong to | Yes | Yes |
+| Call server (TURN), only if the user turned calls on (outside Tor) | No (call content is end-to-end encrypted) | **Yes** (calls do not go through Tor) | That a call happens between two endpoints it relays | Yes | No |
 | Device thief (locked, encrypted DB) | Not without key | n/a | Not without key | n/a | Not without key |
 | Device thief (unlocked / malware) | Yes | Yes | Yes | Yes | Yes |
 

@@ -15,6 +15,17 @@ object VeilNetworkPolicy {
   const val LINK_PREVIEWS_ENABLED = false
   const val CALLS_ENABLED = false
 
+  /**
+   * Calls are an explicit user opt-in (default off): signalling goes through the core over Tor, but WebRTC media does not.
+   * Every call-related surface reads this one function.
+   */
+  fun callsAllowed(optIn: Boolean): Boolean = CALLS_ENABLED || optIn
+  fun callsAllowed(): Boolean = callsAllowed(ChatController.appPrefs.veilCallsOptIn.get())
+
+  /** Calls always use a TURN relay so the other party never sees the user's IP; the user preference cannot weaken this. */
+  @Suppress("UNUSED_PARAMETER")
+  fun callRelayPolicy(userPreference: Boolean): Boolean = true
+
   /** Network settings that could weaken the policy are shown read-only in the UI (the enforcement itself is in [enforce]). */
   const val SETTINGS_LOCKED = true
 

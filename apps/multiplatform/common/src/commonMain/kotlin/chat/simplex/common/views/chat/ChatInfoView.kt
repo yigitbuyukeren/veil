@@ -571,9 +571,10 @@ fun ChatInfoLayout(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
       ) {
-        // Veil: calls are disabled (VeilNetworkPolicy.CALLS_ENABLED), so the call buttons are not offered
-        SearchButton(modifier = Modifier.fillMaxWidth(if (VeilNetworkPolicy.CALLS_ENABLED) 0.25f else 0.5f), chat, contact, close, onSearchClicked)
-        if (VeilNetworkPolicy.CALLS_ENABLED) {
+        // Veil: the call buttons are offered only when calls are turned on (VeilNetworkPolicy.callsAllowed)
+        val veilCallsAllowed = VeilNetworkPolicy.callsAllowed()
+        SearchButton(modifier = Modifier.fillMaxWidth(if (veilCallsAllowed) 0.25f else 0.5f), chat, contact, close, onSearchClicked)
+        if (veilCallsAllowed) {
           AudioCallButton(modifier = Modifier.fillMaxWidth(0.33f), chat, contact, connStats)
           VideoButton(modifier = Modifier.fillMaxWidth(0.5f), chat, contact, connStats)
         }

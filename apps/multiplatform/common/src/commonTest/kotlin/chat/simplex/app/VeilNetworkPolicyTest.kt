@@ -18,6 +18,19 @@ class VeilNetworkPolicyTest {
   )
 
   @Test
+  fun callsAreOffUnlessUserOptsIn() {
+    assertFalse(VeilNetworkPolicy.CALLS_ENABLED)
+    assertFalse(VeilNetworkPolicy.callsAllowed(optIn = false))
+    assertTrue(VeilNetworkPolicy.callsAllowed(optIn = true))
+  }
+
+  @Test
+  fun callsAlwaysUseRelay() {
+    assertTrue(VeilNetworkPolicy.callRelayPolicy(userPreference = true))
+    assertTrue(VeilNetworkPolicy.callRelayPolicy(userPreference = false))
+  }
+
+  @Test
   fun enforceClosesEveryClearNetworkOption() {
     val c = VeilNetworkPolicy.enforce(permissive())
     assertEquals(":9050", c.socksProxy)

@@ -6,7 +6,7 @@
   <string name="veil_tor_unavailable_title">Tor unavailable</string>
   <string name="veil_tor_unavailable_text">Veil connects only through Tor, never directly. Start Orbot (SOCKS proxy 127.0.0.1:9050), then try again. Nothing is sent or received until Tor is available.</string>
   <string name="veil_calls_disabled_title">Calls are off</string>
-  <string name="veil_calls_disabled_text">Voice and video calls are disabled in Veil because they send media outside Tor.</string>
+  <string name="veil_calls_disabled_text">Calls are off. You can turn them on in Settings → Privacy; calls do not go through Tor.</string>
   <string name="veil_external_link_warning">This action opens the link outside Tor, in another app. The website can see your IP address.</string>
   <string name="veil_tor_retry">Try again</string>
   <string name="veil_status_title">Tor and privacy status</string>
@@ -25,7 +25,7 @@
   <string name="veil_onb_story1_title">No account</string>
   <string name="veil_onb_story1_text">We do not ask for a phone number, email or username. Veil has no record that identifies you; your profile is stored on your device and shared only with the people you connect with.</string>
   <string name="veil_onb_story2_title">Tor only</string>
-  <string name="veil_onb_story2_text">All traffic goes through Tor. If Tor is not running, Veil sends nothing and does not switch to a direct connection.</string>
+  <string name="veil_onb_story2_text">Messages and files go only through Tor; calls, if you turn them on, are the exception. If Tor is not running, Veil sends nothing and does not switch to a direct connection.</string>
   <string name="veil_onb_story3_title">A separate identity for every chat</string>
   <string name="veil_onb_story3_text">By default a random pseudonym is used for each connection. If you turn this off in settings, the name you chose is shown to the people you connect with.</string>
   <string name="veil_onb_next">Next</string>
@@ -64,7 +64,7 @@
   <string name="veil_onb_terms_independent">Veil is an independent app that uses the SimpleX network. It has no official ties to the project that develops the network.</string>
   <string name="veil_onb_terms_body">Your messages are delivered through relay servers on the network, and only through Tor. To continue you must accept the network\'s terms of use. No network can remove all risks.</string>
   <string name="veil_onb_terms_link">Read the terms: simplex.chat/privacy</string>
-  <string name="veil_onb_terms_calls">No voice or video calls: call data goes outside Tor.</string>
+  <string name="veil_onb_terms_calls">Voice and video calls are off by default; if you turn them on, they go outside Tor.</string>
   <string name="veil_onb_terms_accept">Accept and start</string>
   <string name="veil_onb_terms_loading">Loading server information…</string>
 
@@ -3633,4 +3633,17 @@
   <string name="veil_a11y_pass_entered">%1$d digits entered</string>
   <string name="veil_a11y_pass_show">Show passphrase</string>
   <string name="veil_a11y_pass_hide">Hide passphrase</string>
+  <string name="veil_calls_section">Calls</string>
+  <string name="veil_calls_toggle">Voice and video calls</string>
+  <string name="veil_calls_toggle_desc">Off by default. Calls do not go through Tor.</string>
+  <string name="veil_calls_optin_title">Calls do not go through Tor</string>
+  <string name="veil_calls_optin_text">Your messages go through Tor, but voice and video calls do not. A call is set up through a call server: the person you talk to does not see your IP address, but the call server does. The content of the call is encrypted. If your privacy matters, use a voice message instead of a call.</string>
+  <string name="veil_calls_optin_confirm">Understood, turn on</string>
+  <string name="veil_calls_cancel">Cancel</string>
+  <string name="veil_calls_outside_tor_label">Call outside Tor</string>
+  <string name="veil_calls_warn_short">This call does not go through Tor. Your IP address is visible to the call server.</string>
+  <string name="veil_calls_start_confirm">Call</string>
+  <string name="veil_calls_accept_confirm">Accept</string>
+  <string name="veil_calls_strip">Outside Tor</string>
+  <string name="veil_calls_on_outside_tor">On, outside Tor</string>
 </resources>

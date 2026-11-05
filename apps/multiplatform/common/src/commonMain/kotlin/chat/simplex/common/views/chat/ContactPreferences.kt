@@ -107,7 +107,7 @@ private fun ContactPreferencesLayout(
     FeatureSection(ChatFeature.Voice, user.fullPreferences.voice.allow, contact.mergedPreferences.voice, allowVoice) {
       applyPrefs(featuresAllowed.copy(voice = it))
     }
-    if (VeilNetworkPolicy.CALLS_ENABLED) { // Veil: calls are disabled, so the calls preference is not offered
+    if (VeilNetworkPolicy.callsAllowed()) { // Veil: the calls preference is offered only when calls are turned on
       SectionDividerSpaced()
       val allowCalls: MutableState<ContactFeatureAllowed> = remember(featuresAllowed) { mutableStateOf(featuresAllowed.calls) }
       FeatureSection(ChatFeature.Calls, user.fullPreferences.calls.allow, contact.mergedPreferences.calls, allowCalls) {

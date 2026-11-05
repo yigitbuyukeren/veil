@@ -347,6 +347,15 @@ private fun ActiveCallOverlayLayout(
       },
       onBack = { chatModel.activeCallViewIsCollapsed.value = true }
     )
+    // Veil: fixed strip while the call is running, the media does not go through Tor
+    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+      Text(
+        stringResource(MR.strings.veil_calls_strip),
+        Modifier.background(Color.Black.copy(alpha = 0.45f), RoundedCornerShape(8.dp)).padding(horizontal = 10.dp, vertical = 2.dp),
+        color = Color(0xFFFFD6A5),
+        style = MaterialTheme.typography.body2
+      )
+    }
     Column(Modifier.padding(horizontal = DEFAULT_PADDING)) {
       @Composable
       fun SelectSoundDevice(size: Dp) {

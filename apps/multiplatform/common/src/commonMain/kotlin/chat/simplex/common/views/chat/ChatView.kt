@@ -888,10 +888,21 @@ private fun connectingText(chatInfo: ChatInfo): String? {
 }
 
 fun startChatCall(remoteHostId: Long?, chatInfo: ChatInfo, media: CallMediaType) {
-  if (!VeilNetworkPolicy.CALLS_ENABLED) {
+  if (!VeilNetworkPolicy.callsAllowed()) {
     AlertManager.shared.showAlertMsg(generalGetString(MR.strings.veil_calls_disabled_title), generalGetString(MR.strings.veil_calls_disabled_text))
     return
   }
+  // Veil: the call does not go through Tor, so it is confirmed every time
+  AlertManager.shared.showAlertDialog(
+    title = generalGetString(MR.strings.veil_calls_outside_tor_label),
+    text = generalGetString(MR.strings.veil_calls_warn_short),
+    confirmText = generalGetString(MR.strings.veil_calls_start_confirm),
+    dismissText = generalGetString(MR.strings.veil_calls_cancel),
+    onConfirm = { startChatCallConfirmed(remoteHostId, chatInfo, media) }
+  )
+}
+
+private fun startChatCallConfirmed(remoteHostId: Long?, chatInfo: ChatInfo, media: CallMediaType) {
   withBGApi {
     if (chatInfo is ChatInfo.Direct) {
       val contactInfo = chatModel.controller.apiContactInfo(remoteHostId, chatInfo.contact.contactId)

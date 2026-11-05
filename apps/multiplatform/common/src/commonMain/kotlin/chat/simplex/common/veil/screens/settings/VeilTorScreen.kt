@@ -112,7 +112,7 @@ fun VeilTorScreen(close: () -> Unit) {
     VeilSectionLabel(stringResource(MR.strings.veil_status_privacy))
     VeilGroup {
       val incognito = remember { appPrefs.incognito.state }.value
-      privacyDefaultRows(incognito).forEachIndexed { i, row ->
+      privacyDefaultRows(incognito, callsEnabled = VeilNetworkPolicy.callsAllowed()).forEachIndexed { i, row ->
         if (i > 0) VeilRowDivider()
         val yn = stringResource(if (row.ok) MR.strings.veil_status_ok else MR.strings.veil_status_fail)
         VeilValueRow(
@@ -120,10 +120,12 @@ fun VeilTorScreen(close: () -> Unit) {
             when (row.kind) {
               PrivacyDefaultKind.Incognito -> MR.strings.veil_set_default_incognito
               PrivacyDefaultKind.LinkPreviewsOff -> MR.strings.veil_set_default_previews
-              PrivacyDefaultKind.CallsOff -> MR.strings.veil_set_default_calls
+              PrivacyDefaultKind.CallsOff -> if (row.ok) MR.strings.veil_set_default_calls else MR.strings.veil_calls_section
             }
           ),
-          sub = null, readOnly = false, value = yn
+          sub = null, readOnly = false,
+          // Veil: when calls are turned on the row says so instead of a plain "no"
+          value = if (row.kind == PrivacyDefaultKind.CallsOff && !row.ok) stringResource(MR.strings.veil_calls_on_outside_tor) else yn
         )
       }
     }

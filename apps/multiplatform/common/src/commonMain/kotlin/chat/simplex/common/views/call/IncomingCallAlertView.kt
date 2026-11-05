@@ -82,6 +82,9 @@ fun IncomingCallInfo(invitation: RcvCallInvitation, chatModel: ChatModel) {
     else CallIcon(painterResource(MR.images.ic_call_filled), stringResource(MR.strings.icon_descr_audio_call))
     Spacer(Modifier.width(4.dp))
     Text(invitation.callTypeText, color = MaterialTheme.colors.onBackground)
+    // Veil: the call media does not go through Tor
+    Spacer(Modifier.width(8.dp))
+    Text(stringResource(MR.strings.veil_calls_outside_tor_label), color = MaterialTheme.colors.error, style = MaterialTheme.typography.body2)
   }
 }
 
