@@ -28,6 +28,7 @@ import chat.simplex.common.views.usersettings.*
 import chat.simplex.common.platform.*
 import chat.simplex.res.MR
 import kotlinx.datetime.*
+import chat.simplex.common.veil.data.veilWipeDeviceLists // Veil
 import java.io.*
 import java.net.URI
 import java.nio.file.Files
@@ -627,6 +628,7 @@ fun deleteChatDatabaseFilesAndState() {
   wallpapersDir.mkdirs()
   DatabaseUtils.ksDatabasePassword.remove()
   appPrefs.newDatabaseInitialized.set(false)
+  veilWipeDeviceLists() // Veil: pins and the other device-local `veil_` lists must not outlive the database (a new profile reuses user ids)
   chatModel.desktopOnboardingRandomPassword.value = false
   controller.appPrefs.storeDBPassphrase.set(true)
   controller.setChatCtrl(null)

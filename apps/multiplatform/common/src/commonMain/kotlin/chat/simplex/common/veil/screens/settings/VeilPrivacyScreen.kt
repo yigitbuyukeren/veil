@@ -1,9 +1,13 @@
 package chat.simplex.common.veil.screens.settings
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import chat.simplex.common.model.*
 import chat.simplex.common.model.ChatController.appPrefs
 import chat.simplex.common.platform.chatModel
+import chat.simplex.common.veil.screens.chat.VeilChoiceRow
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.usersettings.*
 import chat.simplex.res.MR
@@ -22,6 +26,7 @@ fun VeilPrivacyScreen(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
   val callsOptIn = remember { appPrefs.veilCallsOptIn.state }
   val performLA = remember { appPrefs.performLA.state }
   val laMode = remember { appPrefs.laMode.state }
+  val lockDelay = remember { appPrefs.laLockDelay.state }
   val notifPreviewMode = chatModel.notificationPreviewMode
   val user = chatModel.currentUser.value
 
@@ -53,21 +58,50 @@ fun VeilPrivacyScreen(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
 
     VeilSectionLabel(stringResource(MR.strings.veil_set_privacy_device))
     VeilGroup {
+      // The lock itself (on/off, mode, passcode screens, authentication) is upstream's lock page; the self-destruct section of it is reached only from "Gelişmiş".
       VeilValueRow(
         stringResource(MR.strings.veil_set_privacy_app_lock), sub = null, readOnly = false,
-        value = if (performLA.value) laMode.value.text else stringResource(MR.strings.veil_set_off),
-        onClick = { showUpstreamSettings { SimplexLockView(chatModel, appPrefs.laMode, setPerformLA) } }
+        value = when (appLockState(performLA.value, laMode.value == LAMode.PASSCODE)) {
+          AppLockState.Off -> stringResource(MR.strings.veil_set_off)
+          AppLockState.System -> stringResource(MR.strings.veil_lock_system)
+          AppLockState.Passcode -> stringResource(MR.strings.veil_lock_passcode)
+        },
+        onClick = { showUpstreamSettings { SimplexLockView(chatModel, appPrefs.laMode, setPerformLA, showSelfDestruct = false) } }
       )
+      if (lockDelayShown(performLA.value)) {
+        VeilRowDivider()
+        VeilChoiceRow(
+          title = stringResource(MR.strings.veil_lock_delay),
+          options = lockDelayChoices(lockDelay.value).map { it to veilLockDelayLabel(it) },
+          selected = lockDelay.value,
+          onSelect = { appPrefs.laLockDelay.set(it) },
+          modifier = Modifier.padding(horizontal = 8.dp),
+        )
+      }
       VeilRowDivider()
       VeilSwitchRow(
         stringResource(MR.strings.veil_set_privacy_screen_protection),
         checked = protectScreen.value,
         onChange = { on ->
-          appPrefs.privacyProtectScreen.set(on)
-          applyScreenProtection(on)
+          if (screenProtectionOffNeedsWarning(on)) {
+            AlertManager.shared.showAlertDialog(
+              title = generalGetString(MR.strings.veil_screen_off_title),
+              text = generalGetString(MR.strings.veil_screen_off_text),
+              confirmText = generalGetString(MR.strings.veil_screen_off_confirm),
+              destructive = true,
+              onConfirm = {
+                appPrefs.privacyProtectScreen.set(false)
+                applyScreenProtection(false)
+              }
+            )
+          } else {
+            appPrefs.privacyProtectScreen.set(true)
+            applyScreenProtection(true)
+          }
         }
       )
     }
+    VeilNote(stringResource(MR.strings.veil_lock_note))
 
     VeilSectionLabel(stringResource(MR.strings.veil_set_privacy_connections))
     VeilGroup {
@@ -136,4 +170,12 @@ fun VeilPrivacyScreen(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
       )
     }
   }
+}
+
+/** "Hemen", "30 sn", "1 dk": the text of one lock delay choice. */
+@Composable
+private fun veilLockDelayLabel(seconds: Int): String = when (lockDelayText(seconds)) {
+  LockDelayText.Immediately -> stringResource(MR.strings.veil_lock_delay_now)
+  LockDelayText.Seconds -> String.format(stringResource(MR.strings.veil_lock_delay_sec), lockDelayAmount(seconds))
+  LockDelayText.Minutes -> String.format(stringResource(MR.strings.veil_lock_delay_min), lockDelayAmount(seconds))
 }

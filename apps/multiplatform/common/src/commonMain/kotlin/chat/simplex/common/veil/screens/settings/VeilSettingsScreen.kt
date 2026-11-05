@@ -138,7 +138,7 @@ fun VeilSettingsHome(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
       VeilNavRow(
         MR.images.ic_code, stringResource(MR.strings.veil_set_row_advanced),
         stringResource(MR.strings.veil_adv_sum_advanced),
-        onClick = { veilShowSettingsPage { c -> VeilAdvancedScreen(c) } }
+        onClick = { veilShowSettingsPage { c -> VeilAdvancedScreen(setPerformLA, c) } }
       )
     }
     BasicText(

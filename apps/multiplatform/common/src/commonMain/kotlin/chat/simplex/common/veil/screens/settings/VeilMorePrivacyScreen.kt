@@ -88,8 +88,10 @@ fun VeilMorePrivacyScreen(close: () -> Unit) {
       VeilRowDivider()
       VeilSwitchRow(
         stringResource(MR.strings.veil_mp_encrypt_files),
-        description = stringResource(MR.strings.veil_mp_encrypt_files_desc),
+        description = stringResource(if (encryptFilesCanChange(encryptFiles.value)) MR.strings.veil_mp_encrypt_files_desc else MR.strings.veil_mp_encrypt_files_locked),
         checked = encryptFiles.value,
+        // Locked on: it can be turned on but not off (an imported setting may have left it off).
+        enabled = encryptFilesCanChange(encryptFiles.value),
         onChange = { on ->
           appPrefs.privacyEncryptLocalFiles.set(on)
           withBGApi { chatModel.controller.apiSetEncryptLocalFiles(on) }

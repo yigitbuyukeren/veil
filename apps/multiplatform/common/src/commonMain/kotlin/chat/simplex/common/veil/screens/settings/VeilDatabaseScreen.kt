@@ -25,7 +25,9 @@ import chat.simplex.common.veil.screens.chatlist.VeilIcon
 import chat.simplex.common.views.database.DatabaseEncryptionView
 import chat.simplex.common.views.database.databaseActions
 import chat.simplex.common.views.database.databaseManagementActions
+import chat.simplex.common.views.helpers.AlertManager
 import chat.simplex.common.views.helpers.ModalManager
+import chat.simplex.common.views.helpers.generalGetString
 import chat.simplex.common.views.helpers.directoryFileCountAndSize
 import chat.simplex.common.views.helpers.formatBytes
 import chat.simplex.res.MR
@@ -118,8 +120,9 @@ fun VeilDatabaseScreen(close: () -> Unit) {
 }
 
 /**
- * Settings > Veritabanı ve parola > Parola ve dışa aktarma: the passphrase screen (upstream's), export, import, delete
- * database, and the run-chat switch. Nothing here has a dialog of its own: they all come from upstream's code.
+ * Settings > Veritabanı ve parola > Parola ve yedek: the passphrase screen (upstream's), backup (upstream's export) and
+ * restore (upstream's import), delete all data (upstream's delete database), and the run-chat switch. The archive,
+ * the file pickers and the confirmations are upstream's; Veil only asks first (below).
  */
 @Composable
 fun VeilDatabaseManagementScreen(close: () -> Unit) {
@@ -149,13 +152,27 @@ fun VeilDatabaseManagementScreen(close: () -> Unit) {
           onClick = { ModalManager.start.showModal(cardScreen = true) { DatabaseEncryptionView(chatModel, false) } },
           enabled = !opsDisabled
         )
+      }
+
+      // Backup and restore are upstream's export and import (archive, file picker, replace confirmation); Veil asks first.
+      VeilSectionLabel(stringResource(MR.strings.veil_bk_section))
+      VeilGroup {
+        VeilActionRow(MR.images.ic_ios_share, stringResource(MR.strings.veil_bk_backup), stringResource(MR.strings.veil_bk_backup_sum), danger = false, enabled = !opsDisabled, onClick = {
+          veilStartBackup(
+            gate = backupGate(prefs.initialRandomDBPassphrase.get(), m.chatDbEncrypted.value),
+            export = actions.exportDatabase,
+          )
+        })
         VeilRowDivider()
-        VeilActionRow(MR.images.ic_ios_share, stringResource(MR.strings.veil_db_export), stringResource(MR.strings.veil_db_export_sum), danger = false, enabled = !opsDisabled, onClick = actions.exportDatabase)
-        VeilRowDivider()
-        VeilActionRow(MR.images.ic_download, stringResource(MR.strings.veil_db_import), stringResource(MR.strings.veil_db_import_sum), danger = true, enabled = !opsDisabled, onClick = actions.importDatabase)
-        VeilRowDivider()
+        VeilActionRow(MR.images.ic_download, stringResource(MR.strings.veil_bk_restore), stringResource(MR.strings.veil_bk_restore_sum), danger = true, enabled = !opsDisabled, onClick = { veilStartRestore(actions.importDatabase) })
+      }
+      VeilNote(stringResource(MR.strings.veil_bk_note))
+
+      VeilSectionLabel(stringResource(MR.strings.veil_wipe_section))
+      VeilGroup {
         VeilActionRow(MR.images.ic_delete_forever, stringResource(MR.strings.veil_db_delete), stringResource(MR.strings.veil_db_delete_sum), danger = true, enabled = !opsDisabled, onClick = actions.deleteDatabase)
       }
+      VeilNote(stringResource(MR.strings.veil_wipe_note))
       VeilNote(stringResource(MR.strings.veil_db_stops_note))
 
       if (runChatSectionShown(m.localUserCreated.value)) {
@@ -207,4 +224,36 @@ private fun VeilActionRow(icon: ImageResource, title: String, summary: String, d
       BasicText(summary, style = VeilTheme.type.caption.copy(color = colors.ink3), maxLines = 3, overflow = TextOverflow.Ellipsis)
     }
   }
+}
+
+/**
+ * "Yedek al": a backup is always protected by a passphrase the owner chose. Without one the owner is sent to upstream's
+ * passphrase screen; with one a short Veil explanation comes before upstream's export (stop chat, archive, file picker).
+ */
+private fun veilStartBackup(gate: BackupGate, export: () -> Unit) {
+  when (gate) {
+    BackupGate.NeedsPassphrase -> AlertManager.shared.showAlertDialog(
+      title = generalGetString(MR.strings.veil_bk_need_title),
+      text = generalGetString(MR.strings.veil_bk_need_text),
+      confirmText = generalGetString(MR.strings.veil_bk_need_confirm),
+      onConfirm = { ModalManager.start.showModal { DatabaseEncryptionView(chatModel, false) } },
+    )
+    BackupGate.Allowed -> AlertManager.shared.showAlertDialog(
+      title = generalGetString(MR.strings.veil_bk_ready_title),
+      text = generalGetString(MR.strings.veil_bk_ready_text),
+      confirmText = generalGetString(MR.strings.veil_bk_ready_confirm),
+      onConfirm = export,
+    )
+  }
+}
+
+/** "Yedekten geri yükle": the Veil warning about old backups and two devices comes before upstream's file picker and its replace confirmation. */
+private fun veilStartRestore(import: () -> Unit) {
+  AlertManager.shared.showAlertDialog(
+    title = generalGetString(MR.strings.veil_bk_restore_title),
+    text = generalGetString(MR.strings.veil_bk_restore_text),
+    confirmText = generalGetString(MR.strings.veil_bk_restore_confirm),
+    destructive = true,
+    onConfirm = import,
+  )
 }

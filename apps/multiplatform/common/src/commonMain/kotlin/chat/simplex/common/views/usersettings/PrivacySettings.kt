@@ -474,7 +474,8 @@ private val laDelays = listOf(10, 30, 60, 180, 600, 0)
 fun SimplexLockView(
   chatModel: ChatModel,
   currentLAMode: SharedPreference<LAMode>,
-  setPerformLA: (Boolean) -> Unit
+  setPerformLA: (Boolean) -> Unit,
+  showSelfDestruct: Boolean = true, // Veil: the privacy page hides the self-destruct section; Settings > Advanced opens it behind a warning
 ) {
   val showAuthScreen = remember { chatModel.showAuthScreen }
   val performLA = remember { appPrefs.performLA.state }
@@ -678,7 +679,7 @@ fun SimplexLockView(
         }
       }
     }
-    if (performLA.value && laMode.value == LAMode.PASSCODE) {
+    if (showSelfDestruct && performLA.value && laMode.value == LAMode.PASSCODE) { // Veil: showSelfDestruct
       SectionDividerSpaced()
       SectionView(stringResource(MR.strings.self_destruct_passcode)) {
         val openInfo = {

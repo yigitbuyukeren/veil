@@ -10,5 +10,11 @@
 | Two invitations must not share a pseudonym | NOT TESTED |
 | Invitation cancel / unwanted-invite blocking | The chat action sheet of a pending invitation you created shows "Daveti iptal et" (upstream's delete of the pending connection, which invalidates the link). NOT TESTED |
 | Contact verification (security code) | Group-member level on two emulators: same code on both sides, mark/clear verified works (E12). Wrong-contact and key-change cases NOT TESTED; identity-difference explanations not changed |
+| App lock (M3-2) | Off by default (upstream `performLA` = false). When turned on: system lock (Android) or Veil passcode, lock time default 30 s (upstream `laLockDelay`), choices right away, 30 s, 1 min, 5 min. NOT TESTED on a device |
+| Self-destruct passcode (M3-2) | Off by default (upstream `selfDestruct` = false). Set only in Settings > Gelişmiş, behind a warning, and only with the Veil passcode lock. NOT TESTED |
+| Screen protection (M3-2) | On by default (upstream `privacyProtectScreen`); turning it off asks first. NOT TESTED |
+| Local file encryption (M3-4) | On by default (upstream `privacyEncryptLocalFiles`); the Veil switch cannot be turned off while on (it can be turned on if an imported setting left it off). Applies to files saved after it was on. NOT TESTED |
+| Delete messages after (M3-4) | Off ("never") by default (upstream `chatItemTTL`); the choice is on Settings > "Veritabanı ve parola" (N6f). NOT TESTED |
+| Backup (M3-3) | Not automatic and never sent anywhere by Veil; taken only by the owner, only with a passphrase the owner set. NOT TESTED, see [BACKUP_TESTS.md](BACKUP_TESTS.md) |
 
 Acceptance status: "no registration required" observed; the remaining acceptance items are not met. Issue stays open.
