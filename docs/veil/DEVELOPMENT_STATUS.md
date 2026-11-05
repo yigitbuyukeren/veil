@@ -41,6 +41,11 @@ All screen groups of [DESIGN.md](DESIGN.md) exist for Android and the arm64 FOSS
 
 Final audit result of 2026-11-04: navigation was traced from every Veil screen (table in [DESIGN.md](DESIGN.md), "Reachable upstream screens"). Closed with `// Veil:` guards: call buttons and the calls preference in the upstream contact and member info, the WebRTC servers section, the terminal and terminal-app link outside debug builds, and a stale device-migration state in the Android routing. All `veil_` strings were audited against [PRIVACY_CLAIMS.md](PRIVACY_CLAIMS.md): none prohibited, two softened, 25 allowed statements still lack device evidence and are listed with their required evidence (distribution NO-GO, [M1_RELEASE_REPORT.md](M1_RELEASE_REPORT.md)). Eleven unused `veil_` keys were removed from base and tr.
 
+## Phone-test fixes (2026-11-05)
+
+- **Bubble width:** the meta line of the Veil text bubble no longer fills the width, so short messages wrap their content; build and unit tests pass, appearance NOT TESTED on a device.
+- **Live message:** the Veil path was read end to end (button, `startLiveMessage`, `sendLiveMessage`, `apiSendMessages(live = true)`); no Veil hook blocks it. Live items are drawn by upstream's item view, not the Veil bubble (`veilBubbleEligible` excludes `isLive`). Cause of the reported "nothing happens" not found without a device; NOT FIXED.
+
 ## Open items
 
 - **Device and emulator tests of the whole redesign are pending.** The emulator run waits for the owner's go; real devices and Orbot are needed for the M1 gates and for the evidence in the claims list.

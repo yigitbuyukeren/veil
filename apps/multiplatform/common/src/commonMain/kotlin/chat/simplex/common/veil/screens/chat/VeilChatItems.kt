@@ -122,7 +122,7 @@ fun VeilTextBubble(
         onLinkLongClick = onLinkLongClick,
         showTimestamp = false,
       )
-      VeilMetaLine(ci, sent)
+      VeilMetaLine(ci, sent, Modifier.align(Alignment.End))
     }
   }
 }
@@ -164,13 +164,13 @@ private fun veilQuoteSender(quote: CIQuote, chatInfo: ChatInfo): String? = when 
 
 /** "14:32 · düzenlendi · Teslim edildi": time, edited marker and, for outgoing items, the delivery state in words. */
 @Composable
-private fun VeilMetaLine(ci: ChatItem, sent: Boolean) {
+private fun VeilMetaLine(ci: ChatItem, sent: Boolean, modifier: Modifier = Modifier) {
   val colors = VeilTheme.colors
   val state = if (sent) deliveryStateOf(ci.meta.itemStatus) else null
   val edited = ci.meta.itemEdited
+  // no fillMaxWidth: the bubble wraps its content, the caller aligns this line to the end
   Row(
-    Modifier.fillMaxWidth().padding(top = 2.dp),
-    horizontalArrangement = Arrangement.End,
+    modifier.padding(top = 2.dp),
     verticalAlignment = Alignment.CenterVertically,
   ) {
     val base = if (sent) colors.ink2 else colors.ink3
