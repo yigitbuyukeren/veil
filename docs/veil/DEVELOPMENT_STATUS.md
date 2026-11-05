@@ -69,6 +69,10 @@ The manifest no longer claims `simplex.chat` and relay-host web links (they open
 
 Voice and video calls are back as an explicit opt-in, **off by default**, and they are the one thing that does not go through Tor. `VeilNetworkPolicy.CALLS_ENABLED` stays `false`; the preference `veilCallsOptIn` (default `false`) is read through `VeilNetworkPolicy.callsAllowed()` at every call surface (call buttons, calls preference, incoming calls, starting a call, Tor status row). Relay-only ICE is forced for both directions (`callRelayPolicy`). The switch is in Settings > Privacy with a one-time explanation; each outgoing call and each accept is confirmed, an incoming call is labelled "Tor dışı arama", and the active call shows a fixed "Tor dışı" strip. Texts and claims were rewritten ("messages and files go only through Tor; calls (if you turn them on) are the exception", [PRIVACY_CLAIMS.md](PRIVACY_CLAIMS.md)); the call server sees the IP and timing ([THREAT_MODEL.md](THREAT_MODEL.md), [TOR_ONLY.md](TOR_ONLY.md)). `policy-check.sh` also checks that the opt-in defaults to `false` and the relay policy stays forced; unit tests cover `callsAllowed` and the relay policy. Dialogs, label, strip and the relay type in the call info are NOT TESTED on a device. Known limit: a custom ICE server list already stored in preferences (the screen is hidden, so only a settings import could set it) is not cleared.
 
+## Wording pass on upstream screens (N4b, 2026-11-05)
+
+28 strings in `MR/base` and `MR/tr` that name SimpleX and that the reachable upstream screens use were reworded ("invite links", "public name", "Veil"); the ratchet is lowered to 72 (base) and 61 (tr). Relay, operator, About and badge strings were kept. Build and string checks only; the new wording is NOT seen on a device.
+
 ## Open items
 
 - **Device and emulator tests of the whole redesign are pending.** The emulator run waits for the owner's go; real devices and Orbot are needed for the M1 gates and for the evidence in the claims list.

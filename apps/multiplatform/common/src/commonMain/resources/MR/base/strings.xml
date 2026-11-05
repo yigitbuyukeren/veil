@@ -88,7 +88,7 @@
   <string name="connect_plan_open_group">Open group</string>
   <string name="connect_plan_open_new_group">Open new group</string>
   <string name="error_parsing_uri_title">Invalid link</string>
-  <string name="error_parsing_uri_desc">Please check that SimpleX link is correct.</string>
+  <string name="error_parsing_uri_desc">Please check that the link is correct.</string>
 
   <!-- MainActivity.kt -->
   <string name="opening_database">Opening database…</string>
@@ -169,13 +169,13 @@
   <string name="description_via_one_time_link_incognito">incognito via one-time link</string>
 
   <!-- FormattedText, SimpleX links - ChatModel.kt -->
-  <string name="simplex_link_contact">SimpleX contact address</string>
-  <string name="simplex_link_invitation">SimpleX one-time invitation</string>
-  <string name="simplex_link_group">SimpleX group link</string>
-  <string name="simplex_link_channel">SimpleX channel link</string>
+  <string name="simplex_link_contact">contact address</string>
+  <string name="simplex_link_invitation">one-time invitation</string>
+  <string name="simplex_link_group">group link</string>
+  <string name="simplex_link_channel">channel link</string>
   <string name="simplex_link_relay">SimpleX relay address</string>
   <string name="simplex_link_connection">via %1$s</string>
-  <string name="simplex_link_mode">SimpleX links</string>
+  <string name="simplex_link_mode">invite links</string>
   <string name="simplex_link_mode_description">Description</string>
   <string name="simplex_link_mode_full">Full link</string>
   <string name="simplex_link_mode_browser">Via browser</string>
@@ -269,16 +269,16 @@
   <string name="channel_name_requires_newer_app_version">Connecting via channel name requires a newer app version.</string>
   <string name="contact_name_requires_newer_app_version">Connecting via contact name requires a newer app version.</string>
   <string name="please_upgrade_the_app">Please upgrade the app.</string>
-  <string name="simplex_name_error">SimpleX name error</string>
-  <string name="simplex_name_no_servers_desc">None of your servers are set to resolve SimpleX names. Configure servers, or use a connection link.</string>
+  <string name="simplex_name_error">Public name error</string>
+  <string name="simplex_name_no_servers_desc">None of your servers are set to resolve public names. Configure servers, or use a connection link.</string>
   <string name="simplex_name_server_no_resolver_desc">Server %1$s does not support name resolution. Configure servers, or use a connection link.</string>
   <string name="simplex_name_not_found">Name not found</string>
-  <string name="simplex_name_not_found_desc">This SimpleX name is not registered. Please check the name.</string>
+  <string name="simplex_name_not_found_desc">This public name is not registered. Please check the name.</string>
   <string name="simplex_name_resolver_error_desc">Resolver error: %1$s</string>
   <string name="simplex_name_no_valid_link">No valid link</string>
-  <string name="simplex_name_no_valid_link_desc">The SimpleX name %1$s is registered, but it has no valid link.</string>
+  <string name="simplex_name_no_valid_link_desc">The public name %1$s is registered, but it has no valid link.</string>
   <string name="simplex_name_unconfirmed">Unconfirmed name</string>
-  <string name="simplex_name_unconfirmed_desc">The SimpleX name %1$s is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.</string>
+  <string name="simplex_name_unconfirmed_desc">The public name %1$s is registered, but not added to profile. Please add it to your address or channel profile, if you are the owner.</string>
   <string name="channel_temporarily_unavailable">Channel temporarily unavailable</string>
   <string name="channel_no_active_relays_try_later">Channel has no active relays. Please try to join later.</string>
   <string name="app_update_required">App update required</string>
@@ -332,7 +332,7 @@
   <string name="icon_descr_instant_notifications">Instant notifications</string>
   <string name="service_notifications">Instant notifications!</string>
   <string name="service_notifications_disabled">Instant notifications are disabled!</string>
-  <string name="to_preserve_privacy_simplex_has_background_service_instead_of_push_notifications_it_uses_a_few_pc_battery"><![CDATA[To improve privacy, <b>SimpleX runs in background</b> instead of using push notifications.]]></string>
+  <string name="to_preserve_privacy_simplex_has_background_service_instead_of_push_notifications_it_uses_a_few_pc_battery"><![CDATA[To improve privacy, <b>Veil runs in background</b> instead of using push notifications.]]></string>
   <string name="it_can_disabled_via_settings_notifications_still_shown"><![CDATA[<b>It can be disabled via settings</b> – notifications will still be shown while the app is running.]]></string>
   <string name="turn_off_battery_optimization"><![CDATA[<b>Allow it</b> in the next dialog to receive notifications instantly.]]></string>
   <string name="turning_off_service_and_periodic">Battery optimization is active, turning off background service and periodic requests for new messages. You can re-enable them via settings.</string>
@@ -342,7 +342,7 @@
   <string name="turn_off_battery_optimization_button">Allow</string>
   <string name="turn_off_system_restriction_button">Open app settings</string>
   <string name="disable_notifications_button">Disable notifications</string>
-  <string name="system_restricted_background_desc">SimpleX can\'t run in background. You will receive the notifications only when the app is running.</string>
+  <string name="system_restricted_background_desc">Veil can\'t run in background. You will receive the notifications only when the app is running.</string>
   <string name="system_restricted_background_warn"><![CDATA[To enable notifications, please choose <b>App battery usage</b> / <b>Unrestricted</b> in the app settings.]]></string>
   <string name="system_restricted_background_in_call_title">No background calls</string>
   <string name="system_restricted_background_in_call_desc">The app may be closed after 1 minute in background.</string>
@@ -679,7 +679,7 @@
   <string name="compose_send_direct_message_to_connect">Send direct message to connect</string>
   <string name="compose_forward_messages_n">Forwarding %1$s messages</string>
   <string name="compose_save_messages_n">Saving %1$s messages</string>
-  <string name="simplex_links_not_allowed">SimpleX links not allowed</string>
+  <string name="simplex_links_not_allowed">Invite links not allowed</string>
   <string name="files_and_media_not_allowed">Files and media not allowed</string>
   <string name="voice_messages_not_allowed">Voice messages not allowed</string>
   <string name="compose_message_placeholder">Message</string>
@@ -1035,14 +1035,14 @@
   <string name="one_time_link_short">1-time link</string>
   <string name="simplex_address">SimpleX address</string>
   <string name="verify_simplex_name_action">Verify name</string>
-  <string name="verify_simplex_names">Verify SimpleX names</string>
-  <string name="simplex_name_not_verified">SimpleX name not verified</string>
+  <string name="verify_simplex_names">Verify public names</string>
+  <string name="simplex_name_not_verified">Public name not verified</string>
   <string name="simplex_name">SimpleX name</string>
   <string name="your_simplex_name">Your SimpleX name</string>
-  <string name="set_simplex_name">Set SimpleX name</string>
+  <string name="set_simplex_name">Set public name</string>
   <string name="error_saving_simplex_name">Error saving name</string>
-  <string name="simplex_name_owner_no_channel_link">The SimpleX name %1$s is registered without channel link. Add channel link to the name via the registration page.</string>
-  <string name="simplex_name_owner_no_address">The SimpleX name %1$s is registered without SimpleX address. Add your SimpleX address to the name via the registration page.</string>
+  <string name="simplex_name_owner_no_channel_link">The public name %1$s is registered without channel link. Add channel link to the name via the registration page.</string>
+  <string name="simplex_name_owner_no_address">The public name %1$s is registered without contact address. Add your contact address to the name via the registration page.</string>
   <string name="set_user_simplex_name_footer">Let people connect to you via name registered with your SimpleX address.</string>
   <string name="set_channel_simplex_name_footer">Let people join via name registered with this channel link.</string>
   <string name="or_show_this_qr_code">Or show this code</string>
@@ -1060,12 +1060,12 @@
   <string name="retry_verb">Retry</string>
   <string name="share_this_1_time_link">Share this 1-time invite link</string>
   <string name="paste_the_link_you_received">Paste the link you received</string>
-  <string name="the_text_you_pasted_is_not_a_link">The text you pasted is not a SimpleX link.</string>
+  <string name="the_text_you_pasted_is_not_a_link">The text you pasted is not a link.</string>
   <string name="tap_to_paste_link">Tap to paste link</string>
   <string name="loading_profile">Loading profile…</string>
 
   <string name="invalid_qr_code">Invalid QR code</string>
-  <string name="code_you_scanned_is_not_simplex_link_qr_code">The code you scanned is not a SimpleX link QR code.</string>
+  <string name="code_you_scanned_is_not_simplex_link_qr_code">The code you scanned is not a link QR code.</string>
 
   <string name="deleted_chats">Archived contacts</string>
   <string name="no_filtered_contacts">No filtered contacts</string>
@@ -2432,7 +2432,7 @@
   <string name="message_reactions">Message reactions</string>
   <string name="voice_messages">Voice messages</string>
   <string name="files_and_media">Files and media</string>
-  <string name="simplex_links">SimpleX links</string>
+  <string name="simplex_links">invite links</string>
   <string name="recent_history">Visible history</string>
   <string name="audio_video_calls">Audio/video calls</string>
   <string name="available_in_v51">\nAvailable in v5.1</string>
@@ -2498,8 +2498,8 @@
   <string name="prohibit_message_reactions_group">Prohibit messages reactions.</string>
   <string name="allow_to_send_files">Allow to send files and media.</string>
   <string name="prohibit_sending_files">Prohibit sending files and media.</string>
-  <string name="allow_to_send_simplex_links">Allow to send SimpleX links.</string>
-  <string name="prohibit_sending_simplex_links">Prohibit sending SimpleX links</string>
+  <string name="allow_to_send_simplex_links">Allow to send invite links.</string>
+  <string name="prohibit_sending_simplex_links">Prohibit sending invite links</string>
   <string name="enable_sending_recent_history">Send up to 100 last messages to new members.</string>
   <string name="disable_sending_recent_history">Do not send history to new members.</string>
   <string name="enable_sending_member_reports">Allow to report messsages to moderators.</string>
@@ -2518,8 +2518,8 @@
   <string name="message_reactions_are_prohibited">Message reactions are prohibited.</string>
   <string name="group_members_can_send_files">Members can send files and media.</string>
   <string name="files_are_prohibited_in_group">Files and media are prohibited.</string>
-  <string name="group_members_can_send_simplex_links">Members can send SimpleX links.</string>
-  <string name="simplex_links_are_prohibited_in_group">SimpleX links are prohibited.</string>
+  <string name="group_members_can_send_simplex_links">Members can send invite links.</string>
+  <string name="simplex_links_are_prohibited_in_group">Invite links are prohibited.</string>
   <string name="recent_history_is_sent_to_new_members">Up to 100 last messages are sent to new members.</string>
   <string name="recent_history_is_not_sent_to_new_members">History is not sent to new members.</string>
   <string name="group_members_can_send_reports">Members can report messsages to moderators.</string>
@@ -2546,7 +2546,7 @@
   <string name="group_members_can_add_message_reactions_channel">Subscribers can add message reactions.</string>
   <string name="group_members_can_send_voice_channel">Subscribers can send voice messages.</string>
   <string name="group_members_can_send_files_channel">Subscribers can send files and media.</string>
-  <string name="group_members_can_send_simplex_links_channel">Subscribers can send SimpleX links.</string>
+  <string name="group_members_can_send_simplex_links_channel">Subscribers can send invite links.</string>
   <string name="group_members_can_send_reports_channel">Subscribers can report messsages to moderators.</string>
   <string name="recent_history_is_sent_to_new_members_channel">Up to 100 last messages are sent to new subscribers.</string>
   <string name="recent_history_is_not_sent_to_new_members_channel">History is not sent to new subscribers.</string>
@@ -2932,7 +2932,7 @@
   <string name="connect_plan_you_are_already_connecting_to_vName"><![CDATA[You are already connecting to <b>%1$s</b>.]]></string>
   <string name="connect_plan_already_connecting">Already connecting!</string>
   <string name="connect_plan_you_are_already_connecting_via_this_one_time_link">You are already connecting via this one-time link!</string>
-  <string name="connect_plan_this_is_your_own_simplex_address">This is your own SimpleX address!</string>
+  <string name="connect_plan_this_is_your_own_simplex_address">This is your own contact address!</string>
   <string name="connect_plan_repeat_connection_request">Repeat connection request?</string>
   <string name="connect_plan_you_have_already_requested_connection_via_this_address">You have already requested connection via this address!</string>
   <string name="connect_plan_join_your_group">Join your group?</string>

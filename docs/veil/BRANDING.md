@@ -25,11 +25,9 @@ The Veil onboarding, chat list, chat frame, new chat, group, settings and system
 
 ## Still upstream-branded (to resolve before any distribution)
 
-Found by the reachability audit; "SimpleX" still occurs 116 times in `MR/base` and 105 times in `MR/tr` (ratchet baseline, `scripts/ci/strings-simplex-baseline.txt`).
+Found by the reachability audit. After the wording pass of 2026-11-05 (N4b), "SimpleX" occurs 72 times in `MR/base` and 61 times in `MR/tr` (ratchet baseline, `scripts/ci/strings-simplex-baseline.txt`, counted by `scripts/ci/strings-check.sh`; the older 116 and 105 were out of date).
 
-- **System surfaces:** the foreground service notification title ("SimpleX Chat service") and the notification channel names ("SimpleX Chat messages", "SimpleX Chat calls"), visible in the Android notification settings.
-- **Lock texts:** "SimpleX Lock" in the device lock dialogs and the lock mode setting.
-- **Upstream screens opened on purpose** (notifications, privacy "more", profiles, contact and group info via "Gelişmiş", contact and group preferences, version and developer tools): SimpleX wording such as "SimpleX address", "SimpleX links", "SimpleX contacts", "SimpleX runs in background".
+- **Upstream screens opened on purpose** (notifications, privacy "more", profiles, contact and group info via "Gelişmiş", contact and group preferences, version and developer tools): the strings these screens use were reduced on 2026-11-05 (N4b): links say "invite links", names say "public name", the background texts say "Veil". Still open: the upstream look, and any "SimpleX" left in their strings (counted in the ratchet). Kept on purpose: relay and operator terms, the About pages, supporter badges.
 - **Network and servers:** the Veil relay list names no operators; upstream's operator pages remain only in debug builds.
 - **Other locales:** non-English files other than Turkish still say SimpleX in many strings (only `app_name` is set to Veil everywhere).
 - **Deep link:** the manifest keeps only the `simplex:` scheme (no web host filters, no auto-verify), because invitations on the network use it.
