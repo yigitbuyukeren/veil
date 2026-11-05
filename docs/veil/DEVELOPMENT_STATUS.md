@@ -57,6 +57,10 @@ Settings > Gelişmiş is a Veil page (`VeilAdvancedScreen`): move to another dev
 - **Tor evidence:** both migration flows run a temporary chat controller and set its network config with `ChatController.apiSetNetworkConfig(netCfg, ctrl = ctrl)` (`startChatWithTemporaryDatabase`, `SimpleXAPI.kt`), which wraps the config in `VeilNetworkPolicy.enforce` for every controller. The sender also checks `VeilNetworkPolicy.torProxyReady()` before starting and shows an explanation instead when Orbot does not answer. The sentence "the archive is encrypted and uploaded over Tor" is a claim pending device evidence ([PRIVACY_CLAIMS.md](PRIVACY_CLAIMS.md)).
 - **Upstream issue simplex-chat/simplex-chat#7696** ("Android migration fails, exported archive corrupted"): the report is about one very large profile (about 5.6 GB, 3000 files) on 7.0.2; small profiles migrate. No fix exists upstream and it is not in the core we ship; very large profiles may fail to migrate, small ones are expected to work. NOT verified on 7.0.3.
 
+## Removed-member note (N3, 2026-11-05)
+
+Removing a member from the member screen while the group link is open first shows a Veil alert with the rejoin note, then upstream's unchanged removal dialog. Build and unit tests pass; behavior NOT TESTED on a device.
+
 ## Open items
 
 - **Device and emulator tests of the whole redesign are pending.** The emulator run waits for the owner's go; real devices and Orbot are needed for the M1 gates and for the evidence in the claims list.
