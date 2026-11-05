@@ -87,7 +87,7 @@ Audit of 2026-11-04, tracing navigation from every Veil screen. Status values: *
 | Settings, Notifications | `NotificationsSettingsView` | on purpose; gap: upstream look, SimpleX wording |
 | Settings, Database and passphrase | `DatabaseView` (export, import, passphrase, start and stop chat, delete) | on purpose (safety-critical) |
 | Settings, Privacy, "Diğer gizlilik ayarları" | `PrivacySettingsView`, `MorePrivacyView` (link previews toggle is policy-locked) | on purpose; gap: upstream look |
-| Settings, Tor and status, "Sunucular ve ağ" | `NetworkAndServersView` (read-only; WebRTC servers section now hidden) | on purpose, locked; gap: operator and server pages, Flux and SimpleX operator wording |
+| Settings, Tor and status, "Sunucular ve ağ" | `NetworkAndServersView` (read-only; WebRTC servers section now hidden) | Veil read-only relay list (`VeilServersScreen`: hosts of enabled message and file servers, `.onion` marked); upstream's `NetworkAndServersView` only in debug builds |
 | Settings, Gelişmiş | `VersionInfoView`, `DeveloperView` (terminal and terminal-app link now debug builds only) | on purpose; gap: upstream look |
 | Settings, Hakkında | Veil about and licenses; design gallery in debug builds | Veil |
 | Chat list, avatar sheet, rename connection | `ContactConnectionInfoView` | on purpose; gap |
@@ -108,7 +108,7 @@ Audit of 2026-11-04, tracing navigation from every Veil screen. Status values: *
 | Upstream chat list, new chat sheet, channel creation, promotions | not routed on Android; promotions stay off behind `VeilBranding.UPSTREAM_PROMOTIONS` | closed |
 | Calls: call buttons, calls preference, WebRTC servers, incoming calls | guarded by `VeilNetworkPolicy.CALLS_ENABLED` | closed |
 
-Gaps for a later pass: the upstream screens marked "on purpose" (look and Turkish wording), SimpleX wording in the system notification channels, the foreground service notification and the lock texts, the operator pages of the network settings, viewing channels, and the `simplex:` deep-link filters in the manifest ([BRANDING.md](BRANDING.md)).
+Gaps for a later pass: the upstream screens marked "on purpose" (look and Turkish wording), SimpleX wording in the system notification channels, the foreground service notification and the lock texts, viewing channels in the manifest ([BRANDING.md](BRANDING.md)).
 
 ## Language policy
 

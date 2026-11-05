@@ -3189,6 +3189,14 @@
   <string name="veil_set_default_calls">Aramalar kapalı</string>
   <string name="veil_set_tor_servers">Sunucular ve ağ</string>
   <string name="veil_set_tor_servers_desc">Sunucu listeleri; ağ ayarları salt okunurdur.</string>
+  <string name="veil_srv_title">Aktarma sunucuları</string>
+  <string name="veil_srv_smp">Mesaj sunucuları</string>
+  <string name="veil_srv_xftp">Dosya sunucuları</string>
+  <string name="veil_srv_onion">.onion</string>
+  <string name="veil_srv_not_onion">.onion değil</string>
+  <string name="veil_srv_none">Yok</string>
+  <string name="veil_srv_failed">Sunucu listesi okunamadı.</string>
+  <string name="veil_srv_note">Bu liste salt okunurdur. Buradan sunucu eklenemez ya da değiştirilemez.</string>
   <string name="veil_set_about_title">Hakkında ve lisanslar</string>
   <string name="veil_set_about_version">Sürüm</string>
 

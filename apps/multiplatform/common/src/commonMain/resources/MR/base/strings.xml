@@ -3497,6 +3497,14 @@
   <string name="veil_set_default_calls">Calls off</string>
   <string name="veil_set_tor_servers">Servers and network</string>
   <string name="veil_set_tor_servers_desc">Server lists; network settings are read-only.</string>
+  <string name="veil_srv_title">Relay servers</string>
+  <string name="veil_srv_smp">Message servers</string>
+  <string name="veil_srv_xftp">File servers</string>
+  <string name="veil_srv_onion">.onion</string>
+  <string name="veil_srv_not_onion">not .onion</string>
+  <string name="veil_srv_none">None</string>
+  <string name="veil_srv_failed">The server list could not be read.</string>
+  <string name="veil_srv_note">This list is read-only. Servers cannot be added or changed here.</string>
   <string name="veil_set_about_title">About and licenses</string>
   <string name="veil_set_about_version">Version</string>
 

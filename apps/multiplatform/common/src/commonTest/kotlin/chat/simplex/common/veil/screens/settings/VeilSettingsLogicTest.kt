@@ -108,4 +108,14 @@ class VeilSettingsLogicTest {
     assertTrue(veilMigrationMayStart(true))
     assertFalse(veilMigrationMayStart(false))
   }
+
+  @Test
+  fun serverRowsMarkOnionHosts() {
+    assertEquals(
+      listOf(VeilServerRow("abc.onion", true), VeilServerRow("smp.example.org", false)),
+      veilServerRows("smp://key@abc.onion,smp.example.org:5223")
+    )
+    assertEquals(listOf(VeilServerRow("x.onion", true)), veilServerRows("xftp://key@x.onion/"))
+    assertEquals(emptyList(), veilServerRows("not an address"))
+  }
 }

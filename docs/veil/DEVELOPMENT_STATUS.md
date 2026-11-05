@@ -61,6 +61,10 @@ Settings > Gelişmiş is a Veil page (`VeilAdvancedScreen`): move to another dev
 
 Removing a member from the member screen while the group link is open first shows a Veil alert with the rejoin note, then upstream's unchanged removal dialog. Build and unit tests pass; behavior NOT TESTED on a device.
 
+## Deep link and relay list (N5, 2026-11-05)
+
+The manifest no longer claims `simplex.chat` and relay-host web links (they open in the browser); the `simplex:` scheme stays without auto-verify, so Android lets the user choose between apps when SimpleX is installed too. Pasted `https://simplex.chat/...` invitations are parsed in the app and do not depend on the manifest; NOT TESTED. Tor screen: "Sunucular ve ağ" opens a read-only Veil list of the relay servers in use with `.onion` marked (`VeilServersScreen`, host parsing unit-tested); NOT TESTED on a device.
+
 ## Open items
 
 - **Device and emulator tests of the whole redesign are pending.** The emulator run waits for the owner's go; real devices and Orbot are needed for the M1 gates and for the evidence in the claims list.

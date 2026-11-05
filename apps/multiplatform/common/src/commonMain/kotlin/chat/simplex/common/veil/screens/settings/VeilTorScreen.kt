@@ -132,7 +132,7 @@ fun VeilTorScreen(close: () -> Unit) {
     VeilGroup {
       VeilValueRow(
         stringResource(MR.strings.veil_set_tor_servers), sub = stringResource(MR.strings.veil_set_tor_servers_desc), readOnly = false,
-        onClick = { ModalManager.start.showCustomModal { c -> NetworkAndServersView(c) } }
+        onClick = { ModalManager.start.showCustomModal { c -> if (veilIsDebugBuild) NetworkAndServersView(c) else VeilServersScreen(c) } }
       )
     }
   }

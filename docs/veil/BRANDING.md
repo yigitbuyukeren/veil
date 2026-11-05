@@ -30,9 +30,9 @@ Found by the reachability audit; "SimpleX" still occurs 116 times in `MR/base` a
 - **System surfaces:** the foreground service notification title ("SimpleX Chat service") and the notification channel names ("SimpleX Chat messages", "SimpleX Chat calls"), visible in the Android notification settings.
 - **Lock texts:** "SimpleX Lock" in the device lock dialogs and the lock mode setting.
 - **Upstream screens opened on purpose** (notifications, privacy "more", profiles, contact and group info via "Gelişmiş", contact and group preferences, version and developer tools): SimpleX wording such as "SimpleX address", "SimpleX links", "SimpleX contacts", "SimpleX runs in background".
-- **Network and servers (read-only):** operator pages, "SimpleX Chat servers", Flux operator texts.
+- **Network and servers:** the Veil relay list names no operators; upstream's operator pages remain only in debug builds.
 - **Other locales:** non-English files other than Turkish still say SimpleX in many strings (only `app_name` is set to Veil everywhere).
-- **Deep-link intent filters** for `simplex:` and `simplex.chat`/relay hosts (`AndroidManifest.xml`).
+- **Deep link:** the manifest keeps only the `simplex:` scheme (no web host filters, no auto-verify), because invitations on the network use it.
 - **Inside upstream, not reachable on Android:** the old onboarding screens and logos, `SimpleXInfo`, "Why SimpleX is built", news and contact items, the upstream chat list and user picker. They stay in the source (upstream code is not deleted).
 - Desktop module (not part of Veil).
 
