@@ -3008,6 +3008,10 @@
   <string name="veil_list_act_mark_unread">Okunmadı olarak işaretle</string>
   <string name="veil_list_act_favorite">Sık kullanılanlara ekle</string>
   <string name="veil_list_act_unfavorite">Sık kullanılanlardan çıkar</string>
+  <string name="veil_list_act_pin">Sabitle</string>
+  <string name="veil_list_act_unpin">Sabitlemeyi kaldır</string>
+  <string name="veil_list_pinned_desc">Sabitlenmiş</string>
+  <string name="veil_list_pin_limit">En fazla 5 sohbet sabitlenebilir</string>
   <string name="veil_list_act_mute">Bildirimleri kapat</string>
   <string name="veil_list_act_unmute">Bildirimleri aç</string>
   <string name="veil_list_act_mentions">Yalnızca bahsedilmeleri bildir</string>

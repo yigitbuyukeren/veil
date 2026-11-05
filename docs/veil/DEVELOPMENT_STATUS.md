@@ -46,6 +46,10 @@ Final audit result of 2026-11-04: navigation was traced from every Veil screen (
 - **Bubble width:** the meta line of the Veil text bubble no longer fills the width, so short messages wrap their content; build and unit tests pass, appearance NOT TESTED on a device.
 - **Live message:** the Veil path was read end to end (button, `startLiveMessage`, `sendLiveMessage`, `apiSendMessages(live = true)`); no Veil hook blocks it. Live items are drawn by upstream's item view, not the Veil bubble (`veilBubbleEligible` excludes `isLive`). Cause of the reported "nothing happens" not found without a device; NOT FIXED.
 
+## Chat pinning (N1, 2026-11-05)
+
+Chats can be pinned from the avatar sheet (up to 5, shown first in pin order, pin marker in the row). The core has no pinning, so pins are kept on the device per profile (`veil_pinned_chats_<userId>`, `VeilPins`); known limit: they are not part of a database export and do not move with a device migration. Unit tests for the ordering and the limit pass; behavior on a device NOT TESTED.
+
 ## Open items
 
 - **Device and emulator tests of the whole redesign are pending.** The emulator run waits for the owner's go; real devices and Orbot are needed for the M1 gates and for the evidence in the claims list.

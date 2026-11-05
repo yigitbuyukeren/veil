@@ -42,6 +42,7 @@ import chat.simplex.common.platform.*
 import chat.simplex.common.veil.design.*
 import chat.simplex.common.views.chatlist.UserPicker
 import chat.simplex.common.views.chatlist.filteredChats
+import chat.simplex.common.veil.data.VeilPins
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.onboarding.SetNotificationsModeAdditions
 import chat.simplex.common.veil.screens.system.VeilShellNotice
@@ -103,7 +104,16 @@ fun VeilChatListScreen(
   val draft = chatModel.draft.value
   val draftChatId = chatModel.draftChatId.value
   val previewOf = { c: Chat -> veilPreviewOf(c, showPreviews, draft, draftChatId) }
-  val chats = veilVisibleChats(allChats, filter, query) { c -> previewOf(c).let { p -> if (p.sensitive) p.text else null } }
+  val shown = veilVisibleChats(allChats, filter, query) { c -> previewOf(c).let { p -> if (p.sensitive) p.text else null } }
+  val userId = chatModel.currentUser.value?.userId
+  val pins = if (userId != null) VeilPins.pinnedIds(userId) else emptyList()
+  LaunchedEffect(allChats.size, userId) { // forget pins of chats that are gone
+    if (userId != null && allChats.isNotEmpty()) VeilPins.prune(userId, allChats.mapTo(HashSet()) { it.id })
+  }
+  val chats = if (pins.isEmpty() || query.isNotBlank()) shown else {
+    val byId = shown.associateBy { it.id }
+    orderWithPins(shown.map { it.id }, pins).mapNotNull { byId[it] }
+  }
   val unreadCount = veilVisibleChats(allChats, VeilListFilter.Unread, "") { null }.size
   val empty = listEmptyKind(allChats.size, chats.size, filter, query)
 

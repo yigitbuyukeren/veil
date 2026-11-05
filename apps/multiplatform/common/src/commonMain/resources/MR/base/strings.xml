@@ -3316,6 +3316,10 @@
   <string name="veil_list_act_mark_unread">Mark as unread</string>
   <string name="veil_list_act_favorite">Add to favorites</string>
   <string name="veil_list_act_unfavorite">Remove from favorites</string>
+  <string name="veil_list_act_pin">Pin</string>
+  <string name="veil_list_act_unpin">Unpin</string>
+  <string name="veil_list_pinned_desc">Pinned</string>
+  <string name="veil_list_pin_limit">You can pin at most 5 chats</string>
   <string name="veil_list_act_mute">Turn off notifications</string>
   <string name="veil_list_act_unmute">Turn on notifications</string>
   <string name="veil_list_act_mentions">Notify only for mentions</string>

@@ -91,4 +91,32 @@ class VeilChatListLogicTest {
     assertFalse(showUnreadCount(0))
     assertTrue(showUnreadCount(3))
   }
+
+  @Test
+  fun pinsGoFirstInPinOrder() {
+    assertEquals(listOf("c", "a", "b", "d"), orderWithPins(listOf("a", "b", "c", "d"), listOf("c", "a")))
+  }
+
+  @Test
+  fun pinsEdgeCases() {
+    assertEquals(emptyList(), orderWithPins(emptyList(), listOf("x")))
+    assertEquals(listOf("a", "b"), orderWithPins(listOf("a", "b"), emptyList()))
+    assertEquals(listOf("b", "a"), orderWithPins(listOf("a", "b"), listOf("b")))
+    // an id that is not listed (deleted, or filtered out) is dropped; duplicates count once
+    assertEquals(listOf("b", "a"), orderWithPins(listOf("a", "b"), listOf("gone", "b", "b")))
+  }
+
+  @Test
+  fun pinLimitIsFive() {
+    val five = listOf("1", "2", "3", "4", "5")
+    assertEquals(listOf("1", "2", "3", "4"), pinnedAfterPin(listOf("1", "2", "3"), "4"))
+    assertNull(pinnedAfterPin(five, "6"))
+    assertEquals(five, pinnedAfterPin(five, "3"))
+  }
+
+  @Test
+  fun pinsApplyAfterAFilter() {
+    // the filter picked b, c, d; pins a (not shown) and d
+    assertEquals(listOf("d", "b", "c"), orderWithPins(listOf("b", "c", "d"), listOf("a", "d")))
+  }
 }

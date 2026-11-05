@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import chat.simplex.common.model.*
 import chat.simplex.common.platform.chatModel
+import chat.simplex.common.veil.data.VeilPins
 import chat.simplex.common.veil.design.*
 import chat.simplex.common.views.chatlist.unreadCountStr
 import chat.simplex.res.MR
@@ -171,7 +172,7 @@ internal fun VeilChatRow(
   }
 }
 
-/** Muted / favorite markers and the unread badge. */
+/** Muted / pinned / favorite markers and the unread badge. */
 @Composable
 private fun Indicators(chat: Chat) {
   val colors = VeilTheme.colors
@@ -180,6 +181,10 @@ private fun Indicators(chat: Chat) {
   val muted = !cInfo.ntfsEnabled(false) && (cInfo is ChatInfo.Direct || cInfo is ChatInfo.Group)
   if (muted) {
     VeilIcon(MR.images.ic_notifications_off_filled, colors.ink3, size = 15.dp, description = stringResource(MR.strings.veil_list_muted_desc))
+  }
+  val userId = chatModel.currentUser.value?.userId
+  if (userId != null && VeilPins.isPinned(userId, chat.id)) {
+    VeilIcon(MR.images.ic_push_pin, colors.ink3, size = 15.dp, description = stringResource(MR.strings.veil_list_pinned_desc))
   }
   if (cInfo.chatSettings?.favorite == true) {
     VeilIcon(MR.images.ic_star_filled, colors.ink3, size = 15.dp, description = stringResource(MR.strings.veil_list_favorite_desc))

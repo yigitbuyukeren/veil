@@ -77,3 +77,21 @@ fun showUnreadCount(count: Int): Boolean = count > 0
 
 /** Whether stored reveals (eye buttons) must be dropped: when the app leaves the foreground. */
 fun shouldDropReveals(wasVisible: Boolean, isVisible: Boolean): Boolean = wasVisible && !isVisible
+
+/** Most chats that can be pinned at once. */
+const val VEIL_MAX_PINNED = 5
+
+/** [chatIds] with the pinned ones first, in pin order; the rest keep their order. Ids in [pinned] that are not listed are dropped. */
+fun orderWithPins(chatIds: List<String>, pinned: List<String>): List<String> {
+  val present = chatIds.toHashSet()
+  val first = pinned.distinct().filter { it in present }
+  val firstSet = first.toHashSet()
+  return first + chatIds.filter { it !in firstSet }
+}
+
+/** Pin list after pinning [chatId]: unchanged if already pinned, null when the limit is reached. */
+fun pinnedAfterPin(pinned: List<String>, chatId: String): List<String>? = when {
+  chatId in pinned -> pinned
+  pinned.size >= VEIL_MAX_PINNED -> null
+  else -> pinned + chatId
+}

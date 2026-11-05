@@ -10,6 +10,7 @@ import chat.simplex.common.views.contacts.onRequestAccepted
 import chat.simplex.common.views.helpers.*
 import chat.simplex.common.views.newchat.*
 import chat.simplex.common.veil.VeilUi
+import chat.simplex.common.veil.data.VeilPins
 import chat.simplex.common.veil.screens.newchat.veilShowNewChatSheetModal
 import chat.simplex.res.MR
 import dev.icerock.moko.resources.ImageResource
@@ -65,6 +66,20 @@ fun veilChatActions(chat: Chat): List<VeilChatAction> {
     ) { toggleChatFavorite(rh, chat.chatInfo, !fav, chatModel) }
   }
 
+  fun pinAction(): VeilChatAction {
+    val userId = chatModel.currentUser.value?.userId
+    val pinned = userId != null && VeilPins.isPinned(userId, chat.id)
+    return VeilChatAction(
+      if (pinned) MR.strings.veil_list_act_unpin else MR.strings.veil_list_act_pin,
+      MR.images.ic_push_pin
+    ) {
+      if (userId != null) {
+        if (pinned) VeilPins.unpin(userId, chat.id)
+        else if (!VeilPins.pin(userId, chat.id)) AlertManager.shared.showAlertMsg(title = generalGetString(MR.strings.veil_list_pin_limit))
+      }
+    }
+  }
+
   fun muteAction(next: MsgFilter) = VeilChatAction(
     when (next) {
       MsgFilter.None -> MR.strings.veil_list_act_mute
@@ -102,6 +117,7 @@ fun veilChatActions(chat: Chat): List<VeilChatAction> {
         } else {
           if (contact.activeConn != null) {
             add(markAction())
+            add(pinAction())
             add(favoriteAction())
             add(muteAction(contact.chatSettings.enableNtfs.nextMode(false)))
             add(clearAction())
@@ -129,6 +145,7 @@ fun veilChatActions(chat: Chat): List<VeilChatAction> {
           }
           else -> {
             add(markAction())
+            add(pinAction())
             add(favoriteAction())
             add(muteAction(g.chatSettings.enableNtfs.nextMode(true)))
             add(clearAction())
@@ -140,10 +157,12 @@ fun veilChatActions(chat: Chat): List<VeilChatAction> {
     }
     is ChatInfo.Local -> listOf(
       markAction(),
+      pinAction(),
       VeilChatAction(MR.strings.veil_list_act_clear, MR.images.ic_settings_backup_restore, VeilActionTone.Warning) { clearNoteFolderDialog(chat) },
     )
     is ChatInfo.ContactRequest -> requestActions(info.apiId)
     is ChatInfo.ContactConnection -> listOf(
+      pinAction(),
       VeilChatAction(MR.strings.veil_list_act_rename_connection, MR.images.ic_edit) {
         ModalManager.center.closeModals()
         ModalManager.end.closeModals()
