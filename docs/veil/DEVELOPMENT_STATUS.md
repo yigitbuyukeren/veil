@@ -73,6 +73,10 @@ Voice and video calls are back as an explicit opt-in, **off by default**, and th
 
 28 strings in `MR/base` and `MR/tr` that name SimpleX and that the reachable upstream screens use were reworded ("invite links", "public name", "Veil"); the ratchet is lowered to 72 (base) and 61 (tr). Relay, operator, About and badge strings were kept. Build and string checks only; the new wording is NOT seen on a device.
 
+## Notifications screen (N6b, 2026-11-05)
+
+Settings > Notifications is a Veil page (`VeilNotificationsScreen`). It does what upstream's `NotificationsSettingsView` does and nothing else: choose the mode (instant, periodic, only while the app is open; Android only) through `changeNotificationsMode`, and show the Xiaomi autostart hint for the two background modes. The wording is the onboarding step's, so "SimpleX runs in background" no longer appears here. Decision helpers (`VeilNotificationsLogic.kt`) are unit-tested; appearance and behavior NOT TESTED on a device.
+
 ## Open items
 
 - **Device and emulator tests of the whole redesign are pending.** The emulator run waits for the owner's go; real devices and Orbot are needed for the M1 gates and for the evidence in the claims list.

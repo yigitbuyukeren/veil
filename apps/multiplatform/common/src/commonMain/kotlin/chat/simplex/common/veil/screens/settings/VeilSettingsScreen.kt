@@ -107,7 +107,7 @@ fun VeilSettingsHome(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
       VeilNavRow(
         MR.images.ic_notifications, stringResource(MR.strings.veil_set_row_notifications),
         summary(notificationsSummary(notificationsMode)),
-        onClick = { showUpstreamSettings { NotificationsSettingsView(chatModel) } }, enabled = !stopped
+        onClick = { veilShowSettingsPage { c -> VeilNotificationsScreen(c) } }, enabled = !stopped
       )
       VeilRowDivider()
       VeilNavRow(

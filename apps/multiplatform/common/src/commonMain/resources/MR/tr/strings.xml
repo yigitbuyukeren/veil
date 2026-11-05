@@ -3338,4 +3338,7 @@
   <string name="veil_calls_accept_confirm">Kabul et</string>
   <string name="veil_calls_strip">Tor dışı</string>
   <string name="veil_calls_on_outside_tor">Açık, Tor dışı</string>
+  <string name="veil_set_ntf_modes">Mesajlardan nasıl haberdar olacağın</string>
+  <string name="veil_set_ntf_note">Üç seçenekte de bildirimler bir push sunucusundan geçmez; uygulama mesajları kendisi alır.</string>
+  <string name="veil_set_ntf_unavailable">Bildirim modu yalnızca Android\'de değiştirilebilir.</string>
 </resources>

@@ -3646,4 +3646,7 @@
   <string name="veil_calls_accept_confirm">Accept</string>
   <string name="veil_calls_strip">Outside Tor</string>
   <string name="veil_calls_on_outside_tor">On, outside Tor</string>
+  <string name="veil_set_ntf_modes">How you learn about messages</string>
+  <string name="veil_set_ntf_note">With all three options, notifications do not go through a push server; the app receives messages itself.</string>
+  <string name="veil_set_ntf_unavailable">Notification mode can only be changed on Android.</string>
 </resources>
