@@ -2931,4 +2931,8 @@
     <string name="v7_0_channels_relays">Gestiona tus servidores.</string>
     <string name="v7_0_simplex_names_descr">Nombres públicos para tu canal o negocio.</string>
     <string name="v7_0_simplex_names">Nombres públicos SimpleX (BETA)</string>
+    <string name="veil_calls_contact_disabled">Este contacto no permite llamadas</string>
+    <string name="veil_calls_availability_note">Tus contactos verán tu disponibilidad para llamadas cuando reciban la actualización. Los demás perfiles se actualizan cuando los seleccionas.</string>
+    <string name="veil_calls_sync_failed_title">No se pudo actualizar la disponibilidad para llamadas</string>
+    <string name="veil_calls_sync_failed_text">No se pudieron actualizar los permisos de algunos contactos. Se guardó la configuración de llamadas en este dispositivo. Puedes volver a intentarlo ahora.</string>
 </resources>

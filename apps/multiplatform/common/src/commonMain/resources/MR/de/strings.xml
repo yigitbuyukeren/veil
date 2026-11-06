@@ -3003,4 +3003,8 @@
     <string name="v7_0_simplex_names">Öffentliche SimpleX-Namen (BETA)</string>
     <string name="info_row_file_servers">Datei-Server</string>
     <string name="share_text_file_servers">Datei-Server: %s</string>
+    <string name="veil_calls_contact_disabled">Dieser Kontakt erlaubt keine Anrufe</string>
+    <string name="veil_calls_availability_note">Deine Kontakte sehen deine Anrufverfügbarkeit, sobald die Aktualisierung ankommt. Andere Profile werden aktualisiert, wenn du sie auswählst.</string>
+    <string name="veil_calls_sync_failed_title">Anrufverfügbarkeit konnte nicht aktualisiert werden</string>
+    <string name="veil_calls_sync_failed_text">Die Berechtigungen einiger Kontakte konnten nicht aktualisiert werden. Die Anrufeinstellung auf diesem Gerät wurde gespeichert. Du kannst es jetzt erneut versuchen.</string>
 </resources>

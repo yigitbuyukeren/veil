@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import chat.simplex.common.model.ChatInfo
+import chat.simplex.common.model.FeatureAllowed
 import chat.simplex.common.platform.BackHandler
 import chat.simplex.common.views.helpers.fontSizeSqrtMultiplier
 import chat.simplex.common.veil.data.rememberTorRingState
@@ -44,6 +45,7 @@ fun VeilChatTopBar(
   BackHandler(onBack = back)
   val ring = rememberTorRingState()
   val isDirect = chatInfo is ChatInfo.Direct
+  val contactCallsOff = (chatInfo as? ChatInfo.Direct)?.contact?.mergedPreferences?.calls?.contactPreference?.allow == FeatureAllowed.NO
   val group = (chatInfo as? ChatInfo.Group)?.groupInfo
   val subtitles = remember(chatInfo) {
     barSubtitles(
@@ -96,7 +98,14 @@ fun VeilChatTopBar(
         )
         // The bar has a fixed height (the list's top padding depends on it): at large font scales the chip row is left out
         // instead of being clipped. The same facts are in the chat info.
-        if (subtitles.isNotEmpty() && LocalDensity.current.fontScale <= 1.3f) {
+        if (contactCallsOff) {
+          BasicText(
+            stringResource(MR.strings.veil_calls_contact_disabled),
+            style = type.caption.copy(color = colors.ink2),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+          )
+        } else if (subtitles.isNotEmpty() && LocalDensity.current.fontScale <= 1.3f) {
           Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
             for (s in subtitles) when (s) {
               is VeilBarSubtitle.Verified ->

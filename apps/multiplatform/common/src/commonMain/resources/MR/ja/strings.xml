@@ -2839,4 +2839,8 @@
     <string name="badge_unverified_desc">このバッジは検証できず、本物ではない可能性があります。</string>
     <string name="badge_unknown_key_title">バッジを検証できません</string>
     <string name="badge_unknown_key_desc">このバッジは、このバージョンのアプリが認識しない鍵で署名されています。このバッジを検証するにはアプリを更新してください。</string>
+    <string name="veil_calls_contact_disabled">この連絡先は通話を許可していません</string>
+    <string name="veil_calls_availability_note">通話の設定は、更新が届くと連絡先に表示されます。他のプロフィールは選択したときに更新されます。</string>
+    <string name="veil_calls_sync_failed_title">通話の設定を更新できませんでした</string>
+    <string name="veil_calls_sync_failed_text">一部の連絡先の権限を更新できませんでした。この端末の通話設定は保存されています。今すぐ再試行できます。</string>
 </resources>

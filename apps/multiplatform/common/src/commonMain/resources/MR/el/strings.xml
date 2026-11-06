@@ -2521,4 +2521,8 @@
     <string name="info_row_connection_failed">Η σύνδεση απέτυχε</string>
     <string name="member_info_member_failed">απέτυχε</string>
     <string name="down_migration_warning_chat_relays">Αν έχετε συμμετάσχει ή δημιουργήσει κανάλια, θα σταματήσουν να λειτουργούν μόνιμα.</string>
+    <string name="veil_calls_contact_disabled">Αυτή η επαφή δεν επιτρέπει κλήσεις</string>
+    <string name="veil_calls_availability_note">Οι επαφές σου βλέπουν τη διαθεσιμότητα κλήσεων όταν λάβουν την ενημέρωση. Τα άλλα προφίλ ενημερώνονται όταν τα επιλέγεις.</string>
+    <string name="veil_calls_sync_failed_title">Δεν ήταν δυνατή η ενημέρωση της διαθεσιμότητας κλήσεων</string>
+    <string name="veil_calls_sync_failed_text">Δεν ήταν δυνατή η ενημέρωση των δικαιωμάτων ορισμένων επαφών. Η ρύθμιση κλήσεων σε αυτή τη συσκευή αποθηκεύτηκε. Μπορείς να δοκιμάσεις ξανά τώρα.</string>
 </resources>

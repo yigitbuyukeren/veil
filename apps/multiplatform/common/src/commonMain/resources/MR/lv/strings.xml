@@ -2497,4 +2497,8 @@
     <string name="server_address">Servera adrese</string>
     <string name="open_server_settings_button">Atvērt servera iestatījumus</string>
     <string name="max_group_mentions_per_message_reached">Sasniegts maksimālais grupas pieminējumu skaits ziņā.</string>
+    <string name="veil_calls_contact_disabled">Šī kontaktpersona neatļauj zvanus</string>
+    <string name="veil_calls_availability_note">Kontaktpersonas redz tavu zvanu pieejamību, kad saņem atjauninājumu. Citi profili tiek atjaunināti, kad tos atlasi.</string>
+    <string name="veil_calls_sync_failed_title">Neizdevās atjaunināt zvanu pieejamību</string>
+    <string name="veil_calls_sync_failed_text">Neizdevās atjaunināt dažu kontaktpersonu atļaujas. Zvanu iestatījums šajā ierīcē ir saglabāts. Vari mēģināt vēlreiz tagad.</string>
 </resources>

@@ -415,4 +415,8 @@
     <string name="feature_offered_item">%s വാഗ്ദാനം ചെയ്തു</string>
     <string name="search_verb">തിരയുക</string>
     <string name="la_mode_off">ഓഫാണ്</string>
+    <string name="veil_calls_contact_disabled">ഈ കോൺടാക്റ്റ് കോളുകൾ അനുവദിക്കുന്നില്ല</string>
+    <string name="veil_calls_availability_note">അപ്‌ഡേറ്റ് ലഭിക്കുമ്പോൾ കോൺടാക്റ്റുകൾക്ക് നിങ്ങളുടെ കോൾ ലഭ്യത കാണാം. മറ്റ് പ്രൊഫൈലുകൾ തിരഞ്ഞെടുക്കുമ്പോൾ അപ്‌ഡേറ്റ് ചെയ്യും.</string>
+    <string name="veil_calls_sync_failed_title">കോൾ ലഭ്യത അപ്‌ഡേറ്റ് ചെയ്യാനായില്ല</string>
+    <string name="veil_calls_sync_failed_text">ചില കോൺടാക്റ്റുകളുടെ അനുമതികൾ അപ്‌ഡേറ്റ് ചെയ്യാനായില്ല. ഈ ഉപകരണത്തിലെ കോൾ ക്രമീകരണം സംരക്ഷിച്ചു. ഇപ്പോൾ വീണ്ടും ശ്രമിക്കാം.</string>
 </resources>

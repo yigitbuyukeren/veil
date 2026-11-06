@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="veil_calls_contact_disabled">Den här kontakten tillåter inte samtal</string>
+  <string name="veil_calls_availability_note">Dina kontakter ser din samtalstillgänglighet när uppdateringen kommer fram. Andra profiler uppdateras när du väljer dem.</string>
+  <string name="veil_calls_sync_failed_title">Samtalstillgängligheten kunde inte uppdateras</string>
+  <string name="veil_calls_sync_failed_text">Behörigheterna för vissa kontakter kunde inte uppdateras. Samtalsinställningen på den här enheten har sparats. Du kan försöka igen nu.</string>
 </resources>

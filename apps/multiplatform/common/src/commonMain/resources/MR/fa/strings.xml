@@ -2529,4 +2529,8 @@
     <string name="smp_proxy_error_unknown_ca">اثر انگشت در نشانی سرور انتقال با گواهی مطابقت ندارد: ‎%1$s.</string>
     <string name="network_error_unknown_ca">اثر انگشت در نشانی سرور با گواهی مطابقت ندارد: ‎%1$s.</string>
     <string name="button_delete_member_messages">پاک کردن پیام کاربر</string>
+    <string name="veil_calls_contact_disabled">این مخاطب اجازهٔ تماس نمی‌دهد</string>
+    <string name="veil_calls_availability_note">مخاطبان پس از دریافت به‌روزرسانی، وضعیت تماس شما را می‌بینند. نمایه‌های دیگر هنگام انتخابشان به‌روز می‌شوند.</string>
+    <string name="veil_calls_sync_failed_title">وضعیت تماس به‌روز نشد</string>
+    <string name="veil_calls_sync_failed_text">مجوزهای برخی مخاطبان به‌روز نشد. تنظیم تماس در این دستگاه ذخیره شد. اکنون می‌توانید دوباره تلاش کنید.</string>
 </resources>

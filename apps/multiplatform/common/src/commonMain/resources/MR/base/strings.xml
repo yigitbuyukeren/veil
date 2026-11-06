@@ -3814,4 +3814,8 @@
   <string name="veil_bk_restore_confirm">Choose file</string>
   <string name="veil_wipe_section">Delete</string>
   <string name="veil_wipe_note">After deleting, restart the app; Veil returns to the first-run setup. App settings and the lock passcode stay.</string>
+  <string name="veil_calls_contact_disabled">This contact does not allow calls</string>
+  <string name="veil_calls_availability_note">Your call availability is shared with contacts when the update reaches them. Other profiles update when you select them.</string>
+  <string name="veil_calls_sync_failed_title">Call availability could not be updated</string>
+  <string name="veil_calls_sync_failed_text">Some contact permissions could not be updated. Your local call setting is saved. You can retry now.</string>
 </resources>

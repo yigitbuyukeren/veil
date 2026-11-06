@@ -2934,4 +2934,8 @@
     <string name="v7_0_channels_contributors">Aggiungi collaboratori.</string>
     <string name="info_row_file_servers">Server di file</string>
     <string name="share_text_file_servers">Server di file: %s</string>
+    <string name="veil_calls_contact_disabled">Questo contatto non consente le chiamate</string>
+    <string name="veil_calls_availability_note">I tuoi contatti vedono la disponibilità per le chiamate quando ricevono l’aggiornamento. Gli altri profili vengono aggiornati quando li selezioni.</string>
+    <string name="veil_calls_sync_failed_title">Impossibile aggiornare la disponibilità per le chiamate</string>
+    <string name="veil_calls_sync_failed_text">Non è stato possibile aggiornare le autorizzazioni di alcuni contatti. L’impostazione delle chiamate su questo dispositivo è stata salvata. Puoi riprovare ora.</string>
 </resources>

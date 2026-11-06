@@ -2694,4 +2694,8 @@
     <string name="leave_channel_question">Залишити канал?</string>
     <string name="let_someone_connect_to_you">Дозволити іншим зв’язуватися з вами</string>
     <string name="action_button_channel_link">Посилання</string>
+    <string name="veil_calls_contact_disabled">Цей контакт не дозволяє дзвінки</string>
+    <string name="veil_calls_availability_note">Контакти побачать доступність дзвінків, коли отримають оновлення. Інші профілі оновлюються під час їх вибору.</string>
+    <string name="veil_calls_sync_failed_title">Не вдалося оновити доступність дзвінків</string>
+    <string name="veil_calls_sync_failed_text">Не вдалося оновити дозволи деяких контактів. Налаштування дзвінків на цьому пристрої збережено. Можна спробувати ще раз зараз.</string>
 </resources>

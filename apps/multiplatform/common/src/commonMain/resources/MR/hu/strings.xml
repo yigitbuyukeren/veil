@@ -2899,4 +2899,8 @@
     <string name="v7_0_simplex_names">Nyilvános SimpleX-nevek (béta)</string>
     <string name="info_row_file_servers">Fájlkiszolgálók</string>
     <string name="share_text_file_servers">Fájlkiszolgálók: %s</string>
+    <string name="veil_calls_contact_disabled">Ez a partner nem engedélyezi a hívásokat</string>
+    <string name="veil_calls_availability_note">A partnereid a frissítés megérkezésekor látják a hívások elérhetőségét. A többi profil a kiválasztásakor frissül.</string>
+    <string name="veil_calls_sync_failed_title">Nem sikerült frissíteni a hívások elérhetőségét</string>
+    <string name="veil_calls_sync_failed_text">Egyes partnerek engedélyeit nem sikerült frissíteni. A hívásbeállítást ezen az eszközön mentettük. Most újra próbálkozhatsz.</string>
 </resources>

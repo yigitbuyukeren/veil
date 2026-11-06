@@ -2444,4 +2444,8 @@
     <string name="share_group_profile_via_link_alert_text">Le lien sera court, et le profil de groupe sera partagé via le lien.</string>
     <string name="the_sender_will_not_be_notified">L\'expéditeur n\'en sera PAS informé.</string>
     <string name="this_setting_is_for_your_current_profile">Ce réglage est pour votre profil actuel</string>
+    <string name="veil_calls_contact_disabled">Ce contact n’autorise pas les appels</string>
+    <string name="veil_calls_availability_note">Tes contacts voient ta disponibilité pour les appels lorsqu’ils reçoivent la mise à jour. Les autres profils sont mis à jour lorsque tu les sélectionnes.</string>
+    <string name="veil_calls_sync_failed_title">Impossible de mettre à jour la disponibilité pour les appels</string>
+    <string name="veil_calls_sync_failed_text">Les autorisations de certains contacts n’ont pas pu être mises à jour. Le réglage des appels sur cet appareil a été enregistré. Tu peux réessayer maintenant.</string>
 </resources>

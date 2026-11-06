@@ -1520,4 +1520,8 @@
     <string name="report_archive_alert_title_nth">신고 %d건을 보관하시겠습니까?</string>
     <string name="failed_to_create_user_invalid_desc">이 표시 이름은 유효하지 않습니다. 다른 이름을 선택하세요.</string>
     <string name="remote_ctrl_error_timeout">데스크톱에 연결하는 동안 시간 초과되었습니다</string>
+    <string name="veil_calls_contact_disabled">이 연락처는 통화를 허용하지 않습니다</string>
+    <string name="veil_calls_availability_note">업데이트가 전달되면 연락처에 통화 가능 여부가 표시됩니다. 다른 프로필은 선택할 때 업데이트됩니다.</string>
+    <string name="veil_calls_sync_failed_title">통화 가능 여부를 업데이트하지 못했습니다</string>
+    <string name="veil_calls_sync_failed_text">일부 연락처의 권한을 업데이트하지 못했습니다. 이 기기의 통화 설정은 저장되었습니다. 지금 다시 시도할 수 있습니다.</string>
 </resources>

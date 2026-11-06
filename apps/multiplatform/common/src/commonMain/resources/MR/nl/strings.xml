@@ -2439,4 +2439,8 @@
     <string name="server_no_sub">geen abonnement</string>
     <string name="not_connected_to_server_to_receive_messages_no_sub">U bent niet verbonden met de server die u gebruikt om berichten van deze verbinding te ontvangen (geen abonnement).</string>
     <string name="e2ee_info_e2ee"><![CDATA[Berichten worden beschermd door <b>end-to-end-encryptie</b>.]]></string>
+    <string name="veil_calls_contact_disabled">Dit contact staat geen oproepen toe</string>
+    <string name="veil_calls_availability_note">Je contacten zien je beschikbaarheid voor oproepen zodra de update aankomt. Andere profielen worden bijgewerkt wanneer je ze selecteert.</string>
+    <string name="veil_calls_sync_failed_title">Beschikbaarheid voor oproepen kon niet worden bijgewerkt</string>
+    <string name="veil_calls_sync_failed_text">De machtigingen voor sommige contacten konden niet worden bijgewerkt. De oproepinstelling op dit apparaat is opgeslagen. Je kunt het nu opnieuw proberen.</string>
 </resources>

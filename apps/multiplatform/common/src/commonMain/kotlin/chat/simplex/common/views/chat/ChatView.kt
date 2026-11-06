@@ -894,6 +894,13 @@ fun startChatCall(remoteHostId: Long?, chatInfo: ChatInfo, media: CallMediaType)
     AlertManager.shared.showAlertMsg(generalGetString(MR.strings.veil_calls_disabled_title), generalGetString(MR.strings.veil_calls_disabled_text))
     return
   }
+  if ((chatInfo as? ChatInfo.Direct)?.contact?.mergedPreferences?.calls?.contactPreference?.allow == FeatureAllowed.NO) {
+    AlertManager.shared.showAlertMsg(
+      generalGetString(MR.strings.veil_calls_contact_disabled),
+      generalGetString(MR.strings.calls_prohibited_ask_to_enable_calls_alert_text)
+    )
+    return
+  }
   // Veil: the call does not go through Tor, so it is confirmed every time
   AlertManager.shared.showAlertDialog(
     title = generalGetString(MR.strings.veil_calls_outside_tor_label),

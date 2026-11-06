@@ -976,4 +976,8 @@
     <string name="forward_files_in_progress_desc">Ainda a descarregar %1$d ficheiros(s).</string>
     <string name="forward_files_missing_desc">%1$d ficheiros(s) eliminado(s).</string>
     <string name="forward_files_not_accepted_desc">Não foi possível descarregar %1$d ficheiro(s).</string>
+    <string name="veil_calls_contact_disabled">Este contacto não permite chamadas</string>
+    <string name="veil_calls_availability_note">Os teus contactos veem a disponibilidade para chamadas quando recebem a atualização. Os outros perfis são atualizados quando os selecionas.</string>
+    <string name="veil_calls_sync_failed_title">Não foi possível atualizar a disponibilidade para chamadas</string>
+    <string name="veil_calls_sync_failed_text">Não foi possível atualizar as permissões de alguns contactos. A definição de chamadas neste dispositivo foi guardada. Podes tentar novamente agora.</string>
 </resources>

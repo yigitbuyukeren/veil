@@ -2148,4 +2148,8 @@
     <string name="both_you_and_your_contact_can_send_files">אתה והאיש קשר שלך יכולים לשלוח קבצים ומדיה</string>
     <string name="chat_banner_business_connection">צ\'אט עסקי</string>
     <string name="context_user_picker_cant_change_profile_alert_title">אי אפשר לשנות תמונת פרופיל</string>
+    <string name="veil_calls_contact_disabled">איש הקשר הזה לא מאפשר שיחות</string>
+    <string name="veil_calls_availability_note">אנשי הקשר רואים את זמינות השיחות שלך כשהעדכון מגיע אליהם. פרופילים אחרים מתעדכנים כשבוחרים אותם.</string>
+    <string name="veil_calls_sync_failed_title">לא ניתן לעדכן את זמינות השיחות</string>
+    <string name="veil_calls_sync_failed_text">לא ניתן לעדכן את ההרשאות של חלק מאנשי הקשר. הגדרת השיחות במכשיר הזה נשמרה. אפשר לנסות שוב כעת.</string>
 </resources>

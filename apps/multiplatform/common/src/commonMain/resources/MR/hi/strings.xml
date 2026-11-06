@@ -302,4 +302,8 @@
     <string name="database_migration_in_progress">डेटाबेस माइग्रेशन जारी है।\nइसमें कुछ मिनट लग सकते हैं।</string>
     <string name="non_content_uri_alert_title">अमान्य फ़ाइल पथ</string>
     <string name="non_content_uri_alert_text">आपने एक अमान्य फ़ाइल पथ साझा किया है। कृपया इस समस्या की सूचना ऐप डेवलपर्स को दें।</string>
+    <string name="veil_calls_contact_disabled">यह संपर्क कॉल की अनुमति नहीं देता</string>
+    <string name="veil_calls_availability_note">अपडेट पहुँचने पर संपर्कों को आपकी कॉल की उपलब्धता दिखेगी। अन्य प्रोफ़ाइल चुनने पर अपडेट होंगी।</string>
+    <string name="veil_calls_sync_failed_title">कॉल की उपलब्धता अपडेट नहीं हो सकी</string>
+    <string name="veil_calls_sync_failed_text">कुछ संपर्कों की अनुमतियाँ अपडेट नहीं हो सकीं। इस डिवाइस पर कॉल की सेटिंग सहेज दी गई है। अब फिर से कोशिश कर सकते हैं।</string>
 </resources>

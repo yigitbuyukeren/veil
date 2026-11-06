@@ -3506,4 +3506,8 @@
   <string name="veil_bk_restore_confirm">Dosya seç</string>
   <string name="veil_wipe_section">Silme</string>
   <string name="veil_wipe_note">Silindikten sonra uygulamayı yeniden başlat; Veil baştan kuruluma döner. Uygulama ayarları ve kilit parolası kalır.</string>
+  <string name="veil_calls_contact_disabled">Bu kişi aramalara izin vermiyor</string>
+  <string name="veil_calls_availability_note">Arama durumun, güncelleme ulaştığında kişilerine görünür. Diğer profillerin durumu, onları seçtiğinde güncellenir.</string>
+  <string name="veil_calls_sync_failed_title">Arama durumu güncellenemedi</string>
+  <string name="veil_calls_sync_failed_text">Bazı kişi izinleri güncellenemedi. Bu cihazdaki arama ayarın kaydedildi. Şimdi yeniden deneyebilirsin.</string>
 </resources>

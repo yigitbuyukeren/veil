@@ -619,6 +619,7 @@ object ChatController {
         Log.d(TAG, "startChat: running")
       }
       apiStartChat()
+      VeilCallPreferences.syncCurrent(this, null)
       appPrefs.chatStopped.set(false)
     } catch (e: Throwable) {
       Log.e(TAG, "failed starting chat $e")
@@ -702,6 +703,7 @@ object ChatController {
     chatModel.userTags.value = if (hasUser) apiGetChatTags(rhId) ?: emptyList() else emptyList()
     chatModel.activeChatTagFilter.value = null
     chatModel.updateChatTags(rhId)
+    if (hasUser && apiCheckChatRunning(rhId)) VeilCallPreferences.syncCurrent(this, rhId)
   }
 
   // Spec: spec/api.md#startReceiver
@@ -997,8 +999,8 @@ object ChatController {
     }
   }
 
-  private suspend fun apiCheckChatRunning(): Boolean {
-    val r = sendCmd(null, CC.CheckChatRunning())
+  private suspend fun apiCheckChatRunning(rhId: Long? = null): Boolean {
+    val r = sendCmd(rhId, CC.CheckChatRunning())
     when (r.result) {
       is CR.ChatRunning -> return true
       is CR.ChatStopped -> return false
@@ -1902,11 +1904,18 @@ object ChatController {
     return null
   }
 
-  suspend fun apiSetContactPrefs(rh: Long?, contactId: Long, prefs: ChatPreferences): Contact? {
-    val r = sendCmd(rh, CC.ApiSetContactPrefs(contactId, prefs))
-    if (r is API.Result && r.res is CR.ContactPrefsUpdated) return r.res.toContact
+  suspend fun apiSetContactPrefs(rh: Long?, contactId: Long, prefs: ChatPreferences): Contact? = changingActiveUserMutex.withLock {
+    val user = chatModel.currentUser.value ?: return@withLock null
+    if (user.remoteHostId != rh) return@withLock null
+    val enabled = VeilNetworkPolicy.callsAllowed()
+    val advertised = VeilCallPreferences.advertised(rh, user.userId, contactId, prefs, enabled)
+    val r = sendCmd(rh, CC.ApiSetContactPrefs(contactId, advertised))
+    if (r is API.Result && r.res is CR.ContactPrefsUpdated) {
+      if (enabled) VeilCallPreferences.preferenceSaved(rh, user.userId, contactId)
+      return@withLock r.res.toContact
+    }
     Log.e(TAG, "apiSetContactPrefs bad response: ${r.responseType} ${r.details}")
-    return null
+    null
   }
 
   suspend fun apiSetContactAlias(rh: Long?, contactId: Long, localAlias: String): Contact? {
@@ -2846,6 +2855,7 @@ object ChatController {
             }
           }
         }
+        if (active(r.user)) VeilCallPreferences.syncCurrent(this, rhId)
         if (r.contact.directOrUsed) {
           ntfManager.notifyContactConnected(r.user, r.contact)
         }

@@ -217,4 +217,8 @@
     <string name="both_you_and_your_contact_can_send_files">Både du og kontakten din kan sende filer og medier.</string>
     <string name="both_you_and_your_contact_can_send_voice">Både du og kontakten din kan sende talemeldinger.</string>
     <string name="business_address">Firmaadresse</string>
+    <string name="veil_calls_contact_disabled">Denne kontakten tillater ikke anrop</string>
+    <string name="veil_calls_availability_note">Kontaktene dine ser tilgjengeligheten for anrop når oppdateringen kommer fram. Andre profiler oppdateres når du velger dem.</string>
+    <string name="veil_calls_sync_failed_title">Tilgjengeligheten for anrop kunne ikke oppdateres</string>
+    <string name="veil_calls_sync_failed_text">Tillatelsene for noen kontakter kunne ikke oppdateres. Anropsinnstillingen på denne enheten er lagret. Du kan prøve igjen nå.</string>
 </resources>

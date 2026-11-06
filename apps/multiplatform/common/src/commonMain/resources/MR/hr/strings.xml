@@ -1483,4 +1483,8 @@
     <string name="migrate_from_another_device">Migriraj sa drugog uređaja</string>
     <string name="only_you_can_send_voice">Samo vi možete slati glasovne poruke</string>
     <string name="only_your_contact_can_add_message_reactions">Samo vi možete stavljati reakcije na poruke.</string>
+    <string name="veil_calls_contact_disabled">Ovaj kontakt ne dopušta pozive</string>
+    <string name="veil_calls_availability_note">Kontakti vide tvoju dostupnost za pozive kada prime ažuriranje. Ostali profili ažuriraju se kada ih odabereš.</string>
+    <string name="veil_calls_sync_failed_title">Dostupnost za pozive nije ažurirana</string>
+    <string name="veil_calls_sync_failed_text">Dopuštenja nekih kontakata nisu ažurirana. Postavka poziva na ovom uređaju je spremljena. Sada možeš pokušati ponovno.</string>
 </resources>

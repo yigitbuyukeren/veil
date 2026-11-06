@@ -2917,4 +2917,8 @@
     <string name="v7_0_simplex_names">SimpleX 公开名称 (测试)</string>
     <string name="info_row_file_servers">文件服务器</string>
     <string name="share_text_file_servers">文件服务器：%s</string>
+    <string name="veil_calls_contact_disabled">此联系人不允许通话</string>
+    <string name="veil_calls_availability_note">更新送达后，联系人就能看到你的通话可用状态。其他个人资料会在选中时更新。</string>
+    <string name="veil_calls_sync_failed_title">无法更新通话可用状态</string>
+    <string name="veil_calls_sync_failed_text">无法更新部分联系人的权限。此设备上的通话设置已保存。你可以立即重试。</string>
 </resources>

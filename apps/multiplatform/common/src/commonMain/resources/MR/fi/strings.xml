@@ -1499,4 +1499,8 @@
     <string name="desktop_incompatible_version">Yhteensopimaton versio</string>
     <string name="new_mobile_device">Uusi mobiililaite</string>
     <string name="this_device">Tämä laite</string>
+    <string name="veil_calls_contact_disabled">Tämä yhteystieto ei salli puheluita</string>
+    <string name="veil_calls_availability_note">Yhteystietosi näkevät puheluiden saatavuuden, kun päivitys saapuu heille. Muut profiilit päivittyvät, kun valitset ne.</string>
+    <string name="veil_calls_sync_failed_title">Puheluiden saatavuutta ei voitu päivittää</string>
+    <string name="veil_calls_sync_failed_text">Joidenkin yhteystietojen oikeuksia ei voitu päivittää. Tämän laitteen puheluasetus on tallennettu. Voit yrittää uudelleen nyt.</string>
 </resources>

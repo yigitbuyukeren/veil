@@ -2529,4 +2529,8 @@
     <string name="snd_channel_event_channel_profile_updated">profilul canalului a fost actualizat</string>
     <string name="channel_temporarily_unavailable">Canalul este momentan inactiv</string>
     <string name="channel_will_start_with_relays">Canalul va porni cu %1$d din %2$d relee. Continui?</string>
+    <string name="veil_calls_contact_disabled">Acest contact nu permite apeluri</string>
+    <string name="veil_calls_availability_note">Contactele văd disponibilitatea pentru apeluri când primesc actualizarea. Celelalte profiluri se actualizează când le selectezi.</string>
+    <string name="veil_calls_sync_failed_title">Disponibilitatea pentru apeluri nu a putut fi actualizată</string>
+    <string name="veil_calls_sync_failed_text">Permisiunile unor contacte nu au putut fi actualizate. Setarea apelurilor pe acest dispozitiv a fost salvată. Poți încerca din nou acum.</string>
 </resources>

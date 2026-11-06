@@ -2906,4 +2906,8 @@
     <string name="v7_0_simplex_names_descr">أسماء لقناتك أو لشركتك.</string>
     <string name="info_row_file_servers">خوادم الملفات</string>
     <string name="share_text_file_servers">خوادم الملفات: %s</string>
+    <string name="veil_calls_contact_disabled">جهة الاتصال هذه لا تسمح بالمكالمات</string>
+    <string name="veil_calls_availability_note">تظهر حالة المكالمات لجهات اتصالك عند وصول التحديث إليها. تُحدَّث الملفات الشخصية الأخرى عند اختيارها.</string>
+    <string name="veil_calls_sync_failed_title">تعذّر تحديث حالة المكالمات</string>
+    <string name="veil_calls_sync_failed_text">تعذّر تحديث أذونات بعض جهات الاتصال. تم حفظ إعداد المكالمات على هذا الجهاز. يمكنك إعادة المحاولة الآن.</string>
 </resources>

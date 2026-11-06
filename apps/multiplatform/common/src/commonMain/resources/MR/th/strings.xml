@@ -1326,4 +1326,8 @@
     <string name="in_reply_to">ในการตอบกลับถึง</string>
     <string name="no_history">ไม่มีประวัติ</string>
     <string name="conn_event_ratchet_sync_ok">encryptionใช้ได้</string>
+    <string name="veil_calls_contact_disabled">ผู้ติดต่อนี้ไม่อนุญาตให้โทร</string>
+    <string name="veil_calls_availability_note">ผู้ติดต่อจะเห็นสถานะการโทรของคุณเมื่อได้รับการอัปเดต โปรไฟล์อื่นจะอัปเดตเมื่อคุณเลือกโปรไฟล์นั้น</string>
+    <string name="veil_calls_sync_failed_title">อัปเดตสถานะการโทรไม่ได้</string>
+    <string name="veil_calls_sync_failed_text">อัปเดตสิทธิ์ของผู้ติดต่อบางรายไม่ได้ บันทึกการตั้งค่าการโทรในอุปกรณ์นี้แล้ว คุณลองอีกครั้งได้ตอนนี้</string>
 </resources>

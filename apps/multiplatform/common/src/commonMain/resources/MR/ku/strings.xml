@@ -833,4 +833,8 @@
     <string name="restart_chat_button">Siḧbetê ji nû ve veke</string>
     <string name="migrate_from_device_stopping_chat">Siḧbet tê sekinandin</string>
     <string name="migrate_from_device_start_chat">Siḧbetê bide destpêkirin</string>
+    <string name="veil_calls_contact_disabled">Ev têkilî destûrê nade bangan</string>
+    <string name="veil_calls_availability_note">Dema nûvekirin bigihîje têkiliyên te, rewşa bangên te ji wan re xuya dibe. Profîlên din dema tu wan hilbijêrî tên nûvekirin.</string>
+    <string name="veil_calls_sync_failed_title">Rewşa bangan nehat nûvekirin</string>
+    <string name="veil_calls_sync_failed_text">Destûrên hin têkiliyan nehatin nûvekirin. Mîhenga bangan li ser vê amûrê hat tomarkirin. Tu dikarî niha dîsa biceribînî.</string>
 </resources>

@@ -43,4 +43,8 @@
     <string name="accept_contact_incognito_button">গুপ্ত-পরিচয় গ্রহণ করুন</string>
     <string name="search_verb">সার্চ</string>
     <string name="la_mode_off">বন্ধ আছে</string>
+    <string name="veil_calls_contact_disabled">এই পরিচিতি কলের অনুমতি দেন না</string>
+    <string name="veil_calls_availability_note">আপডেট পৌঁছালে পরিচিতিরা আপনার কলের অবস্থা দেখতে পাবেন। অন্য প্রোফাইলগুলি বেছে নিলে সেগুলি আপডেট হবে।</string>
+    <string name="veil_calls_sync_failed_title">কলের অবস্থা আপডেট করা যায়নি</string>
+    <string name="veil_calls_sync_failed_text">কিছু পরিচিতির অনুমতি আপডেট করা যায়নি। এই ডিভাইসে কলের সেটিং সংরক্ষিত হয়েছে। এখন আবার চেষ্টা করতে পারেন।</string>
 </resources>

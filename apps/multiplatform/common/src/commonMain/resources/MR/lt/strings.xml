@@ -1771,4 +1771,8 @@
     <string name="forward_files_in_progress_desc">%1$d failas (-ai, -ų) vis dar atsisiunčiamas (-i, -a).</string>
     <string name="forward_files_failed_to_receive_desc">Nepavyko atsisiųsti %1$d failo (-ų).</string>
     <string name="selected_chat_items_selected_n">%d pasirinkta</string>
+    <string name="veil_calls_contact_disabled">Šis kontaktas neleidžia skambinti</string>
+    <string name="veil_calls_availability_note">Kontaktai mato tavo skambučių prieinamumą, kai gauna atnaujinimą. Kiti profiliai atnaujinami juos pasirinkus.</string>
+    <string name="veil_calls_sync_failed_title">Nepavyko atnaujinti skambučių prieinamumo</string>
+    <string name="veil_calls_sync_failed_text">Nepavyko atnaujinti kai kurių kontaktų leidimų. Skambučių nustatymas šiame įrenginyje išsaugotas. Gali bandyti dar kartą dabar.</string>
 </resources>

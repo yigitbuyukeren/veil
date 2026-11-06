@@ -24,11 +24,24 @@ fun VeilPrivacyScreen(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
   val protectScreen = remember { appPrefs.privacyProtectScreen.state }
   val incognito = remember { appPrefs.incognito.state }
   val callsOptIn = remember { appPrefs.veilCallsOptIn.state }
+  var syncingCalls by remember { mutableStateOf(false) }
   val performLA = remember { appPrefs.performLA.state }
   val laMode = remember { appPrefs.laMode.state }
   val lockDelay = remember { appPrefs.laLockDelay.state }
   val notifPreviewMode = chatModel.notificationPreviewMode
   val user = chatModel.currentUser.value
+
+  fun setCallsEnabled(enabled: Boolean) {
+    appPrefs.veilCallsOptIn.set(enabled)
+    syncingCalls = true
+    withBGApi {
+      try {
+        VeilCallPreferences.syncCurrent(chatModel.controller, chatModel.remoteHostId())
+      } finally {
+        syncingCalls = false
+      }
+    }
+  }
 
   VeilSettingsScaffold(stringResource(MR.strings.veil_set_privacy_title), close) {
     VeilSectionLabel(stringResource(MR.strings.veil_set_privacy_previews))
@@ -128,21 +141,24 @@ fun VeilPrivacyScreen(setPerformLA: (Boolean) -> Unit, close: () -> Unit) {
         stringResource(MR.strings.veil_calls_toggle),
         description = stringResource(MR.strings.veil_calls_toggle_desc),
         checked = callsOptIn.value,
+        enabled = !syncingCalls,
         onChange = { on ->
           if (!on) {
-            appPrefs.veilCallsOptIn.set(false)
+            setCallsEnabled(false)
           } else {
             AlertManager.shared.showAlertDialog(
               title = generalGetString(MR.strings.veil_calls_optin_title),
               text = generalGetString(MR.strings.veil_calls_optin_text),
               confirmText = generalGetString(MR.strings.veil_calls_optin_confirm),
               dismissText = generalGetString(MR.strings.veil_calls_cancel),
-              onConfirm = { appPrefs.veilCallsOptIn.set(true) }
+              onConfirm = { setCallsEnabled(true) }
             )
           }
         }
       )
     }
+
+    VeilNote(stringResource(MR.strings.veil_calls_availability_note))
 
     if (user != null && !chatModel.desktopNoUserNoRemote) {
       VeilSectionLabel(stringResource(MR.strings.veil_set_privacy_receipts))

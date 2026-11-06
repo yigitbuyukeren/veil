@@ -2521,4 +2521,8 @@
     <string name="simplex_link_relay">SimpleX реле линк</string>
     <string name="chat_banner_connect_to_use_bot">Натисни Свързване, за използване на бота</string>
     <string name="cant_send_commands_alert_text">За да изпращате команди, трябва да сте свързани.</string>
+    <string name="veil_calls_contact_disabled">Този контакт не разрешава обаждания</string>
+    <string name="veil_calls_availability_note">Състоянието на обажданията се вижда от контактите, когато получат актуализацията. Другите профили се актуализират, когато ги избереш.</string>
+    <string name="veil_calls_sync_failed_title">Състоянието на обажданията не беше актуализирано</string>
+    <string name="veil_calls_sync_failed_text">Разрешенията за някои контакти не бяха актуализирани. Настройката за обаждания на това устройство е запазена. Можеш да опиташ отново сега.</string>
 </resources>

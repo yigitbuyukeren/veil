@@ -3006,4 +3006,8 @@
     <string name="tray_show">Показать SimpleX</string>
     <string name="tray_quit">Выйти из SimpleX</string>
     <string name="tray_tooltip">SimpleX</string>
+    <string name="veil_calls_contact_disabled">Этот контакт не разрешает звонки</string>
+    <string name="veil_calls_availability_note">Контакты увидят доступность звонков, когда получат обновление. Другие профили обновляются при их выборе.</string>
+    <string name="veil_calls_sync_failed_title">Не удалось обновить доступность звонков</string>
+    <string name="veil_calls_sync_failed_text">Не удалось обновить разрешения некоторых контактов. Настройка звонков на этом устройстве сохранена. Можно повторить попытку сейчас.</string>
 </resources>

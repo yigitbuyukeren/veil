@@ -882,4 +882,8 @@
     <string name="another_instance_title">Appen kører allerede</string>
     <string name="app_update_required">App\'en skal opdateres</string>
     <string name="chat_link_business_address">Virksomhedsadresse</string>
+    <string name="veil_calls_contact_disabled">Denne kontakt tillader ikke opkald</string>
+    <string name="veil_calls_availability_note">Dine kontakter ser din tilgængelighed for opkald, når opdateringen når frem. Andre profiler opdateres, når du vælger dem.</string>
+    <string name="veil_calls_sync_failed_title">Tilgængeligheden for opkald kunne ikke opdateres</string>
+    <string name="veil_calls_sync_failed_text">Tilladelserne for nogle kontakter kunne ikke opdateres. Opkaldsindstillingen på denne enhed er gemt. Du kan prøve igen nu.</string>
 </resources>
