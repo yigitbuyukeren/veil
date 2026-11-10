@@ -9,10 +9,10 @@ Checked: 2026-11-04. Source: https://simplex.chat/privacy/ (section "Conditions 
 | Protocol specs not older than 1 year | Track upstream stable; manual update procedure in `docs/veil/UPSTREAM.md` (VEIL-003) | Planned |
 | User-to-user messaging only (or clearly labeled bots) | M1 is private 1:1 and small group messaging only; no bots | Compliant by scope |
 | Same limits, rules and restrictions as official software | Do not alter client limits or relay rate/size handling | Must verify at VEIL-017 |
-| Users accept the same Conditions of Use before access | First-run screen with link to the conditions, acceptance recorded locally; relays unreachable before acceptance | Planned (VEIL-009/016) |
-| App states that it is an app for using the SimpleX network | Disclosure in README and in-app about screen | Planned (VEIL-016) |
-| No SimpleX Chat Ltd branding without permission; no impersonation of official software | Own name and assets; no upstream logos | Planned |
-| Source available in-app under an open-source license; AGPLv3 when using SimpleX code | AGPL-3.0; in-app source link | Planned (VEIL-016) |
+| Users accept the same Conditions of Use before access | First-run screen with link to the conditions, acceptance recorded locally; relays unreachable before acceptance | Implemented in `ConditionsScreen.kt`; device acceptance/network ordering remains unverified |
+| App states that it is an app for using the SimpleX network | Disclosure in README and in-app about screen | Implemented in the Veil about screen; device verification pending |
+| No SimpleX Chat Ltd branding without permission; no impersonation of official software | Own name and assets; remaining system branding in `BRANDING.md` | Partial |
+| Source available in-app under an open-source license; AGPLv3 when using SimpleX code | AGPL-3.0; in-app source link | Implemented in the Veil about screen; device verification pending |
 | Ongoing compliance | Review on each upstream bump | Process |
 
 ## User-facing conditions to surface
@@ -30,7 +30,7 @@ Checked: 2026-11-04. Source: https://simplex.chat/privacy/ (section "Conditions 
 
 ## Open items
 
-- Confirm exactly which preset relays publish `.onion` addresses in the pinned upstream version (VEIL-007).
+- Static source evidence for preset `.onion` endpoints is recorded in `TOR_ONLY.md`; actual reachability and Orbot/device behavior remain unverified.
 - Wording of the conditions-acceptance screen must be reviewed against the then-current text.
 
 No contradiction between the relay terms and the M1 scope has been found at the date above. This is a document review only; no relay was contacted.

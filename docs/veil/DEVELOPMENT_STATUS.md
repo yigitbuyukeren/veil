@@ -46,6 +46,13 @@ Final audit result of 2026-11-04: navigation was traced from every Veil screen (
 - **Bubble width:** the meta line of the Veil text bubble no longer fills the width, so short messages wrap their content; build and unit tests pass, appearance NOT TESTED on a device.
 - **Live message:** the Veil path was read end to end (button, `startLiveMessage`, `sendLiveMessage`, `apiSendMessages(live = true)`); no Veil hook blocks it. Live items are drawn by upstream's item view, not the Veil bubble (`veilBubbleEligible` excludes `isLive`). Cause of the reported "nothing happens" not found without a device; NOT FIXED.
 
+## Chat item verifier fix (2026-11-05)
+
+- Opening a chat on a phone reported `VerifyError` in `ChatItemView` (`copy-cat1 v2<-v263`, `Composer`). The previous debug APK reproduces the same error at offset `0x1413` on an Android 15 arm64 emulator with ART verification forced (`dalvikvm -Xverify:all`).
+- The outer inline `Box` is now behind a small non-inline composable, `ChatItemContainer`, separating the large item body from the caller's many parameters without changing its layout or actions.
+- The rebuilt arm64 FOSS debug APK passes verification of the affected class and construction of all 45 generated item/container classes. The standalone probe then reaches Android environment initialization, which needs an app context; this is a verifier regression check, not a full chat UI test. Phone chat rendering remains NOT TESTED after the fix.
+- Build, 264 Veil unit tests, the Android unit test and `policy-check.sh`: PASS. The full common suite has 269 tests with 5 failures in `ChatItemsMergerTest`, `ProviderForGalleryTest` and `ThemesTest` because `androidAppContext` is not initialized. Those failures remain unresolved; the focused passing suite does not replace that result.
+
 ## Chat pinning (N1, 2026-11-05)
 
 Chats can be pinned from the avatar sheet (up to 5, shown first in pin order, pin marker in the row). The core has no pinning, so pins are kept on the device per profile (`veil_pinned_chats_<userId>`, `VeilPins`); known limit: they are not part of a database export and do not move with a device migration. Unit tests for the ordering and the limit pass; behavior on a device NOT TESTED.
@@ -68,6 +75,10 @@ The manifest no longer claims `simplex.chat` and relay-host web links (they open
 ## Calls as an opt-in (N7, 2026-11-05)
 
 Voice and video calls are back as an explicit opt-in, **off by default**, and they are the one thing that does not go through Tor. `VeilNetworkPolicy.CALLS_ENABLED` stays `false`; the preference `veilCallsOptIn` (default `false`) is read through `VeilNetworkPolicy.callsAllowed()` at every call surface (call buttons, calls preference, incoming calls, starting a call, Tor status row). Relay-only ICE is forced for both directions (`callRelayPolicy`). The switch is in Settings > Privacy with a one-time explanation; each outgoing call and each accept is confirmed, an incoming call is labelled "Tor dışı arama", and the active call shows a fixed "Tor dışı" strip. Texts and claims were rewritten ("messages and files go only through Tor; calls (if you turn them on) are the exception", [PRIVACY_CLAIMS.md](PRIVACY_CLAIMS.md)); the call server sees the IP and timing ([THREAT_MODEL.md](THREAT_MODEL.md), [TOR_ONLY.md](TOR_ONLY.md)). `policy-check.sh` also checks that the opt-in defaults to `false` and the relay policy stays forced; unit tests cover `callsAllowed` and the relay policy. Dialogs, label, strip and the relay type in the call info are NOT TESTED on a device. Known limit: a custom ICE server list already stored in preferences (the screen is hidden, so only a settings import could set it) is not cleared.
+
+## Call controls in the Veil chat bar (2026-11-06)
+
+The Veil chat bar now connects audio and video buttons to the existing `startCall` callback (including the outside-Tor confirmation). Buttons appear only after the global calls opt-in is enabled, for a ready and active direct contact whose merged call preferences permit calls, with no active call. During a call with that contact, an end-call button uses the existing `endCall` callback. The opt-in and active call are observed as Compose state. No group call controls are offered. Arm64 FOSS debug build, 264 Veil common tests, the Android unit test, policy and documentation checks pass. Two-phone call completion and the layout on phones still need verification.
 
 ## Wording pass on upstream screens (N4b, 2026-11-05)
 

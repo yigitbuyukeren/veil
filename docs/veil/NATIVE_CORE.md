@@ -17,7 +17,7 @@ This replaces the earlier plan to build the core with Nix on Linux and compare h
 
 1. the pinned public key (`scripts/ci/keys/simplex-release.asc`) has the expected primary fingerprint `BBDF 7BDA D154 8B16 836A F5B9 D53B DFD1 53C3 66BA`;
 2. the detached signatures of `_sha256sums` and of the APK are good and were made by that key;
-3. the APK SHA-256 matches the pinned value.
+3. the APK SHA-256 matches the pinned value. The signed `_sha256sums` covers desktop/CLI assets; the APK is authenticated by its own detached signature, not by inclusion in that list.
 
 The two libraries are then extracted unmodified for `arm64-v8a`. Details, hashes and what was and was not checked by hand are in the "Native core" section of [ANDROID_BUILD.md](ANDROID_BUILD.md).
 

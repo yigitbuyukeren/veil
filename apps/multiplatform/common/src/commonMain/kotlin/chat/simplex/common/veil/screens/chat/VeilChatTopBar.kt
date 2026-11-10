@@ -17,6 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import chat.simplex.common.model.ChatInfo
 import chat.simplex.common.model.FeatureAllowed
+import chat.simplex.common.views.call.CallMediaType
+import chat.simplex.common.model.ChatController.appPrefs
+import chat.simplex.common.model.VeilNetworkPolicy
+import chat.simplex.common.platform.chatModel
 import chat.simplex.common.platform.BackHandler
 import chat.simplex.common.views.helpers.fontSizeSqrtMultiplier
 import chat.simplex.common.veil.data.rememberTorRingState
@@ -29,7 +33,8 @@ import dev.icerock.moko.resources.compose.stringResource
 
 /**
  * Top bar of the Veil chat: back, mask avatar, name with verification / member chips, search, Tor ring.
- * Same height as upstream's app bar (the message list's top padding is computed from it). Calls are not offered.
+ * Same height as upstream's app bar (the message list's top padding is computed from it).
+ * Calls use the existing opt-in, contact permissions and confirmation flow.
  *
  * Tapping the name area runs [VeilChatHooks.onChatInfo], which by default calls [openInfo] (upstream's chat info).
  */
@@ -39,6 +44,8 @@ fun VeilChatTopBar(
   back: () -> Unit,
   openInfo: () -> Unit,
   openSearch: () -> Unit,
+  startCall: (CallMediaType) -> Unit,
+  endCall: () -> Unit,
 ) {
   val colors = VeilTheme.colors
   val type = VeilTheme.type
@@ -56,6 +63,11 @@ fun VeilChatTopBar(
       incognito = chatInfo.incognito,
     )
   }
+  val callsOptIn = remember { appPrefs.veilCallsOptIn.state }
+  val activeCall = remember { chatModel.activeCall }.value
+  val contact = (chatInfo as? ChatInfo.Direct)?.contact
+  val canStartCall = VeilNetworkPolicy.callsAllowed(callsOptIn.value) && contact != null &&
+    contact.mergedPreferences.calls.enabled.forUser && contact.ready && contact.active && activeCall == null
   val hasInfo = chatInfo !is ChatInfo.Local
   Row(
     Modifier
@@ -121,6 +133,18 @@ fun VeilChatTopBar(
             }
           }
         }
+      }
+    }
+    if (contact != null && activeCall?.contact?.id == chatInfo.id) {
+      VeilIconButton(onClick = endCall, contentDescription = stringResource(MR.strings.call_service_notification_end_call)) {
+        VeilIcon(MR.images.ic_call_end_filled, colors.errText, size = 22.dp)
+      }
+    } else if (canStartCall) {
+      VeilIconButton(onClick = { startCall(CallMediaType.Audio) }, contentDescription = stringResource(MR.strings.icon_descr_audio_call)) {
+        VeilIcon(MR.images.ic_call_500, colors.ink2, size = 22.dp)
+      }
+      VeilIconButton(onClick = { startCall(CallMediaType.Video) }, contentDescription = stringResource(MR.strings.icon_descr_video_call)) {
+        VeilIcon(MR.images.ic_videocam, colors.ink2, size = 22.dp)
       }
     }
     if (chatInfo !is ChatInfo.Local) {

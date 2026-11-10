@@ -4,7 +4,7 @@ No independent security audit has been completed; not distributed. Do not rely o
 
 **Threat model:** relay operator observation, network correlation, malicious counterparty, compromised device, side-channel metadata, unauthorized group access and supply chain.
 
-**Design invariants:** E2EE provided by mature SimpleX components (the official prebuilt core, verified by hash and signature, see [docs/veil/NATIVE_CORE.md](docs/veil/NATIVE_CORE.md)); per-contact identity; Tor-only transport; fail closed rather than route clear-text; no third-party tracking SDK; encrypt local chat history; no sensitive logs.
+**Design invariants:** E2EE provided by mature SimpleX components (the official prebuilt core, verified by hash and signature, see [docs/veil/NATIVE_CORE.md](docs/veil/NATIVE_CORE.md)); per-contact identity; Tor-only messaging policy with opt-in call media outside Tor (see [TOR_ONLY.md](docs/veil/TOR_ONLY.md)); fail closed for messaging rather than route direct; no third-party tracking SDK; encrypt local chat history; no sensitive logs.
 
 **Disclosure:** please use GitHub private vulnerability reporting when enabled. Do not publish exploit details affecting users until maintainers can assess and coordinate disclosure.
 

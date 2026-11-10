@@ -68,7 +68,7 @@ Une fois la connexion établie, vous pouvez [vérifier le code de sécurité de 
 
 ## Guide de l'utilisateur (NOUVEAU)
 
-Découvrez les fonctionnalités et les paramètres de l'application dans le nouveau [Guide de l'utilisateur](../fr/guide/README.md). (PROCHAINEMENT EN FR)
+Découvrez les fonctionnalités et les paramètres de l'application dans le nouveau [Guide de l'utilisateur](../../guide/README.md). (PROCHAINEMENT EN FR)
 
 ## Aider à traduire SimpleX Chat
 

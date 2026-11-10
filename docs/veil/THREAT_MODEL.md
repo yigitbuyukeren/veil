@@ -6,7 +6,7 @@ Status: draft for independent review. Nothing here has been verified on devices 
 
 Veil M1 is a closed Android alpha built on the SimpleX stack (unchanged cryptography and protocol), with a Tor-only transport policy: every network connection to relays goes through Tor to `.onion` endpoints and the app fails closed when Tor is unavailable. There are no accounts, phone numbers or emails, and no Veil-operated servers.
 
-Out of scope for M1: voice/video, files and media, backups, multi-device, iOS/desktop, public group discovery, paid features, new cryptography.
+Original M1 acceptance scope excludes voice/video, files/media, backups, multi-device, iOS/desktop, public discovery, paid features and new cryptography. Current code nevertheless exposes opt-in calls outside Tor, upstream media, backup/restore and device migration; these are not validated M1 protections. See [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) and [BACKUP_TESTS.md](BACKUP_TESTS.md).
 
 ## 2. Assets
 
@@ -18,7 +18,7 @@ Out of scope for M1: voice/video, files and media, backups, multi-device, iOS/de
 | Contact keys / ratchet state | Impersonation, decryption | Device DB |
 | Group membership | Social graph | Device DB; other members |
 | Local database key | Protects everything at rest | Device (key handling decided in VEIL-012) |
-| Backups / exports | Bypass of at-rest protection | Not offered in M1 |
+| Backups / exports | Bypass of at-rest protection | Exposed through upstream flows; archive/file protection and destructive import require testing |
 | Device metadata (model, OS, timezone, install time, notification timing) | Fingerprinting | Device, OS, push infrastructure (none planned) |
 
 ## 3. Adversaries
@@ -29,7 +29,7 @@ Out of scope for M1: voice/video, files and media, backups, multi-device, iOS/de
 | A2 | Global passive network observer | Sees traffic between user and Tor entry guard and at relay | Not assumed defeated by Tor: end-to-end timing correlation is possible |
 | A3 | Malicious counterparty / group member | Receives everything sent to them, can invite others, spam, forward, screenshot, probe | Cannot be prevented from retaining content |
 | A4 | Seized / stolen / compromised device | Reads storage; with root or malware reads memory and screen | Out of protection once unlocked or when malware runs |
-| A5 | Malicious file/link | Parser exploits, deceptive links | M1 has no files; links are not auto-fetched |
+| A5 | Malicious file/link | Parser exploits, deceptive links | Media/file paths exist and need review; link previews are disabled |
 | A6 | Supply chain (upstream, dependencies, build) | Malicious update or dependency | Mitigated only by pinning, review, CI scans |
 | A7 | Local network attacker | Blocks Tor, injects, forces fallback | Must not cause clear-text fallback |
 
@@ -73,6 +73,8 @@ Mode "Tor-only" is Veil's only mode. "Clear" is shown only to document what Veil
 - Android may expose metadata (app install, process activity, notification channel timing) that Veil cannot remove.
 
 ## 7. M1 testable assumptions and acceptance criteria
+
+This is the original device-acceptance matrix, not a fresh test report. Historical emulator/static evidence is in [EMULATOR_TESTS.md](EMULATOR_TESTS.md); the current release decision is NO-GO in [M1_RELEASE_REPORT.md](M1_RELEASE_REPORT.md).
 
 | # | Assumption / criterion | Verified by | Status |
 |---|---|---|---|

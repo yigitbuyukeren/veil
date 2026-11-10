@@ -122,7 +122,7 @@ Also, we added Persian interface language to the Android and desktop apps, thank
 
 ---
 
-Jun 1, 2024 [Children's Safety Requires End-to-End Encryption](./20240601-children-safety-requires-e2e-encryption.md)
+Jun 1, 2024 [Children's Safety Requires End-to-End Encryption](./20240601-protecting-children-safety-requires-e2e-encryption.md)
 
 As lawmakers grapple with the serious issue of child exploitation online, some proposed solutions would fuel the very problem they aim to solve.
 

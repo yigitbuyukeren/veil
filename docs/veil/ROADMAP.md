@@ -26,7 +26,7 @@ Goal: a Tor-only Android closed alpha, not a finished or audited product. Issue 
 
 ## Redesign "Tül" (implemented, NOT TESTED)
 
-Status 2026-11-04: all nine groups below exist in code and build (arm64 FOSS debug) with unit tests for the logic, the contrast of both themes and the design system. **No screen has been run on a device or an emulator**, so by the acceptance rule below no group is "done" yet. Commits per group are in [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md). Remaining: the emulator run (waits for the owner's go), the upstream screens that are opened on purpose and still have the upstream look ([DESIGN.md](DESIGN.md), "Reachable upstream screens"), English translation, and the remaining upstream wording ([BRANDING.md](BRANDING.md)).
+Status 2026-11-04: all nine groups below exist in code and build (arm64 FOSS debug) with unit tests for the logic, the contrast of both themes and the design system. **No screen has been run on a device or an emulator**, so by the acceptance rule below no group is "done" yet. Commits per group are in [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md). Remaining: the emulator run (waits for the owner's go), the upstream screens that are opened on purpose and still have the upstream look ([DESIGN.md](DESIGN.md), "Reachable upstream screens"), English fallback review, and the remaining upstream wording ([BRANDING.md](BRANDING.md)).
 
 A whole-app redesign on a Veil design system, Turkish-first. It replaces the upstream screens one by one without touching upstream logic (architecture rule in [DESIGN.md](DESIGN.md)). The app builds and runs after every screen group. Desktop and remote connection stay hidden, device migration is under Gelişmiş; calls are an opt-in, off by default and outside Tor (N7).
 
@@ -40,7 +40,7 @@ Screen groups (details in the screen map of [DESIGN.md](DESIGN.md)):
 6. **Groups:** create, info, members and roles, group link, add members.
 7. **Settings:** simplified groups, read-only network settings, Tor and status, about and licenses.
 8. **System screens:** app lock, empty and error states, dialogs, database errors.
-9. **Language:** Turkish-first strings (done, identical in base and tr), CI audit of leftover upstream strings (done as a ratchet), English translation (not started).
+9. **Language:** Turkish strings in tr and English fallback in base, CI audit of leftover upstream strings (done as a ratchet), English base strings exist; completeness and presentation still need verification.
 
 Acceptance: each screen group is shown to work on an emulator before it is called done; device behavior stays NOT TESTED until the M1 device runs. The redesign does not by itself change the release decision.
 
@@ -98,3 +98,9 @@ Run these from now on, tighten per milestone:
 ## Excluded for now
 
 Group voice/video calls, public group discovery, paid features, custom crypto, unbounded public relay usage, changes to the SimpleX core, building the core from source.
+
+## Açık uygulama düzeltmeleri
+
+- Canlı mesaj düğmesinin telefonda çalışmama nedenini araştır ve iki cihazda doğrula.
+- Bildirim başlıkları, kanal görünen adları ve kilit metinlerindeki SimpleX markalamasını düzelt; kanal ID'lerini koru.
+- M2 öncesinde `M2_AUDIT.md` hazırlanacak; M1 GO olmadan M2 geliştirmesi başlamayacak.

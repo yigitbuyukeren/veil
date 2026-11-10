@@ -1,14 +1,14 @@
 # Veil vision
 
-Veil is a messaging app that asks for no account, knows no route except Tor, and does not claim more than it can show. This document states the idea, the decisions behind it and what is deliberately left out. Current progress is not tracked here; see [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md). The visual and interface rules are in [DESIGN.md](DESIGN.md).
+Veil is a messaging app that asks for no account, routes messages through Tor, and does not claim more than it can show. This document states the idea, the decisions behind it and what is deliberately left out. Current progress is not tracked here; see [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md). The visual and interface rules are in [DESIGN.md](DESIGN.md).
 
 ## Main idea
 
-**Veil: a messaging app that asks for no account, knows no way out except Tor, and claims no more than it can measure.**
+**Veil: a messaging app that asks for no account, routes messages through Tor, and claims no more than it can measure.**
 
 ## Three pillars
 
-1. **Tor is the only route.** All traffic goes through Orbot to `.onion` addresses. When Tor is not available nothing is sent (fail-closed). No setting is left that bypasses this rule. How it is enforced is described in [TOR_ONLY.md](TOR_ONLY.md).
+1. **Tor is the only route.** Messaging uses Orbot and `.onion` relay addresses by policy; opt-in call media is outside Tor. When Tor is not available nothing is sent (fail-closed). No setting is left that bypasses this rule. How it is enforced is described in [TOR_ONLY.md](TOR_ONLY.md).
 2. **A separate identity for every conversation.** No phone number, no e-mail, no username. Every connection is opened with a random profile by default (incognito). See [PRIVACY_DEFAULTS.md](PRIVACY_DEFAULTS.md).
 3. **An honest interface.** The screen shows only what can be measured. Claims such as "you are safe" or a green shield do not appear. Every privacy statement comes from the allowed list in [PRIVACY_CLAIMS.md](PRIVACY_CLAIMS.md) and is paired with its limits.
 
@@ -26,7 +26,7 @@ Someone who cares about privacy, is not technical, and speaks Turkish. A claim s
 
 ## Out of scope
 
-- Voice and video calls (stay disabled until a separate anonymity and media-routing analysis and real-device tests exist).
-- Desktop, iOS, remote desktop connection and moving the app to another device (hidden in the interface for now).
+- Tor-routed voice/video: existing calls are off by default and opt-in outside Tor, with relay-only policy; device evidence remains pending ([TOR_ONLY.md](TOR_ONLY.md)).
+- Desktop, iOS and remote desktop connection. Device migration is available under Gelişmiş and onboarding through upstream flows; it is not verified on phones.
 - Anything that needs a change to the SimpleX core, cryptography or protocol.
 - Group voice/video calls, public group discovery, paid features, unbounded public relay usage (see [ROADMAP.md](ROADMAP.md), "Excluded for now").

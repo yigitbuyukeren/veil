@@ -1181,7 +1181,7 @@ fun ChatLayout(
                   if (chatInfo != null) {
                     // Veil: Veil top bar, except while searching (the search field is upstream's app bar)
                     if (veilChatActive() && !showSearch.value && contentFilter.value == null) {
-                      VeilChatTopBar(chatInfo, back, openInfo = info, openSearch = { showSearch.value = true })
+                      VeilChatTopBar(chatInfo, back, openInfo = info, openSearch = { showSearch.value = true }, startCall = startCall, endCall = endCall)
                     } else {
                       ChatInfoToolbar(chatsCtx, chatInfo, back, info, startCall, endCall, addMembers, openGroupLink, changeNtfsState, onSearchValueChanged, showSearch, contentFilter, availableContent, searchPlaceholder)
                     }

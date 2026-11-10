@@ -126,7 +126,7 @@ fun ChatItemView(
   val onLinkLongClick = { _: String -> showMenu.value = true }
   val live = remember { derivedStateOf { composeState.value.liveMessage != null } }.value
 
-  Box(
+  ChatItemContainer(
     modifier = (if (fillMaxWidth) Modifier.fillMaxWidth() else Modifier),
     contentAlignment = alignment,
   ) {
@@ -841,6 +841,17 @@ fun ChatItemView(
       }
     }
   }
+}
+
+// Veil: keep the large item body out of the caller's inline Box expansion so
+// Android's dex verifier can validate it without the caller's parameter pressure.
+@Composable
+private fun ChatItemContainer(
+  modifier: Modifier,
+  contentAlignment: Alignment,
+  content: @Composable BoxScope.() -> Unit,
+) {
+  Box(modifier = modifier, contentAlignment = contentAlignment, content = content)
 }
 
 @Composable
