@@ -1,0 +1,70 @@
+name: Bug report
+description: Something is broken or does not match the documented behavior.
+title: "[bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not paste messages, contact names, invite links, addresses, keys, passwords or database contents.** Censor anything that identifies a person.
+        Security problems go to [SECURITY.md](https://github.com/yigitbuyukeren/veil/blob/main/SECURITY.md), not to a public issue.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: build
+    attributes:
+      label: Build
+      description: Commit hash and APK type (debug or release), or the release tag.
+      placeholder: 4b7322ec5, android-foss-arm64-v8a-debug.apk
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and Android version
+      description: Emulator or phone model, Android version and patch level. Anonymize anything identifying.
+    validations:
+      required: false
+  - type: dropdown
+    id: tor
+    attributes:
+      label: Tor state
+      options:
+        - Orbot connected
+        - Orbot not running (the app should fail closed)
+        - Not applicable (UI only)
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Optional. Remove personal data, message contents, addresses and keys first.
+      render: shell
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched the existing issues.
+          required: true
+        - label: This is not a security vulnerability (those go to SECURITY.md).
+          required: true
+        - label: I removed personal data from this report.
+          required: true

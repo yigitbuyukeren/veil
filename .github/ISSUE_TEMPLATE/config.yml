@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/yigitbuyukeren/veil/security/policy
+    about: Report privately. Do not open a public issue for a security problem.
+  - name: Contributing guide
+    url: https://github.com/yigitbuyukeren/veil/blob/main/docs/veil/CONTRIBUTING.md
+    about: Read this before opening a pull request.

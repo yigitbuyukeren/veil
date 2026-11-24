@@ -4,6 +4,8 @@
 
 Veil is an open-source Android client using the SimpleX messaging stack with Tor-only relay connectivity as its security policy. It ships the official prebuilt SimpleX core (verified by hash and signature) and changes only the app layer. The first target is a **closed Android alpha**, not a finished or audited product.
 
+Veil is an independent derivative of the SimpleX Chat client. It is not affiliated with, endorsed by, or supported by SimpleX Chat Ltd; the SimpleX name is used only to describe the upstream code and the network it connects to.
+
 ## What M1 aims to prove
 
 - No phone number or email needed; no central cross-chat user identifier.
@@ -23,12 +25,17 @@ Tor and end-to-end encryption are **not a guarantee of 100% anonymity**. Endpoin
 
 Veil is an unaudited closed alpha in development. The Tor-only network policy is implemented in the app layer (fail-closed start gate, enforced at a single choke point, network settings locked). It has unit tests and earlier emulator runs; the latest changes are not verified on a device, there is no real-device verification and no independent security audit. The current release decision is NO-GO. [docs/veil/DEVELOPMENT_STATUS.md](docs/veil/DEVELOPMENT_STATUS.md) is the single status source.
 
+## Contributing
+
+Veil is open source and developed in public, but the project is evidence-gated: a change is not done because it compiles, and no behavior is called working without a recorded run. Read [docs/veil/CONTRIBUTING.md](docs/veil/CONTRIBUTING.md) before opening an issue or a pull request. Documentation, translation, emulator scenarios and leak-test scripts are useful now; pairing and real-device tests stay blocked until two Android phones and Orbot are available ([roadmap](docs/veil/ROADMAP.md)).
+
 ## Source & licenses
 
 - Upstream: https://github.com/simplex-chat/simplex-chat
 - Upstream Android build: https://github.com/simplex-chat/simplex-chat/blob/stable/apps/multiplatform/README.md
 - Public server terms: https://simplex.chat/privacy/
 - Upstream code is AGPLv3; licenses and copyright attribution of forked material must be preserved. The upstream brand/logos may be protected separately.
+- Provenance of this repository (upstream release, commit and license): [NOTICE](NOTICE).
 
 ## Documentation
 
@@ -38,4 +45,5 @@ Veil's own documents are in [docs/veil/](docs/veil/); the rest of `docs/` is ups
 - Status and release decision: [development status](docs/veil/DEVELOPMENT_STATUS.md), [M1 release report](docs/veil/M1_RELEASE_REPORT.md).
 - Security: [SECURITY.md](SECURITY.md), [threat model](docs/veil/THREAT_MODEL.md), [privacy claims policy](docs/veil/PRIVACY_CLAIMS.md), [Tor-only transport](docs/veil/TOR_ONLY.md), [network egress](docs/veil/NETWORK_EGRESS.md).
 - Build and sources: [Android build](docs/veil/ANDROID_BUILD.md), [native core decision](docs/veil/NATIVE_CORE.md), [upstream base](docs/veil/UPSTREAM.md), [SOURCES.md](SOURCES.md).
-- Licenses: [upstream licenses](docs/veil/UPSTREAM_LICENSES.md), [third-party notices](docs/THIRD_PARTY_NOTICES.md).
+- Licenses: [upstream licenses](docs/veil/UPSTREAM_LICENSES.md), [third-party notices](docs/THIRD_PARTY_NOTICES.md), [NOTICE](NOTICE).
+- Contributing: [contributing guide](docs/veil/CONTRIBUTING.md), [upstream contributing guide](docs/CONTRIBUTING.md).

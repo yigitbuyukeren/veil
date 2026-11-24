@@ -1,0 +1,16 @@
+Veil — provenance notice
+
+Veil is an independent client for the SimpleX network. It is not affiliated
+with, endorsed by, or supported by SimpleX Chat Ltd. The SimpleX name is used
+only to describe the upstream code and the network; the SimpleX name and logo
+are not covered by the code license, and Veil uses its own name and assets.
+
+This repository contains code from SimpleX Chat v7.0.3
+(https://github.com/simplex-chat/simplex-chat, commit
+b3907c9de7a2c596075762bf05ba3e1d2532aff1), licensed under the GNU Affero
+General Public License v3.0. Copyright in that code belongs to its authors;
+the upstream commit history and authorship are preserved in this repository.
+
+Veil's own changes are licensed under the same terms. See LICENSE,
+docs/veil/UPSTREAM.md, docs/veil/UPSTREAM_LICENSES.md and
+docs/THIRD_PARTY_NOTICES.md.

@@ -1,0 +1,50 @@
+name: Feature or design proposal
+description: Propose a behavior change, a screen or a policy. Discuss it before writing code.
+title: "[proposal] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Veil is an evidence-gated closed alpha. Read [the contributing guide](https://github.com/yigitbuyukeren/veil/blob/main/docs/veil/CONTRIBUTING.md) first; large changes need agreement on the problem and the plan before a pull request.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: Which user problem does this solve? Link the roadmap or issue item if it exists.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What should happen, and where in the app?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Where does it fit?
+      options:
+        - M1 closed alpha (device evidence)
+        - Redesign "Tül"
+        - M2 or later
+        - Not sure
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope-check
+    attributes:
+      label: Scope check
+      options:
+        - label: It does not need a change to the SimpleX core or to cryptography.
+          required: true
+        - label: It does not add a network path outside Tor (calls stay an opt-in exception).
+          required: true
+        - label: I can help implement or test it, or I state what I cannot do.
+          required: false

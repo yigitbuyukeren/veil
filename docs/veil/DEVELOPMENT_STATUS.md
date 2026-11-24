@@ -2,7 +2,7 @@
 
 **This is the single status source for Veil.** Other documents link here instead of repeating status; evidence documents ([EMULATOR_TESTS.md](EMULATOR_TESTS.md), [TOR_ONLY.md](TOR_ONLY.md), [NETWORK_EGRESS.md](NETWORK_EGRESS.md)) hold the recorded results. Plans for work not done: [ROADMAP.md](ROADMAP.md).
 
-Updated 2026-11-04. Base: SimpleX Chat v7.0.3. Evidence rules: PASS only with a recorded test; everything else is NOT TESTED, NOT STARTED or BLOCKED. No issue is closed; all await independent review.
+Updated 2026-11-06. Base: SimpleX Chat v7.0.3. Evidence rules: PASS only with a recorded test; everything else is NOT TESTED, NOT STARTED or BLOCKED. No issue is closed; all await independent review.
 
 ## Summary
 
