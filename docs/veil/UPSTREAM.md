@@ -32,7 +32,7 @@ git remote add upstream https://github.com/simplex-chat/simplex-chat.git
 2. `git fetch upstream tag vX.Y.Z`
 3. Create a branch, `git merge vX.Y.Z`; resolve conflicts, keeping Veil's Tor-only policy changes.
 4. Review the diff of cryptography/protocol sources; they should come only from upstream.
-5. Run the build and the release-gate checks (VEIL-004/005/008), update this file (tag, SHA, date) and `docs/veil/UPSTREAM_LICENSES.md`.
+5. Run the build and the release-gate checks (VEIL-004/005/008), update this file (tag, SHA, date), `NOTICE` (release, commit, license) and `docs/veil/UPSTREAM_LICENSES.md`.
 6. Re-check the relay conditions in `docs/veil/RELAY_USAGE.md`. The relay terms require protocol specs not older than one year, so update upstream at least that often.
 
 ## Secret scan note
