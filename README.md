@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/veil/banner-dark.png">
+  <img src="docs/veil/banner-light.png" width="100%" alt="Veil — Closed alpha (AGPLv3). Tor-only messaging on SimpleX protocol with fail-closed network architecture diagram (device, fail-closed gate blocking clearnet, Tor .onion 3-hop relay, receiver; no phone, email, or account).">
+</picture>
+
 # Veil
 
 **Privacy-first, accountless Android messaging** — closed alpha in development.
