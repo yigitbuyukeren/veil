@@ -44,6 +44,6 @@ Veil's own documents are in [docs/veil/](docs/veil/); the rest of `docs/` is ups
 - Direction: [vision](docs/veil/VISION.md), [design](docs/veil/DESIGN.md), [roadmap](docs/veil/ROADMAP.md).
 - Status and release decision: [development status](docs/veil/DEVELOPMENT_STATUS.md), [M1 release report](docs/veil/M1_RELEASE_REPORT.md).
 - Security: [SECURITY.md](SECURITY.md), [threat model](docs/veil/THREAT_MODEL.md), [privacy claims policy](docs/veil/PRIVACY_CLAIMS.md), [Tor-only transport](docs/veil/TOR_ONLY.md), [network egress](docs/veil/NETWORK_EGRESS.md).
-- Build and sources: [Android build](docs/veil/ANDROID_BUILD.md), [native core decision](docs/veil/NATIVE_CORE.md), [upstream base](docs/veil/UPSTREAM.md), [SOURCES.md](SOURCES.md).
+- Build and sources: [Android build](docs/veil/ANDROID_BUILD.md), [native core decision](docs/veil/NATIVE_CORE.md), [upstream base](docs/veil/UPSTREAM.md).
 - Licenses: [upstream licenses](docs/veil/UPSTREAM_LICENSES.md), [third-party notices](docs/THIRD_PARTY_NOTICES.md), [NOTICE](NOTICE).
 - Contributing: [contributing guide](docs/veil/CONTRIBUTING.md), [upstream contributing guide](docs/CONTRIBUTING.md).

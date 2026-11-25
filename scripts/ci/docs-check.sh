@@ -3,7 +3,7 @@
 set -u
 cd "$(git rev-parse --show-toplevel)"
 fail=0
-docs="README.md SECURITY.md SOURCES.md docs/THIRD_PARTY_NOTICES.md docs/veil/CONTRIBUTING.md docs/veil/THREAT_MODEL.md docs/veil/PRIVACY_CLAIMS.md docs/veil/UPSTREAM.md docs/veil/UPSTREAM_LICENSES.md docs/veil/RELAY_USAGE.md docs/veil/ANDROID_BUILD.md docs/veil/NATIVE_CORE.md docs/veil/BRANDING.md docs/veil/TOR_ONLY.md docs/veil/NETWORK_EGRESS.md docs/veil/PRIVACY_DEFAULTS.md docs/veil/DEVELOPMENT_STATUS.md docs/veil/M1_RELEASE_REPORT.md docs/veil/EMULATOR_TESTS.md docs/veil/ROADMAP.md docs/veil/VISION.md docs/veil/DESIGN.md"
+docs="README.md SECURITY.md docs/THIRD_PARTY_NOTICES.md docs/veil/CONTRIBUTING.md docs/veil/THREAT_MODEL.md docs/veil/PRIVACY_CLAIMS.md docs/veil/UPSTREAM.md docs/veil/UPSTREAM_LICENSES.md docs/veil/RELAY_USAGE.md docs/veil/ANDROID_BUILD.md docs/veil/NATIVE_CORE.md docs/veil/BRANDING.md docs/veil/TOR_ONLY.md docs/veil/NETWORK_EGRESS.md docs/veil/PRIVACY_DEFAULTS.md docs/veil/DEVELOPMENT_STATUS.md docs/veil/M1_RELEASE_REPORT.md docs/veil/EMULATOR_TESTS.md docs/veil/ROADMAP.md docs/veil/VISION.md docs/veil/DESIGN.md"
 for f in $docs; do
   [ -f "$f" ] || { echo "DOCS FAIL: missing $f"; fail=1; continue; }
   dir=$(dirname "$f")
