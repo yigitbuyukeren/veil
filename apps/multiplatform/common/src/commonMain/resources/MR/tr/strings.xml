@@ -16,6 +16,9 @@
     <string name="veil_network_locked">Veil yalnızca Tor üzerinden bağlanır; bu ayar değiştirilemez.</string>
     <string name="veil_socks_up">SOCKS proxy yanıt veriyor (Tor devreleri ölçülmedi)</string>
     <string name="veil_socks_down">SOCKS proxy yanıt vermiyor: hiçbir şey gönderilmez veya alınmaz</string>
+    <string name="veil_tor_ring_proxy_answers">Proxy yanıt veriyor</string>
+    <string name="veil_tor_ring_connecting">Bağlanıyor</string>
+    <string name="veil_tor_ring_unavailable">Tor yok — hiçbir şey gönderilmiyor</string>
     <string name="veil_status_recheck">Yeniden denetle</string>
     <string name="veil_licenses">Açık kaynak lisansları</string>
     <string name="veil_licenses_text">Veil, GNU AGPL-3.0 altında özgür yazılımdır ve SimpleX Chat’e (Telif hakkı SimpleX Chat Ltd ve katkıda bulunanlar) dayanır. Apache-2.0, MIT, BSD, ISC, LGPL (2.1 ve 3.0), SIL OFL 1.1 lisanslı ve kamu malı üçüncü taraf bileşenler içerir; tam liste bildirim dosyasındadır.</string>

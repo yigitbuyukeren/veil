@@ -13,7 +13,6 @@ Verify the base: `git merge-base --is-ancestor b3907c9de7a2c596075762bf05ba3e1d2
 
 ## Differences from upstream in the import
 
-- `README.md` is Veil's (upstream's remains in history).
 - `NOTICE` records the upstream release, commit and license of the imported base.
 - Upstream `.github/` removed (workflows, actions, issue templates, funding, codeowners): upstream release, CLA and website automation must not run in this repository. Veil CI is added in VEIL-005; Veil's own issue and pull-request templates live there.
 - `.gitignore` extended with secret, signing, local-config and build-output patterns.

@@ -13,6 +13,9 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import chat.simplex.res.MR
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.stringResource
 
 /** State of the Tor proxy as shown by [TorRing]. */
 enum class TorRingState {
@@ -24,17 +27,16 @@ enum class TorRingState {
   Unavailable,
 }
 
-// TODO(veil): move these to strings.xml together with the other Turkish UI texts.
-const val TOR_RING_LABEL_PROXY_ANSWERS = "Proxy yanıt veriyor"
-const val TOR_RING_LABEL_CONNECTING = "Bağlanıyor"
-const val TOR_RING_LABEL_UNAVAILABLE = "Tor yok — hiçbir şey gönderilmiyor"
-
-/** The exact Turkish status text for a ring state. */
-fun torRingLabel(state: TorRingState): String = when (state) {
-  TorRingState.ProxyAnswers -> TOR_RING_LABEL_PROXY_ANSWERS
-  TorRingState.Connecting -> TOR_RING_LABEL_CONNECTING
-  TorRingState.Unavailable -> TOR_RING_LABEL_UNAVAILABLE
+/** Resource for the exact status text of a ring state. */
+fun torRingLabelRes(state: TorRingState): StringResource = when (state) {
+  TorRingState.ProxyAnswers -> MR.strings.veil_tor_ring_proxy_answers
+  TorRingState.Connecting -> MR.strings.veil_tor_ring_connecting
+  TorRingState.Unavailable -> MR.strings.veil_tor_ring_unavailable
 }
+
+/** The exact localized status text for a ring state. */
+@Composable
+fun torRingLabel(state: TorRingState): String = stringResource(torRingLabelRes(state))
 
 /**
  * Tor status ring (prototype `ring()`): 32-unit viewBox, outer ring r=12 / stroke 2.6, inner dot r=5.

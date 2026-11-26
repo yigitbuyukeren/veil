@@ -1,6 +1,7 @@
 package chat.simplex.common.veil.design
 
 import androidx.compose.ui.geometry.Size
+import chat.simplex.res.MR
 import kotlin.test.*
 
 // ./gradlew :common:testDebugUnitTest --tests 'chat.simplex.common.veil.design.*'
@@ -100,10 +101,10 @@ class VeilDesignTest {
   }
 
   @Test
-  fun torRingLabelsAreExactTurkishTexts() {
-    assertEquals("Proxy yanıt veriyor", torRingLabel(TorRingState.ProxyAnswers))
-    assertEquals("Bağlanıyor", torRingLabel(TorRingState.Connecting))
-    assertEquals("Tor yok — hiçbir şey gönderilmiyor", torRingLabel(TorRingState.Unavailable))
+  fun torRingLabelsUseLocalizedResources() {
+    assertEquals(MR.strings.veil_tor_ring_proxy_answers, torRingLabelRes(TorRingState.ProxyAnswers))
+    assertEquals(MR.strings.veil_tor_ring_connecting, torRingLabelRes(TorRingState.Connecting))
+    assertEquals(MR.strings.veil_tor_ring_unavailable, torRingLabelRes(TorRingState.Unavailable))
   }
 
   @Test

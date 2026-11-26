@@ -8,6 +8,6 @@ pat='HttpURLConnection|\.openConnection\(|Jsoup\.connect|okhttp3|io\.ktor|HttpCl
 fail=0
 while IFS= read -r f; do
   grep -qxF "$f" "$allow" || { echo "EGRESS FAIL: network API in unlisted file $f"; grep -nE "$pat" "$f" | head -3; fail=1; }
-done < <(git grep -lE "$pat" -- 'apps/multiplatform/common/src/commonMain/*.kt' 'apps/multiplatform/common/src/androidMain/*.kt' 'apps/multiplatform/android/src/main/*.kt' 'apps/multiplatform/android/src/main/*.java' 'apps/multiplatform/android/src/main/AndroidManifest.xml' | sort)
+done < <(git grep -lE "$pat" -- 'apps/multiplatform/common/src/commonMain/*.kt' 'apps/multiplatform/common/src/androidMain/*.kt' 'apps/multiplatform/android/src/main/*.kt' 'apps/multiplatform/android/src/main/*.java' 'apps/multiplatform/android/src/main/AndroidManifest.xml' 'apps/multiplatform/android/src/foss/*.kt' 'apps/multiplatform/android/src/foss/*.java' 'apps/multiplatform/android/src/foss/AndroidManifest.xml' 'apps/multiplatform/android/src/google/*.kt' 'apps/multiplatform/android/src/google/*.java' 'apps/multiplatform/android/src/google/AndroidManifest.xml' | sort)
 [ $fail -eq 0 ] && echo "egress inventory check: PASS ($(wc -l < $allow | tr -d ' ') listed files)"
 exit $fail

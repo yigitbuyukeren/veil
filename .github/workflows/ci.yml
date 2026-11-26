@@ -48,12 +48,17 @@ jobs:
         working-directory: apps/multiplatform
         env:
           JAVA_TOOL_OPTIONS: -Duser.language=en -Duser.country=US
-        run: ./gradlew assembleFossDebug :android:testFossDebugUnitTest :common:testDebugUnitTest --tests 'chat.simplex.app.VeilNetworkPolicyTest' --tests 'chat.simplex.common.veil.design.VeilDesignTest' -Pveil.abis=arm64-v8a --console=plain
+        run: ./gradlew assembleFossDebug :android:testFossDebugUnitTest -Pveil.abis=arm64-v8a --console=plain
+      - name: Veil unit tests (all 25 Veil classes, upstream suite excluded)
+        working-directory: apps/multiplatform
+        env:
+          JAVA_TOOL_OPTIONS: -Duser.language=en -Duser.country=US
+        run: ./gradlew :common:testDebugUnitTest --tests 'chat.simplex.common.veil.*' --tests 'chat.simplex.app.VeilNetworkPolicyTest' --tests 'chat.simplex.app.VeilCallPreferencesTest' -Pveil.abis=arm64-v8a --console=plain
       - name: Summary (what ran and what did not)
         if: always()
         run: |
           {
             echo "### Veil CI status"
-            echo "- RAN: secret scan, docs check, strings check, workflow lint (job static); FOSS debug build and unit tests (this job)"
-            echo "- NOT RUN: lint, armeabi-v7a, native core from source (not planned: prebuilt, signature-verified libs), third-party license inventory, instrumented and real-device tests"
+            echo "- RAN: secret scan, docs check, strings check, workflow lint (job static); FOSS debug build, Android template unit test, all 25 Veil common unit tests (this job)"
+            echo "- NOT RUN: lint, armeabi-v7a, native core from source (not planned: prebuilt, signature-verified libs), third-party license inventory, instrumented and real-device tests; upstream common suite (5 known failures in ChatItemsMergerTest, ProviderForGalleryTest, ThemesTest)"
           } >> "$GITHUB_STEP_SUMMARY"

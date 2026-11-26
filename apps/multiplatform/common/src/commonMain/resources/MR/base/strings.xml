@@ -16,6 +16,9 @@
   <string name="veil_network_locked">Veil connects only through Tor; this setting cannot be changed.</string>
   <string name="veil_socks_up">SOCKS proxy is responding (Tor circuits not measured)</string>
   <string name="veil_socks_down">SOCKS proxy is not responding: nothing is sent or received</string>
+  <string name="veil_tor_ring_proxy_answers">Proxy answers</string>
+  <string name="veil_tor_ring_connecting">Connecting</string>
+  <string name="veil_tor_ring_unavailable">No Tor — nothing is being sent</string>
   <string name="veil_status_recheck">Check again</string>
   <string name="veil_licenses">Open source licenses</string>
   <string name="veil_licenses_text">Veil is free software under GNU AGPL-3.0 and is based on SimpleX Chat (copyright SimpleX Chat Ltd and contributors). It includes third-party components licensed under Apache-2.0, MIT, BSD, ISC, LGPL (2.1 and 3.0), SIL OFL 1.1 and public domain; the full list is in the notices file.</string>
